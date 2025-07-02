@@ -30,6 +30,8 @@ func (l *AddLogic) Add(req *types.AddReq) (resp *types.AddResp, err error) {
 		Price: req.Price,
 	})
 
+	logx.Infof("AddLogic.Add: rsp: %v, err: %v", rsp, err)
+
 	if err != nil {
 		return
 	}

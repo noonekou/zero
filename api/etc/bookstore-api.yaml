@@ -12,3 +12,11 @@ Check:
     Hosts:
       - etcd:2379
     Key: check.rpc
+
+Log:
+  Mode: file
+  KeepDays: 7
+  MaxSize: 20
+  MaxBackups: 0
+  StackCooldownMillis: 500
+  

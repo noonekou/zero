@@ -7,3 +7,10 @@ Etcd:
 
 DataSource: root:@tcp(mysql:3306)/gozero
 Table: book
+
+Log:
+  Mode: file
+  KeepDays: 7
+  MaxSize: 20
+  MaxBackups: 0
+  StackCooldownMillis: 500
