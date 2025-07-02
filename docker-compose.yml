@@ -1,21 +1,28 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  api:
+  api-service:
     build:
-      context: ./api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: bookstore-api
     ports:
       - "8888:8888"
     depends_on:
       - etcd
+      - mysql
+      - add-rpc-service
+      - check-rpc-service
     networks:
       - bookstore-net
+    volumes:
+      - ./logs/api:/root/logs
 
-  add:
+  add-rpc-service:
     build:
-      context: ./rpc/add
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.add-rpc
+    container_name: bookstore-add-rpc
     ports:
       - "8080:8080"
     depends_on:
@@ -23,11 +30,15 @@ services:
       - mysql
     networks:
       - bookstore-net
+    volumes:
+      - ./logs/add-rpc:/root/logs
+    restart: always
 
-  check:
+  check-rpc-service:
     build:
-      context: ./rpc/check
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.check-rpc
+    container_name: bookstore-check-rpc
     ports:
       - "8081:8081"
     depends_on:
@@ -35,9 +46,13 @@ services:
       - mysql
     networks:
       - bookstore-net
+    volumes:
+      - ./logs/check-rpc:/root/logs
+    restart: always
 
   mysql:
-    image: mysql:5.7
+    image: mysql:latest
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -46,19 +61,54 @@ services:
       - "3306:3306"
     volumes:
       - ./rpc/model/book.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
     networks:
       - bookstore-net
+    restart: always
 
   etcd:
-    image: bitnami/etcd:3.4
+    image: bitnami/etcd:latest
+    # command:
+    #   - etcd
+    #   - --name
+    #   - etcd0
+    #   - --listen-client-urls
+    #   - http://0.0.0.0:2379
+    #   - --advertise-client-urls
+    #   - http://etcd:2379 # 注意这里要用 container_name 或 service name
+    #   - --listen-peer-urls
+    #   - http://0.0.0.0:2380
+    #   - --initial-advertise-peer-urls
+    #   - http://etcd:2380
+    #   - --initial-cluster-token
+    #   - etcd-cluster-1
+    #   - --initial-cluster
+    #   - etcd0=http://etcd:2380
+    #   - --initial-cluster-state
+    #   - new
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
-      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+      - ETCD_NAME=etcd0 # 对应 --name
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379 # 对应 --listen-client-urls
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379 # 对应 --advertise-client-urls
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380 # 对应 --listen-peer-urls
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://etcd:2380 # 对应 --initial-advertise-peer-urls
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster-1 # 对应 --initial-cluster-token
+      - ETCD_INITIAL_CLUSTER=etcd0=http://etcd:2380 # 对应 --initial-cluster
+      - ETCD_INITIAL_CLUSTER_STATE=new # 对应 --initial-cluster-state
+
     ports:
       - "2379:2379"
     networks:
       - bookstore-net
+    volumes:
+      - etcd_data:/bitnami/etcd/data
+    restart: always
 
 networks:
   bookstore-net:
     driver: bridge
+
+volumes:
+  mysql_data:
+  etcd_data:
