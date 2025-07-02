@@ -105,6 +105,41 @@ services:
       - etcd_data:/bitnami/etcd/data
     restart: always
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411 # 用于Zipkin兼容性
+      - COLLECTOR_OTLP_ENABLED=true # 启用OTLP接收，Go-Zero通常使用HTTP Thrift
+    ports:
+      - "6831:6831/udp" # Jaeger Agent 接收 Thrift TChannel UDP
+      - "14268:14268" # Jaeger Collector HTTP 接收端口 (Go-Zero 配置的 Endpoint)
+      - "14250:14250" # Jaeger Collector gRPC 接收端口
+      - "16686:16686" # Jaeger UI 端口
+      - "9411:9411" # Zipkin 兼容性端口
+    networks:
+      - bookstore-net
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml" # 指定配置文件路径
+      - "--storage.tsdb.path=/prometheus" # 指定数据存储路径
+    ports:
+      - "9090:9090"
+    networks:
+      - bookstore-net
+    depends_on:
+      - api-service
+      - add-rpc-service
+      - check-rpc-service
+    restart: always
+
 networks:
   bookstore-net:
     driver: bridge
@@ -112,3 +147,4 @@ networks:
 volumes:
   mysql_data:
   etcd_data:
+  prometheus_data:

@@ -1,0 +1,24 @@
+global:
+  scrape_interval: "15s"
+  evaluation_interval: "15s"
+
+scrape_configs:
+  # Prometheus 自身的指标
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Go-Zero API Service 的指标
+  - job_name: "bookstore-api"
+    static_configs:
+      - targets: ["api-service:4009"] 
+
+  # Go-Zero Add RPC Service 的指标
+  - job_name: "add-rpc"
+    static_configs:
+      - targets: ["add-rpc-service:4009"] 
+
+  # Go-Zero Check RPC Service 的指标
+  - job_name: "check-rpc"
+    static_configs: 
+     - targets: ["check-rpc-service:4009"] 

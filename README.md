@@ -31,3 +31,13 @@ docker-compose logs -f check-rpc-service
 ```Dockerfile
 docker-compose down
 ```
+
+# 监控
+
+1. prometheus
+
+http://localhost:9090/
+
+2. jaeger
+
+http://localhost:16686/
