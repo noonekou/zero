@@ -15,4 +15,8 @@ type Config struct {
 			Key   string
 		}
 	}
+	Auth struct {
+		AccessSecret string
+		AccessExpire int64
+	}
 }

@@ -19,11 +19,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/add",
 				Handler: AddHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/check",
-				Handler: CheckHandler(serverCtx),
-			},
 		},
+	)
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthMiddleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/check",
+					Handler: CheckHandler(serverCtx),
+				},
+			}...,
+		),
 	)
 }

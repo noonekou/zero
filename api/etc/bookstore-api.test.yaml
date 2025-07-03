@@ -2,6 +2,10 @@ Name: bookstore-apii
 Host: 0.0.0.0
 Port: 8888
 
+Auth:
+  AccessSecret: 2yB#@guNbKJDtgys  # JWT 签名密钥，建议使用足够长且复杂的随机字符串
+  AccessExpire: 86400   # JWT 过期时间（秒），例如 86400 秒 = 24 小时
+
 ConfigCenter:
   Etcd:
     Hosts:
