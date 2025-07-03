@@ -2,6 +2,12 @@ Name: bookstore-api
 Host: 0.0.0.0
 Port: 8888
 
+ConfigCenter:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: "/configs/bookstore-api.yaml"
+
 Add:
   Etcd:
     Hosts:

@@ -7,6 +7,12 @@ import (
 
 type Config struct {
 	rest.RestConf
-	Add   zrpc.RpcClientConf
-	Check zrpc.RpcClientConf
+	Add          zrpc.RpcClientConf
+	Check        zrpc.RpcClientConf
+	ConfigCenter struct {
+		Etcd struct {
+			Hosts []string
+			Key   string
+		}
+	}
 }

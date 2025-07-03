@@ -1,0 +1,9 @@
+Name: check.rpc
+ListenOn: 0.0.0.0:8081
+Etcd:
+  Hosts:
+  - localhost:2379
+  Key: check.rpc
+
+DataSource: root:@tcp(localhost:3306)/gozero
+Table: book

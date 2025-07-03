@@ -68,24 +68,6 @@ services:
 
   etcd:
     image: bitnami/etcd:latest
-    # command:
-    #   - etcd
-    #   - --name
-    #   - etcd0
-    #   - --listen-client-urls
-    #   - http://0.0.0.0:2379
-    #   - --advertise-client-urls
-    #   - http://etcd:2379 # 注意这里要用 container_name 或 service name
-    #   - --listen-peer-urls
-    #   - http://0.0.0.0:2380
-    #   - --initial-advertise-peer-urls
-    #   - http://etcd:2380
-    #   - --initial-cluster-token
-    #   - etcd-cluster-1
-    #   - --initial-cluster
-    #   - etcd0=http://etcd:2380
-    #   - --initial-cluster-state
-    #   - new
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
       - ETCD_NAME=etcd0 # 对应 --name
@@ -96,13 +78,29 @@ services:
       - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster-1 # 对应 --initial-cluster-token
       - ETCD_INITIAL_CLUSTER=etcd0=http://etcd:2380 # 对应 --initial-cluster
       - ETCD_INITIAL_CLUSTER_STATE=new # 对应 --initial-cluster-state
-
     ports:
       - "2379:2379"
     networks:
       - bookstore-net
     volumes:
       - etcd_data:/bitnami/etcd/data
+    restart: always
+
+  etcdkeeper:
+    image: evildecay/etcdkeeper:latest # EtcdKeeper 官方 Docker 镜像
+    container_name: etcdkeeper
+    ports:
+      - "8080:8999" # 将 EtcdKeeper 容器的 8080 端口映射到宿主机的 8080 端口
+    environment:
+      # 配置 EtcdKeeper 连接的 etcd 地址。
+      # 这里的 "etcd" 是你的 etcd 服务在 Docker Compose 网络中的名称。
+      ETCD_URLS: "http://etcd:2379"
+      # ETCD_USERNAME: "your_username" # 如果 etcd 开启了认证
+      # ETCD_PASSWORD: "your_password" # 如果 etcd 开启了认证
+    depends_on:
+      - etcd # 确保 etcd 服务启动后 EtcdKeeper 再启动
+    networks:
+      - bookstore-net
     restart: always
 
   jaeger:
