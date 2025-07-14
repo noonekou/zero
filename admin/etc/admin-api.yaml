@@ -1,0 +1,15 @@
+Name: admin-api
+Host: 0.0.0.0
+Port: 8888
+
+Auth:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: auth.rpc
+
+User:
+  Etcd:
+    Hosts:
+      - localhost:2379
+    Key: user.rpc

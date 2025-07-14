@@ -1,0 +1,86 @@
+syntax = "v1"
+
+type UserInfo {
+	Id        int64  `json:"id"`
+	UserName  string `json:"username"`
+	NickName  string `json:"nickname"`
+	Avatar    string `json:"avatar"`
+	Email     string `json:"email"`
+	Phone     string `json:"phone"`
+	Status    int    `json:"status"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type (
+	LoginReq {
+		username string `json:"username"`
+		password string `json:"password"`
+	}
+	LoginResp {
+		Token string   `json:"token"`
+		User  UserInfo `json:"user"`
+	}
+	RegisterReq {
+		username         string `json:"username"`
+		password         string `json:"password"`
+		confirm_password string `json:"confirm_password"`
+	}
+	RegisterResp {
+		Token string   `json:"token"`
+		User  UserInfo `json:"user"`
+	}
+)
+
+type (
+	GetUserInfoResp {
+		UserInfo
+	}
+)
+
+type (
+	UserListReq {
+		page     int `json:"page"`
+		pageSize int `json:"pageSize"`
+	}
+	UserListResp {
+		Total int64      `json:"total"`
+		List  []UserInfo `json:"list"`
+	}
+)
+
+// 定义 HTTP 服务
+// @server 语法块主要用于控制对 HTTP 服务生成时 meta 信息，目前支持功能有：
+// 1. 路由分组
+// 2. 中间件声明
+// 3. 路由前缀
+// 4. 超时配置
+// 5. jwt 鉴权开关
+// 所有声明仅对当前 service 中的路由有效
+@server (
+	// 代表当前 service 代码块下的路由生成代码时都会被放到 login 目录下
+	group: auth
+	// 定义路由前缀为 "/v1"
+	prefix: /v1
+)
+service admin-api {
+	@handler AuthLogin
+	post /auth/login (LoginReq) returns (LoginResp)
+
+	@handler AuthRegister
+	post /auth/register (RegisterReq) returns (RegisterResp)
+}
+
+@server (
+	group:      user
+	middleware: AuthMiddleware
+	prefix:     /v1
+)
+service admin-api {
+	@handler GetUserInfo
+	get /user/info returns (GetUserInfoResp)
+
+	@handler UserList
+	get /user/list (UserListReq) returns (UserListResp)
+}
+
