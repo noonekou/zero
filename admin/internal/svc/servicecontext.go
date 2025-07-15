@@ -22,6 +22,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:         c,
 		Auth:           authclient.NewAuth(zrpc.MustNewClient(c.AuthConf)),
 		User:           userclient.NewUser(zrpc.MustNewClient(c.UserConf)),
-		AuthMiddleware: middleware.NewAuthMiddleware().Handle,
+		AuthMiddleware: middleware.NewAuthMiddleware(c.Authorization.AccessSecret, c.Authorization.AccessExpire).Handle,
 	}
 }

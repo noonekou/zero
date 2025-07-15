@@ -1,19 +1,41 @@
 package middleware
 
-import "net/http"
+import (
+	"bookstore/admin/internal/types"
+	"bookstore/common/auth"
+	"bookstore/response"
+	"context"
+	"net/http"
+)
 
 type AuthMiddleware struct {
+	AccessSecret string
+	AccessExpire int64
 }
 
-func NewAuthMiddleware() *AuthMiddleware {
-	return &AuthMiddleware{}
+func NewAuthMiddleware(accessSecret string, accessExpire int64) *AuthMiddleware {
+	return &AuthMiddleware{
+		AccessSecret: accessSecret,
+		AccessExpire: accessExpire,
+	}
 }
 
 func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// TODO generate middleware implement function, delete after code implementation
+		token := r.Header.Get("Authorization")
+		if token == "" {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
 
-		// Passthrough to next handler if need
-		next(w, r)
+		userId, err := auth.ValidateToken(m.AccessSecret, token)
+
+		if err != nil {
+			response.ResponseError(w, err)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), types.CtxKeyUserID, userId)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	}
 }

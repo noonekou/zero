@@ -1,17 +1,17 @@
 Name: auth.rpc.rpc
 ListenOn: 0.0.0.0:8080
-Mode: pro
+Mode: dev
 
 Etcd:
   Hosts:
-    - etcd:2379
+    - 127.0.0.1:2379
   Key: auth.rpc.rpc
 
 Authorization:
   AccessSecret: 2yB#@guNbKJDtgys  # JWT 签名密钥，建议使用足够长且复杂的随机字符串
   AccessExpire: 86400   # JWT 过期时间（秒），例如 86400 秒 = 24 小时
 
-DataSource: root:@tcp(postgres:5432)/gozero
+DataSource: postgres://localhost:5432/test?sslmode=disable
 
   #Monitoring
 Prometheus:

@@ -1,13 +1,30 @@
 package svc
 
-import "bookstore/rpc/auth/internal/config"
+import (
+	"bookstore/rpc/auth/internal/config"
+	"bookstore/rpc/model"
+
+	_ "github.com/lib/pq"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
+)
 
 type ServiceContext struct {
-	Config config.Config
+	Config              config.Config
+	UserModel           model.TAdminUserModel
+	RoleModel           model.TRoleModel
+	PermissionModel     model.TPermissionModel
+	UserRoleModel       model.TUserRoleModel
+	RolePermissionModel model.TRolePermissionModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
+	conn := sqlx.NewSqlConn("postgres", c.DataSource)
 	return &ServiceContext{
-		Config: c,
+		Config:              c,
+		UserModel:           model.NewTAdminUserModel(conn),
+		RoleModel:           model.NewTRoleModel(conn),
+		PermissionModel:     model.NewTPermissionModel(conn),
+		UserRoleModel:       model.NewTUserRoleModel(conn),
+		RolePermissionModel: model.NewTRolePermissionModel(conn),
 	}
 }

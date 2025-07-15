@@ -1,13 +1,13 @@
 Name: user.rpc
-ListenOn: 0.0.0.0:8080
-Mode: pro
+ListenOn: 0.0.0.0:8081
+Mode: dev
 
 Etcd:
   Hosts:
-    - etcd:2379
+    - 127.0.0.1:2379
   Key: user.rpc
 
-DataSource: root:@tcp(postgres:5432)/gozero
+DataSource: postgres://localhost:5432/test?sslmode=disable
 
   #Monitoring
 Prometheus:

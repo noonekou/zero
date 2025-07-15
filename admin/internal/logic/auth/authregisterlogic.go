@@ -5,6 +5,7 @@ import (
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/rpc/auth/auth"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +25,21 @@ func NewAuthRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Auth
 }
 
 func (l *AuthRegisterLogic) AuthRegister(req *types.RegisterReq) (resp *types.RegisterResp, err error) {
-	// todo: add your logic here and delete this line
+	if (req.Username == "" || req.Password == "") && req.Confirm_password == "" {
+		return nil, err
+	}
 
-	return
+	rsp, err := l.svcCtx.Auth.Register(l.ctx, &auth.RegisterReq{
+		Username:        req.Username,
+		Password:        req.Password,
+		ConfirmPassword: req.Confirm_password,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.RegisterResp{
+		Token: rsp.Token,
+	}, nil
 }

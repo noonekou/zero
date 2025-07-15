@@ -2,9 +2,14 @@ package logic
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"bookstore/rpc/auth/auth"
 	"bookstore/rpc/auth/internal/svc"
+	"bookstore/rpc/model"
+
+	common "bookstore/common/auth"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +29,44 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 }
 
 func (l *RegisterLogic) Register(in *auth.RegisterReq) (*auth.RegisterResp, error) {
-	// todo: add your logic here and delete this line
+	if (in.Username == "" || in.Password == "") && in.ConfirmPassword == "" {
+		return nil, errors.New("username or password is empty")
+	}
+	user, err := l.svcCtx.UserModel.FindOneByUsername(l.ctx, in.Username)
+	if err != nil && err != sql.ErrNoRows {
+		return nil, err
+	}
 
-	return &auth.RegisterResp{}, nil
+	if user != nil {
+		return nil, errors.New("username has been registered")
+	}
+
+	_, err = l.svcCtx.UserModel.Insert(l.ctx, &model.TAdminUser{
+		Username: in.Username,
+		Password: in.Password,
+		Nickname: "",
+		Avatar:   "",
+		Email:    "",
+		Phone:    "",
+		Status:   1,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	user, err = l.svcCtx.UserModel.FindOneByUsername(l.ctx, in.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	token, err := common.GenerateToken(l.svcCtx.Config.Authorization.AccessSecret, l.svcCtx.Config.Authorization.AccessExpire, user.Id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &auth.RegisterResp{
+		Token: token,
+	}, nil
 }

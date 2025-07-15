@@ -2,9 +2,11 @@ package auth
 
 import (
 	"context"
+	"errors"
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/rpc/auth/auth"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +26,20 @@ func NewAuthLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AuthLog
 }
 
 func (l *AuthLoginLogic) AuthLogin(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	// todo: add your logic here and delete this line
+	if req.Username == "" || req.Password == "" {
+		return nil, errors.New("username or password is empty")
+	}
 
-	return
+	rsp, err := l.svcCtx.Auth.Login(l.ctx, &auth.LoginReq{
+		Username: req.Username,
+		Password: req.Password,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.LoginResp{
+		Token: rsp.Token,
+	}, nil
 }

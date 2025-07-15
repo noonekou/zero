@@ -24,6 +24,13 @@ curl -i "http://localhost:8888/v1/user/info"
 grpcui -plaintext 127.0.0.1:8080
 # 或者
 grpcurl -plaintext 127.0.0.1:8080 user.User/GetUserInfo
+
+# pgsql 生成model
+goctl model pg datasource -url="postgres://localhost:5432/test?sslmode=disable" -table=t_user,t_role,t_admin_user,t_permission,t_role_permission,t_user_role -dir=.
+
+# pg 连接配置 etc/xxx.yaml
+# config
+# svr context
 ```
 
 ## 创建 rpc 服务
