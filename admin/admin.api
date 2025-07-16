@@ -18,8 +18,7 @@ type (
 		password string `json:"password"`
 	}
 	LoginResp {
-		Token string   `json:"token"`
-		User  UserInfo `json:"user"`
+		Token string `json:"token"`
 	}
 	RegisterReq {
 		username         string `json:"username"`
@@ -27,8 +26,7 @@ type (
 		confirm_password string `json:"confirm_password"`
 	}
 	RegisterResp {
-		Token string   `json:"token"`
-		User  UserInfo `json:"user"`
+		Token string `json:"token"`
 	}
 )
 

@@ -63,6 +63,8 @@ XXX:
 
 ```Dockerfile
 docker-compose up -d --build
+# 指定配置文件
+docker-compose -f docker-compose.dev.yml up -d --build
 ```
 
 2. 启动所有服务：
@@ -89,6 +91,12 @@ docker-compose logs -f check-rpc-service
 
 ```Dockerfile
 docker-compose down
+```
+
+6. 进入容器 pg
+
+```Dockerfile
+docker compose -f docker-compose.admin.yml exec pg psql -U postgres gozero
 ```
 
 # 监控

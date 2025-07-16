@@ -2,7 +2,7 @@
 // goctl 1.8.4
 // Source: auth.rpc.proto
 
-package authclient
+package adminauthservice
 
 import (
 	"context"
@@ -19,28 +19,28 @@ type (
 	RegisterReq  = auth.RegisterReq
 	RegisterResp = auth.RegisterResp
 
-	Auth interface {
+	AdminAuthService interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 		Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 	}
 
-	defaultAuth struct {
+	defaultAdminAuthService struct {
 		cli zrpc.Client
 	}
 )
 
-func NewAuth(cli zrpc.Client) Auth {
-	return &defaultAuth{
+func NewAdminAuthService(cli zrpc.Client) AdminAuthService {
+	return &defaultAdminAuthService{
 		cli: cli,
 	}
 }
 
-func (m *defaultAuth) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	client := auth.NewAuthClient(m.cli.Conn())
+func (m *defaultAdminAuthService) Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
 	return client.Login(ctx, in, opts...)
 }
 
-func (m *defaultAuth) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
-	client := auth.NewAuthClient(m.cli.Conn())
+func (m *defaultAdminAuthService) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
 	return client.Register(ctx, in, opts...)
 }

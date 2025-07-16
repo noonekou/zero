@@ -1,17 +1,17 @@
-Name: auth.rpc.rpc
-ListenOn: 0.0.0.0:8080
+Name: auth.api.rpc
+ListenOn: 0.0.0.0:8280
 Mode: pro
 
 Etcd:
   Hosts:
     - etcd:2379
-  Key: auth.rpc.rpc
+  Key: auth.api.rpc
 
 Authorization:
-  AccessSecret: 2yB#@guNbKJDtgys  # JWT 签名密钥，建议使用足够长且复杂的随机字符串
+  AccessSecret: 2yB#KJ@guNbDtgys  # JWT 签名密钥，建议使用足够长且复杂的随机字符串
   AccessExpire: 86400   # JWT 过期时间（秒），例如 86400 秒 = 24 小时
 
-DataSource: root:@tcp(postgres:5432)/gozero
+DataSource: postgres://postgres:123456@pg:5432/gozero?sslmode=disable
 
   #Monitoring
 Prometheus:
@@ -21,7 +21,7 @@ Prometheus:
 
 #链路追踪
 Telemetry:
-  Name: check-rpc
+  Name: auth.api
   Endpoint: http://jaeger:14268/api/traces
   Sampler: 1.0
   Batcher: jaeger

@@ -1,0 +1,46 @@
+Name: admin-api
+Host: 0.0.0.0
+Port: 8889
+Mode: pro
+
+Authorization:
+  AccessSecret: 2yB#KJ@guNbDtgys  # JWT 签名密钥，建议使用足够长且复杂的随机字符串
+  AccessExpire: 86400   # JWT 过期时间（秒），例如 86400 秒 = 24 小时
+
+ConfigCenter:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: "/configs/api-api.yaml"
+
+AuthConf:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: auth.api.rpc
+
+UserConf:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: user.api.rpc
+
+#Monitoring
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4009
+  Path: /metrics
+
+#链路追踪
+Telemetry:
+  Name: admin-api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
+Log:
+  Mode: file
+  KeepDays: 7
+  MaxSize: 20
+  MaxBackups: 0
+  StackCooldownMillis: 500

@@ -20,7 +20,7 @@ func GenerateToken(accessSecret string, accessExpire int64, userId int64) (strin
 	claims := CustomClaims{
 		UserId: userId,
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer:    "bookstore-api",
+			Issuer:    "gozero-api",
 			ExpiresAt: jwt.NewNumericDate(time.Unix(now+accessExpire, 0)),
 			IssuedAt:  jwt.NewNumericDate(time.Unix(now, 0)),
 		},

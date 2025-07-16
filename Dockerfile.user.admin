@@ -1,0 +1,25 @@
+# Dockerfile.add-rpc
+FROM golang:1.24 AS builder
+
+WORKDIR /app
+
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o user-admin-service ./rpc/user/user.go
+
+FROM alpine:latest
+
+RUN apk add --no-cache ca-certificates
+
+WORKDIR /root/
+COPY --from=builder /app/user-admin-service .
+
+COPY --from=builder /app/rpc/user/etc/user.admin.yaml ./etc/user.admin.yaml
+
+EXPOSE 8181
+CMD ["./user-admin-service", "-f", "./etc/user.admin.yaml"]
+

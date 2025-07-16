@@ -1,15 +1,14 @@
-package logic
+package apiauthservicelogic
 
 import (
 	"context"
 	"database/sql"
 
+	common "bookstore/common/auth"
+	errs "bookstore/common/error"
 	"bookstore/rpc/auth/auth"
 	"bookstore/rpc/auth/internal/svc"
 	"bookstore/rpc/model"
-
-	common "bookstore/common/auth"
-	errs "bookstore/common/error"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -41,7 +40,7 @@ func (l *RegisterLogic) Register(in *auth.RegisterReq) (*auth.RegisterResp, erro
 		return nil, errs.ErrUsernameAlreadyExist.GRPCStatus().Err()
 	}
 
-	_, err = l.svcCtx.UserModel.Insert(l.ctx, &model.TAdminUser{
+	_, err = l.svcCtx.UserModel.Insert(l.ctx, &model.TUser{
 		Username: in.Username,
 		Password: in.Password,
 		Nickname: "",

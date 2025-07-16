@@ -15,3 +15,5 @@
 {"@timestamp":"2025-07-16T15:42:09.541+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
 {"@timestamp":"2025-07-16T15:42:19.543+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
 {"@timestamp":"2025-07-16T15:58:04.211+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-16T17:19:41.650+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-16T17:21:03.926+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}

@@ -6,7 +6,8 @@ import (
 
 	"bookstore/rpc/auth/auth"
 	"bookstore/rpc/auth/internal/config"
-	"bookstore/rpc/auth/internal/server"
+	adminauthserviceServer "bookstore/rpc/auth/internal/server/adminauthservice"
+	apiauthserviceServer "bookstore/rpc/auth/internal/server/apiauthservice"
 	"bookstore/rpc/auth/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -26,7 +27,8 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		auth.RegisterAuthServer(grpcServer, server.NewAuthServer(ctx))
+		auth.RegisterAdminAuthServiceServer(grpcServer, adminauthserviceServer.NewAdminAuthServiceServer(ctx))
+		auth.RegisterApiAuthServiceServer(grpcServer, apiauthserviceServer.NewApiAuthServiceServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

@@ -1,0 +1,25 @@
+# Dockerfile.add-rpc
+FROM golang:1.24 AS builder
+
+WORKDIR /app
+
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o auth-admin-service ./rpc/auth/auth.rpc.go
+
+FROM alpine:latest
+
+RUN apk add --no-cache ca-certificates
+
+WORKDIR /root/
+COPY --from=builder /app/auth-admin-service .
+
+COPY --from=builder /app/rpc/auth/etc/auth.rpc.admin.yaml ./etc/auth.rpc.admin.yaml
+
+EXPOSE 8180
+CMD ["./auth-admin-service", "-f", "./etc/auth.rpc.admin.yaml"]
+

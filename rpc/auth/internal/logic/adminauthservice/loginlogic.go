@@ -1,4 +1,4 @@
-package logic
+package adminauthservicelogic
 
 import (
 	"context"
@@ -31,7 +31,7 @@ func (l *LoginLogic) Login(in *auth.LoginReq) (*auth.LoginResp, error) {
 		return nil, errs.ErrUsernameOrPasswordIsEmpty.GRPCStatus().Err()
 	}
 
-	tUser, err := l.svcCtx.UserModel.FindOneByUsernameAndPassword(l.ctx, in.Username, in.Password)
+	tUser, err := l.svcCtx.AdminUserModel.FindOneByUsernameAndPassword(l.ctx, in.Username, in.Password)
 	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}

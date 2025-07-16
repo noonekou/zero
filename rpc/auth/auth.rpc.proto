@@ -22,7 +22,12 @@ message RegisterResp {
   string token = 1;
 }
 
-service Auth {
+service AdminAuthService {
+  rpc Login(LoginReq) returns (LoginResp);
+  rpc Register(RegisterReq) returns (RegisterResp);
+}
+
+service ApiAuthService {
   rpc Login(LoginReq) returns (LoginResp);
   rpc Register(RegisterReq) returns (RegisterResp);
 }

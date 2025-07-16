@@ -28,6 +28,7 @@ type (
 		Insert(ctx context.Context, data *TUser) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TUser, error)
 		FindOneByUsername(ctx context.Context, username string) (*TUser, error)
+		FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TUser, error)
 		FindAllByPage(ctx context.Context, page, pageSize int64) (*[]TUser, error)
 		Count(ctx context.Context) (int64, error)
 		Update(ctx context.Context, data *TUser) error
@@ -84,6 +85,20 @@ func (m *defaultTUserModel) FindOneByUsername(ctx context.Context, username stri
 	var resp TUser
 	query := fmt.Sprintf("select %s from %s where username = $1 limit 1", tUserRows, m.table)
 	err := m.conn.QueryRowCtx(ctx, &resp, query, username)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlx.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultTUserModel) FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TUser, error) {
+	var resp TUser
+	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 limit 1", tUserRows, m.table)
+	err := m.conn.QueryRowCtx(ctx, &resp, query, username, password)
 	switch err {
 	case nil:
 		return &resp, nil

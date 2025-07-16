@@ -9,7 +9,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-service ./api/bookstore.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-service ./api/api.go
 
 FROM alpine:latest
 
@@ -18,7 +18,7 @@ RUN apk add --no-cache ca-certificates
 WORKDIR /root/
 COPY --from=builder /app/api-service .
 
-COPY --from=builder /app/api/etc/bookstore-api.yaml ./etc/bookstore-api.yaml
+COPY --from=builder /app/api/etc/api-api.yaml ./etc/api-api.yaml
 
-EXPOSE 8888
-CMD ["./api-service", "-f", "./etc/bookstore-api.yaml"]
+EXPOSE 8889
+CMD ["./api-service", "-f", "./etc/api-api.yaml"]

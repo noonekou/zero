@@ -1,0 +1,24 @@
+# Dockerfile.api
+FROM golang:1.24 AS builder
+
+WORKDIR /app
+
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o admin-service ./admin/admin.go
+
+FROM alpine:latest
+
+RUN apk add --no-cache ca-certificates
+
+WORKDIR /root/
+COPY --from=builder /app/admin-service .
+
+COPY --from=builder /app/admin/etc/admin-api.yaml ./etc/admin-api.yaml
+
+EXPOSE 8888
+CMD ["./admin-service", "-f", "./etc/admin-api.yaml"]

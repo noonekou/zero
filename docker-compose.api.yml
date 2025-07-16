@@ -1,0 +1,148 @@
+version: "3.8"
+
+services:
+  api-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: zero-api
+    ports:
+      - "8889:8889"
+    depends_on:
+      - etcd
+      - pg
+      - auth-rpc-service
+      - user-rpc-service
+    networks:
+      - api-net
+    volumes:
+      - ./logs/api:/root/logs
+
+  auth-rpc-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.auth.api
+    container_name: zero-auth-rpc
+    ports:
+      - "8280:8280"
+    depends_on:
+      - etcd
+      - pg
+    networks:
+      - api-net
+    volumes:
+      - ./logs/auth-api-rpc:/root/logs
+    restart: always
+
+  user-rpc-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.user.api
+    container_name: zero-user-rpc
+    ports:
+      - "8281:8281"
+    depends_on:
+      - etcd
+      - pg
+    networks:
+      - api-net
+    volumes:
+      - ./logs/user-api-rpc:/root/logs
+    restart: always
+
+  pg:
+    image: postgres:latest
+    container_name: pg
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: gozero
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./rpc/model:/docker-entrypoint-initdb.d
+    networks:
+      - api-net
+    restart: always
+
+  etcd:
+    image: bitnami/etcd:latest
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME=etcd0 # 对应 --name
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379 # 对应 --listen-client-urls
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379 # 对应 --advertise-client-urls
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380 # 对应 --listen-peer-urls
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://etcd:2380 # 对应 --initial-advertise-peer-urls
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster-1 # 对应 --initial-cluster-token
+      - ETCD_INITIAL_CLUSTER=etcd0=http://etcd:2380 # 对应 --initial-cluster
+      - ETCD_INITIAL_CLUSTER_STATE=new # 对应 --initial-cluster-state
+    ports:
+      - "2379:2379"
+    networks:
+      - api-net
+    volumes:
+      - etcd_data:/bitnami/etcd/data
+    restart: always
+
+  etcdkeeper:
+    image: evildecay/etcdkeeper:latest # EtcdKeeper 官方 Docker 镜像
+    container_name: etcdkeeper
+    ports:
+      - "8080:8999" # 将 EtcdKeeper 容器的 8080 端口映射到宿主机的 8999 端口
+    environment:
+      # 配置 EtcdKeeper 连接的 etcd 地址。
+      # 这里的 "etcd" 是你的 etcd 服务在 Docker Compose 网络中的名称。
+      ETCD_URLS: "http://etcd:2379"
+      # ETCD_USERNAME: "your_username" # 如果 etcd 开启了认证
+      # ETCD_PASSWORD: "your_password" # 如果 etcd 开启了认证
+    depends_on:
+      - etcd # 确保 etcd 服务启动后 EtcdKeeper 再启动
+    networks:
+      - api-net
+    restart: always
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411 # 用于Zipkin兼容性
+      - COLLECTOR_OTLP_ENABLED=true # 启用OTLP接收，Go-Zero通常使用HTTP Thrift
+    ports:
+      - "6831:6831/udp" # Jaeger Agent 接收 Thrift TChannel UDP
+      - "14268:14268" # Jaeger Collector HTTP 接收端口 (Go-Zero 配置的 Endpoint)
+      - "14250:14250" # Jaeger Collector gRPC 接收端口
+      - "16686:16686" # Jaeger UI 端口
+      - "9411:9411" # Zipkin 兼容性端口
+    networks:
+      - api-net
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.api.yml:/etc/prometheus/prometheus.api.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.api.yml" # 指定配置文件路径
+      - "--storage.tsdb.path=/prometheus" # 指定数据存储路径
+    ports:
+      - "9090:9090"
+    networks:
+      - api-net
+    depends_on:
+      - api-service
+      - auth-rpc-service
+      - user-rpc-service
+    restart: always
+
+networks:
+  api-net:
+    driver: bridge
+
+volumes:
+  pg_data:
+  etcd_data:
+  prometheus_data:

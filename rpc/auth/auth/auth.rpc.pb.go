@@ -236,8 +236,11 @@ const file_auth_rpc_proto_rawDesc = "" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12)\n" +
 	"\x10confirm_password\x18\x03 \x01(\tR\x0fconfirmPassword\"$\n" +
 	"\fRegisterResp\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token2c\n" +
-	"\x04Auth\x12(\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token2o\n" +
+	"\x10AdminAuthService\x12(\n" +
+	"\x05Login\x12\x0e.auth.LoginReq\x1a\x0f.auth.LoginResp\x121\n" +
+	"\bRegister\x12\x11.auth.RegisterReq\x1a\x12.auth.RegisterResp2m\n" +
+	"\x0eApiAuthService\x12(\n" +
 	"\x05Login\x12\x0e.auth.LoginReq\x1a\x0f.auth.LoginResp\x121\n" +
 	"\bRegister\x12\x11.auth.RegisterReq\x1a\x12.auth.RegisterRespB\bZ\x06./authb\x06proto3"
 
@@ -261,12 +264,16 @@ var file_auth_rpc_proto_goTypes = []any{
 	(*RegisterResp)(nil), // 3: auth.RegisterResp
 }
 var file_auth_rpc_proto_depIdxs = []int32{
-	0, // 0: auth.Auth.Login:input_type -> auth.LoginReq
-	2, // 1: auth.Auth.Register:input_type -> auth.RegisterReq
-	1, // 2: auth.Auth.Login:output_type -> auth.LoginResp
-	3, // 3: auth.Auth.Register:output_type -> auth.RegisterResp
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	0, // 0: auth.AdminAuthService.Login:input_type -> auth.LoginReq
+	2, // 1: auth.AdminAuthService.Register:input_type -> auth.RegisterReq
+	0, // 2: auth.ApiAuthService.Login:input_type -> auth.LoginReq
+	2, // 3: auth.ApiAuthService.Register:input_type -> auth.RegisterReq
+	1, // 4: auth.AdminAuthService.Login:output_type -> auth.LoginResp
+	3, // 5: auth.AdminAuthService.Register:output_type -> auth.RegisterResp
+	1, // 6: auth.ApiAuthService.Login:output_type -> auth.LoginResp
+	3, // 7: auth.ApiAuthService.Register:output_type -> auth.RegisterResp
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -285,7 +292,7 @@ func file_auth_rpc_proto_init() {
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_auth_rpc_proto_goTypes,
 		DependencyIndexes: file_auth_rpc_proto_depIdxs,

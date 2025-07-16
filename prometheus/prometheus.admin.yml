@@ -9,16 +9,16 @@ scrape_configs:
       - targets: ["localhost:9090"]
 
   # Go-Zero API Service 的指标
-  - job_name: "bookstore-api"
+  - job_name: "admin-service"
     static_configs:
-      - targets: ["api-service:4009"] 
+      - targets: ["admin-service:4009"] 
 
   # Go-Zero Add RPC Service 的指标
-  - job_name: "add-rpc"
+  - job_name: "auth-rpc-service"
     static_configs:
-      - targets: ["add-rpc-service:4009"] 
+      - targets: ["auth-rpc-service:4009"] 
 
   # Go-Zero Check RPC Service 的指标
-  - job_name: "check-rpc"
+  - job_name: "user-rpc-service"
     static_configs: 
-     - targets: ["check-rpc-service:4009"] 
+     - targets: ["user-rpc-service:4009"] 

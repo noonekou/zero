@@ -3,7 +3,7 @@ package svc
 import (
 	"bookstore/admin/internal/config"
 	"bookstore/admin/internal/middleware"
-	"bookstore/rpc/auth/authclient"
+	"bookstore/rpc/auth/client/adminauthservice"
 	"bookstore/rpc/user/client/adminuserservice"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -12,7 +12,7 @@ import (
 
 type ServiceContext struct {
 	Config         config.Config
-	Auth           authclient.Auth
+	Auth           adminauthservice.AdminAuthService
 	AdminUser      adminuserservice.AdminUserService
 	AuthMiddleware rest.Middleware
 }
@@ -20,7 +20,7 @@ type ServiceContext struct {
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:         c,
-		Auth:           authclient.NewAuth(zrpc.MustNewClient(c.AuthConf)),
+		Auth:           adminauthservice.NewAdminAuthService(zrpc.MustNewClient(c.AuthConf)),
 		AdminUser:      adminuserservice.NewAdminUserService(zrpc.MustNewClient(c.UserConf)),
 		AuthMiddleware: middleware.NewAuthMiddleware(c.Authorization.AccessSecret, c.Authorization.AccessExpire).Handle,
 	}

@@ -1,0 +1,35 @@
+Name: auth.api.rpc
+ListenOn: 0.0.0.0:8280
+Mode: dev
+
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: auth.api.rpc
+
+Authorization:
+  AccessSecret: 2yB#KJ@guNbDtgys  # JWT 签名密钥，建议使用足够长且复杂的随机字符串
+  AccessExpire: 86400   # JWT 过期时间（秒），例如 86400 秒 = 24 小时
+
+DataSource: postgres://localhost:5432/test?sslmode=disable
+
+  #Monitoring
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4009
+  Path: /metrics
+
+#链路追踪
+Telemetry:
+  Name: auth.api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
+Log:
+  Mode: file
+  KeepDays: 7
+  MaxSize: 20
+  MaxBackups: 0
+  StackCooldownMillis: 500
+
