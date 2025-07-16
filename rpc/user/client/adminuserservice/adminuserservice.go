@@ -2,7 +2,7 @@
 // goctl 1.8.4
 // Source: user.proto
 
-package userclient
+package adminuserservice
 
 import (
 	"context"
@@ -20,28 +20,28 @@ type (
 	UserListReq     = user.UserListReq
 	UserListResp    = user.UserListResp
 
-	User interface {
+	AdminUserService interface {
 		GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error)
 		UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error)
 	}
 
-	defaultUser struct {
+	defaultAdminUserService struct {
 		cli zrpc.Client
 	}
 )
 
-func NewUser(cli zrpc.Client) User {
-	return &defaultUser{
+func NewAdminUserService(cli zrpc.Client) AdminUserService {
+	return &defaultAdminUserService{
 		cli: cli,
 	}
 }
 
-func (m *defaultUser) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
-	client := user.NewUserClient(m.cli.Conn())
+func (m *defaultAdminUserService) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
+	client := user.NewAdminUserServiceClient(m.cli.Conn())
 	return client.GetUserInfo(ctx, in, opts...)
 }
 
-func (m *defaultUser) UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error) {
-	client := user.NewUserClient(m.cli.Conn())
+func (m *defaultAdminUserService) UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error) {
+	client := user.NewAdminUserServiceClient(m.cli.Conn())
 	return client.UserList(ctx, in, opts...)
 }

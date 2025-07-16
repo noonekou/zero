@@ -20,3 +20,5 @@
 {"@timestamp":"2025-07-16T14:07:39.072+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
 {"@timestamp":"2025-07-16T14:08:26.908+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
 {"@timestamp":"2025-07-16T14:30:51.152+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-16T15:43:35.484+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-16T15:44:07.877+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}

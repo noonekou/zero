@@ -29,6 +29,8 @@ type (
 		FindOne(ctx context.Context, id int64) (*TAdminUser, error)
 		FindOneByUsername(ctx context.Context, username string) (*TAdminUser, error)
 		FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TAdminUser, error)
+		FindAllByPage(ctx context.Context, page, pageSize int64) (*[]TAdminUser, error)
+		Count(ctx context.Context) (int64, error)
 		Update(ctx context.Context, data *TAdminUser) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -104,6 +106,32 @@ func (m *defaultTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Contex
 		return nil, ErrNotFound
 	default:
 		return nil, err
+	}
+}
+
+func (m *defaultTAdminUserModel) FindAllByPage(ctx context.Context, page, pageSize int64) (*[]TAdminUser, error) {
+	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tAdminUserRows, m.table)
+	var resp []TAdminUser
+	err := m.conn.QueryRowsCtx(ctx, &resp, query, pageSize, (page-1)*pageSize)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlx.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultTAdminUserModel) Count(ctx context.Context) (int64, error) {
+	query := fmt.Sprintf("select count(1) from %s", m.table)
+	var resp int64
+	err := m.conn.QueryRowCtx(ctx, &resp, query)
+	switch err {
+	case nil:
+		return resp, nil
+	default:
+		return 0, err
 	}
 }
 

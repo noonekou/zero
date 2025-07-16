@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"errors"
+	errs "bookstore/common/error"
 	"strings"
 	"time"
 
@@ -47,12 +47,12 @@ func ValidateToken(accessSecret string, token string) (int64, error) {
 	})
 
 	if err != nil {
-		return 0, err
+		return 0, errs.ErrTokenInvalid
 	}
 
 	claims, ok := tk.Claims.(*CustomClaims)
 	if !ok || !tk.Valid {
-		return 0, errors.New("invalid token")
+		return 0, errs.ErrTokenInvalid
 	}
 
 	return claims.UserId, nil

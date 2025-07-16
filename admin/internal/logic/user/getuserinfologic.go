@@ -5,6 +5,8 @@ import (
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	errs "bookstore/common/error"
+	"bookstore/rpc/user/client/adminuserservice"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +26,14 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 }
 
 func (l *GetUserInfoLogic) GetUserInfo() (resp *types.GetUserInfoResp, err error) {
-	// todo: add your logic here and delete this line
+	user, err := l.svcCtx.AdminUser.GetUserInfo(l.ctx, &adminuserservice.GetUserInfoReq{Id: l.ctx.Value(types.CtxKeyUserID).(int64)})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	if user.Info == nil {
+		return nil, errs.ErrUserNotFound
+	}
+
+	return &types.GetUserInfoResp{UserInfo: types.UserInfo{Id: user.Info.Id, UserName: user.Info.UserName, NickName: user.Info.NickName, Avatar: user.Info.Avatar, Email: user.Info.Email, Phone: user.Info.Phone, Status: int(user.Info.Status), CreatedAt: user.Info.CreatedAt, UpdatedAt: user.Info.UpdatedAt}}, nil
 }

@@ -8,8 +8,8 @@ type UserInfo {
 	Email     string `json:"email"`
 	Phone     string `json:"phone"`
 	Status    int    `json:"status"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	CreatedAt int64  `json:"created_at"`
+	UpdatedAt int64  `json:"updated_at"`
 }
 
 type (
@@ -40,8 +40,8 @@ type (
 
 type (
 	UserListReq {
-		page     int `json:"page"`
-		pageSize int `json:"pageSize"`
+		page     int64 `form:"page"`
+		pageSize int64 `form:"pageSize"`
 	}
 	UserListResp {
 		Total int64      `json:"total"`

@@ -41,8 +41,8 @@ type UserInfo struct {
 }
 
 type UserListReq struct {
-	Page     int `json:"page"`
-	PageSize int `json:"pageSize"`
+	Page     int64 `form:"page"`
+	PageSize int64 `form:"pageSize"`
 }
 
 type UserListResp struct {

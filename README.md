@@ -43,6 +43,8 @@ goctl rpc new xxx
 
 # 根据 xxx.proto 生成 xxx-rpc 服务
 goctl rpc protoc xxx.proto --go_out=. --go-grpc_out=. --zrpc_out=.
+# 分组 需要加 -m
+goctl rpc protoc xxx.proto --go_out=. --go-grpc_out=. --zrpc_out=. -m
 ```
 
 ## 修改 api 配置文件，实现 rpc 调用

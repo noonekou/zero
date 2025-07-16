@@ -19,6 +19,7 @@ const (
 	ErrCodeUsernameOrPasswordIsEmpty = 20001
 	ErrCodePasswordMissMatch         = 20002
 	ErrCodeUsernameAlreadyExist      = 20003
+	ErrCodeUserNotFound              = 20004
 )
 
 type MyError struct {
@@ -53,6 +54,7 @@ var (
 	ErrUsernameOrPasswordIsEmpty = NewMyError(ErrCodeUsernameOrPasswordIsEmpty, "username or password is empty")
 	ErrPasswordMissMatch         = NewMyError(ErrCodePasswordMissMatch, "password miss match")
 	ErrUsernameAlreadyExist      = NewMyError(ErrCodeUsernameAlreadyExist, "username already exist")
+	ErrUserNotFound              = NewMyError(ErrCodeUserNotFound, "user not found")
 )
 
 func IsMyError(err error, code ErrorCodeType) bool {

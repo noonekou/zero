@@ -131,6 +131,7 @@ func (x *UserInfo) GetUpdatedAt() int64 {
 
 type GetUserInfoReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -163,6 +164,13 @@ func (x *GetUserInfoReq) ProtoReflect() protoreflect.Message {
 // Deprecated: Use GetUserInfoReq.ProtoReflect.Descriptor instead.
 func (*GetUserInfoReq) Descriptor() ([]byte, []int) {
 	return file_user_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetUserInfoReq) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
 }
 
 type GetUserInfoResp struct {
@@ -330,8 +338,9 @@ const file_user_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\b \x01(\x03R\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\t \x01(\x03R\tupdatedAt\"\x10\n" +
-	"\x0eGetUserInfoReq\"5\n" +
+	"updated_at\x18\t \x01(\x03R\tupdatedAt\" \n" +
+	"\x0eGetUserInfoReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"5\n" +
 	"\x0fGetUserInfoResp\x12\"\n" +
 	"\x04info\x18\x01 \x01(\v2\x0e.user.UserInfoR\x04info\">\n" +
 	"\vUserListReq\x12\x12\n" +
@@ -339,8 +348,11 @@ const file_user_proto_rawDesc = "" +
 	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\"H\n" +
 	"\fUserListResp\x12\x14\n" +
 	"\x05total\x18\x01 \x01(\x03R\x05total\x12\"\n" +
-	"\x04list\x18\x02 \x03(\v2\x0e.user.UserInfoR\x04list2u\n" +
-	"\x04User\x12:\n" +
+	"\x04list\x18\x02 \x03(\v2\x0e.user.UserInfoR\x04list2|\n" +
+	"\vUserService\x12:\n" +
+	"\vGetUserInfo\x12\x14.user.GetUserInfoReq\x1a\x15.user.GetUserInfoResp\x121\n" +
+	"\bUserList\x12\x11.user.UserListReq\x1a\x12.user.UserListResp2\x81\x01\n" +
+	"\x10AdminUserService\x12:\n" +
 	"\vGetUserInfo\x12\x14.user.GetUserInfoReq\x1a\x15.user.GetUserInfoResp\x121\n" +
 	"\bUserList\x12\x11.user.UserListReq\x1a\x12.user.UserListRespB\bZ\x06./userb\x06proto3"
 
@@ -367,12 +379,16 @@ var file_user_proto_goTypes = []any{
 var file_user_proto_depIdxs = []int32{
 	0, // 0: user.GetUserInfoResp.info:type_name -> user.UserInfo
 	0, // 1: user.UserListResp.list:type_name -> user.UserInfo
-	1, // 2: user.User.GetUserInfo:input_type -> user.GetUserInfoReq
-	3, // 3: user.User.UserList:input_type -> user.UserListReq
-	2, // 4: user.User.GetUserInfo:output_type -> user.GetUserInfoResp
-	4, // 5: user.User.UserList:output_type -> user.UserListResp
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
+	1, // 2: user.UserService.GetUserInfo:input_type -> user.GetUserInfoReq
+	3, // 3: user.UserService.UserList:input_type -> user.UserListReq
+	1, // 4: user.AdminUserService.GetUserInfo:input_type -> user.GetUserInfoReq
+	3, // 5: user.AdminUserService.UserList:input_type -> user.UserListReq
+	2, // 6: user.UserService.GetUserInfo:output_type -> user.GetUserInfoResp
+	4, // 7: user.UserService.UserList:output_type -> user.UserListResp
+	2, // 8: user.AdminUserService.GetUserInfo:output_type -> user.GetUserInfoResp
+	4, // 9: user.AdminUserService.UserList:output_type -> user.UserListResp
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -391,7 +407,7 @@ func file_user_proto_init() {
 			NumEnums:      0,
 			NumMessages:   5,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_user_proto_goTypes,
 		DependencyIndexes: file_user_proto_depIdxs,
