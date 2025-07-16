@@ -3,13 +3,13 @@ package logic
 import (
 	"context"
 	"database/sql"
-	"errors"
 
 	"bookstore/rpc/auth/auth"
 	"bookstore/rpc/auth/internal/svc"
 	"bookstore/rpc/model"
 
 	common "bookstore/common/auth"
+	errs "bookstore/common/error"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,7 +30,7 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 
 func (l *RegisterLogic) Register(in *auth.RegisterReq) (*auth.RegisterResp, error) {
 	if (in.Username == "" || in.Password == "") && in.ConfirmPassword == "" {
-		return nil, errors.New("username or password is empty")
+		return nil, errs.ErrUsernameOrPasswordIsEmpty.GRPCStatus().Err()
 	}
 	user, err := l.svcCtx.UserModel.FindOneByUsername(l.ctx, in.Username)
 	if err != nil && err != sql.ErrNoRows {
@@ -38,7 +38,7 @@ func (l *RegisterLogic) Register(in *auth.RegisterReq) (*auth.RegisterResp, erro
 	}
 
 	if user != nil {
-		return nil, errors.New("username has been registered")
+		return nil, errs.ErrUsernameAlreadyExist.GRPCStatus().Err()
 	}
 
 	_, err = l.svcCtx.UserModel.Insert(l.ctx, &model.TAdminUser{

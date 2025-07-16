@@ -6,6 +6,8 @@ import (
 	"bookstore/admin/internal/logic/user"
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/common/response"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -19,10 +21,7 @@ func UserListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := user.NewUserListLogic(r.Context(), svcCtx)
 		resp, err := l.UserList(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		response.Response(w, resp, err)
+
 	}
 }

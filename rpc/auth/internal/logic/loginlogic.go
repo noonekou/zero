@@ -3,9 +3,9 @@ package logic
 import (
 	"context"
 	"database/sql"
-	"errors"
 
 	common "bookstore/common/auth"
+	errs "bookstore/common/error"
 	"bookstore/rpc/auth/auth"
 	"bookstore/rpc/auth/internal/svc"
 
@@ -28,7 +28,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 
 func (l *LoginLogic) Login(in *auth.LoginReq) (*auth.LoginResp, error) {
 	if in.Username == "" || in.Password == "" {
-		return nil, errors.New("username or password is empty")
+		return nil, errs.ErrUsernameOrPasswordIsEmpty.GRPCStatus().Err()
 	}
 
 	tUser, err := l.svcCtx.UserModel.FindOneByUsernameAndPassword(l.ctx, in.Username, in.Password)
@@ -37,7 +37,7 @@ func (l *LoginLogic) Login(in *auth.LoginReq) (*auth.LoginResp, error) {
 	}
 
 	if tUser == nil {
-		return nil, errors.New("username not exist")
+		return nil, errs.ErrUsernameNotExist.GRPCStatus().Err()
 	}
 
 	token, err := common.GenerateToken(l.svcCtx.Config.Authorization.AccessSecret, l.svcCtx.Config.Authorization.AccessExpire, tUser.Id)

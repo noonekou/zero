@@ -1,2 +1,5 @@
 {"@timestamp":"2025-07-15T20:07:46.387+08:00","caller":"prometheus/agent.go:40","content":"Starting prometheus agent at 0.0.0.0:4009","level":"info"}
 {"@timestamp":"2025-07-15T20:41:29.906+08:00","caller":"proc/shutdown.go:84","content":"Got signal 2, shutting down...","level":"info"}
+{"@timestamp":"2025-07-16T14:02:49.708+08:00","caller":"prometheus/agent.go:40","content":"Starting prometheus agent at 0.0.0.0:4009","level":"info"}
+{"@timestamp":"2025-07-16T14:07:58.720+08:00","caller":"proc/shutdown.go:84","content":"Got signal 2, shutting down...","level":"info"}
+{"@timestamp":"2025-07-16T14:08:14.626+08:00","caller":"prometheus/agent.go:40","content":"Starting prometheus agent at 0.0.0.0:4009","level":"info"}
