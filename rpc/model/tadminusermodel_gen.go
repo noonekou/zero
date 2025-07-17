@@ -97,7 +97,7 @@ func (m *defaultTAdminUserModel) FindOneByUsername(ctx context.Context, username
 
 func (m *defaultTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TAdminUser, error) {
 	var resp TAdminUser
-	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 limit 1", tAdminUserRows, m.table)
+	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 limit 1", tAdminUserRowsWithPlaceHolder, m.table)
 	err := m.conn.QueryRowCtx(ctx, &resp, query, username, password)
 	switch err {
 	case nil:
@@ -110,7 +110,7 @@ func (m *defaultTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Contex
 }
 
 func (m *defaultTAdminUserModel) FindAllByPage(ctx context.Context, page, pageSize int64) (*[]TAdminUser, error) {
-	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tAdminUserRows, m.table)
+	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tAdminUserRowsWithPlaceHolder, m.table)
 	var resp []TAdminUser
 	err := m.conn.QueryRowsCtx(ctx, &resp, query, pageSize, (page-1)*pageSize)
 	switch err {
@@ -136,7 +136,7 @@ func (m *defaultTAdminUserModel) Count(ctx context.Context) (int64, error) {
 }
 
 func (m *defaultTAdminUserModel) Insert(ctx context.Context, data *TAdminUser) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3, $4, $5, $6, $7) returning id", m.table, tAdminUserRowsExpectAutoSet)
+	query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3, $4, $5, $6, $7)", m.table, tAdminUserRowsExpectAutoSet)
 	ret, err := m.conn.ExecCtx(ctx, query, data.Username, data.Password, data.Nickname, data.Avatar, data.Email, data.Phone, data.Status)
 	return ret, err
 }
