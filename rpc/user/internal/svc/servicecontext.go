@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"bookstore/rpc/model"
+	"bookstore/common/model"
 	"bookstore/rpc/user/internal/config"
 
 	_ "github.com/lib/pq"
@@ -10,7 +10,7 @@ import (
 
 type ServiceContext struct {
 	Config         config.Config
-	UserModel      model.TUserModel
+	UserModel      model.TUserModel // 用户模型
 	AdminUserModel model.TAdminUserModel
 }
 

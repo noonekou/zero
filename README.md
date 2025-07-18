@@ -26,7 +26,7 @@ grpcui -plaintext 127.0.0.1:8080
 grpcurl -plaintext 127.0.0.1:8080 user.User/GetUserInfo
 
 # pgsql 生成model
-goctl model pg datasource -url="postgres://localhost:5432/test?sslmode=disable" -table=t_user,t_role,t_admin_user,t_permission,t_role_permission,t_user_role -dir=.
+goctl model pg datasource -url="postgres://localhost:5432/test?sslmode=disable" -table=t_admin_user,t_admin_user_role,t_api_permission,t_apis,t_permission,t_resource,t_role,t_role_permission,t_user -dir=.
 
 # pg 连接配置 etc/xxx.yaml
 # config

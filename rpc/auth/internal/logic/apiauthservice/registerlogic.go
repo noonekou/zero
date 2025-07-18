@@ -6,9 +6,9 @@ import (
 
 	common "bookstore/common/auth"
 	errs "bookstore/common/error"
+	"bookstore/common/model"
 	"bookstore/rpc/auth/auth"
 	"bookstore/rpc/auth/internal/svc"
-	"bookstore/rpc/model"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

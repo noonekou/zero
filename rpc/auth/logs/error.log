@@ -25,3 +25,19 @@
 {"@timestamp":"2025-07-16T16:47:39.901+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
 {"@timestamp":"2025-07-16T16:49:43.876+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
 {"@timestamp":"2025-07-16T17:20:24.836+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:12:38.290+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-18T13:14:00.694+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:18:40.331+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-18T13:18:48.510+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:18:48.510+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: wrong index 2 in sql","level":"error"}
+{"@timestamp":"2025-07-18T13:22:34.183+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-18T13:23:03.045+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:23:03.045+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: wrong index 2 in sql","level":"error"}
+{"@timestamp":"2025-07-18T13:24:15.644+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-18T13:24:20.024+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:24:20.024+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: wrong index 2 in sql","level":"error"}
+{"@timestamp":"2025-07-18T13:24:37.580+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: wrong index 2 in sql","level":"error"}
+{"@timestamp":"2025-07-18T13:25:12.549+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-18T13:25:28.685+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:25:28.689+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: sql: no rows in result set","level":"error"}
+{"@timestamp":"2025-07-18T13:26:41.862+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: <nil>","level":"error"}

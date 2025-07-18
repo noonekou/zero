@@ -7,6 +7,8 @@ Authorization:
   AccessSecret: 2yB#@guNbKJDtgys  # JWT 签名密钥，建议使用足够长且复杂的随机字符串
   AccessExpire: 86400   # JWT 过期时间（秒），例如 86400 秒 = 24 小时
 
+DataSource: postgres://localhost:5432/test?sslmode=disable
+
 AuthConf:
   Etcd:
     Hosts:
@@ -18,3 +20,10 @@ UserConf:
     Hosts:
       - localhost:2379
     Key: user.admin.rpc
+
+Log:
+  Mode: file
+  KeepDays: 7
+  MaxSize: 20
+  MaxBackups: 0
+  StackCooldownMillis: 500

@@ -27,7 +27,6 @@ type (
 	tPermissionModel interface {
 		Insert(ctx context.Context, data *TPermission) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TPermission, error)
-		FindOneByCode(ctx context.Context, code string) (*TPermission, error)
 		FindOneByName(ctx context.Context, name string) (*TPermission, error)
 		Update(ctx context.Context, data *TPermission) error
 		Delete(ctx context.Context, id int64) error
@@ -39,11 +38,13 @@ type (
 	}
 
 	TPermission struct {
-		Id        int64     `db:"id"`         // 权限ID
-		Code      string    `db:"code"`       // 权限编码(如：sys:user:list， sys:user:add)
-		Name      string    `db:"name"`       // 权限名
-		CreatedAt time.Time `db:"created_at"` // 创建时间
-		UpdatedAt time.Time `db:"updated_at"` // 更新时间
+		Id           int64          `db:"id"`            // 权限ID
+		Name         string         `db:"name"`          // 权限名
+		ResourceName string         `db:"resource_name"` // 资源名
+		Action       string         `db:"action"`        // 操作类型
+		Description  sql.NullString `db:"description"`   // 权限描述
+		CreatedAt    time.Time      `db:"created_at"`    // 创建时间
+		UpdatedAt    time.Time      `db:"updated_at"`    // 更新时间
 	}
 )
 
@@ -74,20 +75,6 @@ func (m *defaultTPermissionModel) FindOne(ctx context.Context, id int64) (*TPerm
 	}
 }
 
-func (m *defaultTPermissionModel) FindOneByCode(ctx context.Context, code string) (*TPermission, error) {
-	var resp TPermission
-	query := fmt.Sprintf("select %s from %s where code = $1 limit 1", tPermissionRows, m.table)
-	err := m.conn.QueryRowCtx(ctx, &resp, query, code)
-	switch err {
-	case nil:
-		return &resp, nil
-	case sqlx.ErrNotFound:
-		return nil, ErrNotFound
-	default:
-		return nil, err
-	}
-}
-
 func (m *defaultTPermissionModel) FindOneByName(ctx context.Context, name string) (*TPermission, error) {
 	var resp TPermission
 	query := fmt.Sprintf("select %s from %s where name = $1 limit 1", tPermissionRows, m.table)
@@ -103,14 +90,14 @@ func (m *defaultTPermissionModel) FindOneByName(ctx context.Context, name string
 }
 
 func (m *defaultTPermissionModel) Insert(ctx context.Context, data *TPermission) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values ($1, $2)", m.table, tPermissionRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.Code, data.Name)
+	query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3, $4)", m.table, tPermissionRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.Name, data.ResourceName, data.Action, data.Description)
 	return ret, err
 }
 
 func (m *defaultTPermissionModel) Update(ctx context.Context, newData *TPermission) error {
 	query := fmt.Sprintf("update %s set %s where id = $1", m.table, tPermissionRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, newData.Id, newData.Code, newData.Name)
+	_, err := m.conn.ExecCtx(ctx, query, newData.Id, newData.Name, newData.ResourceName, newData.Action, newData.Description)
 	return err
 }
 

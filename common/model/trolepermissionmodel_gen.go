@@ -27,7 +27,8 @@ type (
 	tRolePermissionModel interface {
 		Insert(ctx context.Context, data *TRolePermission) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TRolePermission, error)
-		FindOneByRoleIdPermissionId(ctx context.Context, roleId int64, permissionId int64) (*TRolePermission, error)
+		FindOneByRoleNamePermissionName(ctx context.Context, roleName string, permissionName string) (*TRolePermission, error)
+		FindPermissionNameByUserId(ctx context.Context, userId int64) ([]string, error)
 		Update(ctx context.Context, data *TRolePermission) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -38,11 +39,11 @@ type (
 	}
 
 	TRolePermission struct {
-		Id           int64     `db:"id"`            // 角色权限ID
-		RoleId       int64     `db:"role_id"`       // 角色ID
-		PermissionId int64     `db:"permission_id"` // 权限ID
-		CreatedAt    time.Time `db:"created_at"`    // 创建时间
-		UpdatedAt    time.Time `db:"updated_at"`    // 更新时间
+		Id             int64     `db:"id"`              // 角色权限ID
+		RoleName       string    `db:"role_name"`       // 角色名
+		PermissionName string    `db:"permission_name"` // 权限名
+		CreatedAt      time.Time `db:"created_at"`      // 创建时间
+		UpdatedAt      time.Time `db:"updated_at"`      // 更新时间
 	}
 )
 
@@ -73,10 +74,10 @@ func (m *defaultTRolePermissionModel) FindOne(ctx context.Context, id int64) (*T
 	}
 }
 
-func (m *defaultTRolePermissionModel) FindOneByRoleIdPermissionId(ctx context.Context, roleId int64, permissionId int64) (*TRolePermission, error) {
+func (m *defaultTRolePermissionModel) FindOneByRoleNamePermissionName(ctx context.Context, roleName string, permissionName string) (*TRolePermission, error) {
 	var resp TRolePermission
-	query := fmt.Sprintf("select %s from %s where role_id = $1 and permission_id = $2 limit 1", tRolePermissionRows, m.table)
-	err := m.conn.QueryRowCtx(ctx, &resp, query, roleId, permissionId)
+	query := fmt.Sprintf("select %s from %s where role_name = $1 and permission_name = $2 limit 1", tRolePermissionRows, m.table)
+	err := m.conn.QueryRowCtx(ctx, &resp, query, roleName, permissionName)
 	switch err {
 	case nil:
 		return &resp, nil
@@ -87,15 +88,30 @@ func (m *defaultTRolePermissionModel) FindOneByRoleIdPermissionId(ctx context.Co
 	}
 }
 
+func (m *defaultTRolePermissionModel) FindPermissionNameByUserId(ctx context.Context, userId int64) ([]string, error) {
+	query := fmt.Sprintf("select permission_name from t_admin_user_role inner join t_role on user_id = $1 and t_role.id = role_id inner join t_role_permission on name = role_name")
+	var resp []string
+	err := m.conn.QueryRowsCtx(ctx, &resp, query, userId)
+
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlx.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
 func (m *defaultTRolePermissionModel) Insert(ctx context.Context, data *TRolePermission) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values ($1, $2)", m.table, tRolePermissionRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.RoleId, data.PermissionId)
+	ret, err := m.conn.ExecCtx(ctx, query, data.RoleName, data.PermissionName)
 	return ret, err
 }
 
 func (m *defaultTRolePermissionModel) Update(ctx context.Context, newData *TRolePermission) error {
 	query := fmt.Sprintf("update %s set %s where id = $1", m.table, tRolePermissionRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, newData.Id, newData.RoleId, newData.PermissionId)
+	_, err := m.conn.ExecCtx(ctx, query, newData.Id, newData.RoleName, newData.PermissionName)
 	return err
 }
 

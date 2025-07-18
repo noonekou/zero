@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/core/stringx"
@@ -97,7 +98,8 @@ func (m *defaultTAdminUserModel) FindOneByUsername(ctx context.Context, username
 
 func (m *defaultTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TAdminUser, error) {
 	var resp TAdminUser
-	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 limit 1", tAdminUserRowsWithPlaceHolder, m.table)
+	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 limit 1", tAdminUserRows, m.table)
+	logx.Infof("query: %s, username: %s, password: %s", query, username, password)
 	err := m.conn.QueryRowCtx(ctx, &resp, query, username, password)
 	switch err {
 	case nil:
@@ -110,7 +112,7 @@ func (m *defaultTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Contex
 }
 
 func (m *defaultTAdminUserModel) FindAllByPage(ctx context.Context, page, pageSize int64) (*[]TAdminUser, error) {
-	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tAdminUserRowsWithPlaceHolder, m.table)
+	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tAdminUserRows, m.table)
 	var resp []TAdminUser
 	err := m.conn.QueryRowsCtx(ctx, &resp, query, pageSize, (page-1)*pageSize)
 	switch err {

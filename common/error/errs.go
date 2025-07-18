@@ -14,6 +14,7 @@ const (
 	ErrCodeNotAuthorized = 10000
 	ErrCodeTokenInvalid  = 10001
 	ErrCodeTokenExpired  = 10002
+	ErrCodeNoPermission  = 10003
 
 	ErrCodeUsernameNotExist          = 20000
 	ErrCodeUsernameOrPasswordIsEmpty = 20001
@@ -49,6 +50,7 @@ var (
 	ErrNotAuthorized = NewMyError(ErrCodeNotAuthorized, "not authorized")
 	ErrTokenInvalid  = NewMyError(ErrCodeTokenInvalid, "token invalid")
 	ErrTokenExpired  = NewMyError(ErrCodeTokenExpired, "token expired")
+	ErrNoPermission  = NewMyError(ErrCodeNoPermission, "no permission")
 
 	ErrUsernameNotExist          = NewMyError(ErrCodeUsernameNotExist, "username not exist")
 	ErrUsernameOrPasswordIsEmpty = NewMyError(ErrCodeUsernameOrPasswordIsEmpty, "username or password is empty")

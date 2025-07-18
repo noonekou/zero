@@ -71,7 +71,7 @@ service admin-api {
 
 @server (
 	group:      user
-	middleware: AuthMiddleware
+	middleware: AuthMiddleware,PermissionMiddleware
 	prefix:     /v1
 )
 service admin-api {

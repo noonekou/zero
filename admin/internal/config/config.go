@@ -11,6 +11,7 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
-	AuthConf zrpc.RpcClientConf
-	UserConf zrpc.RpcClientConf
+	AuthConf   zrpc.RpcClientConf
+	UserConf   zrpc.RpcClientConf
+	DataSource string
 }

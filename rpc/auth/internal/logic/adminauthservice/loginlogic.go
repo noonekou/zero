@@ -31,7 +31,9 @@ func (l *LoginLogic) Login(in *auth.LoginReq) (*auth.LoginResp, error) {
 		return nil, errs.ErrUsernameOrPasswordIsEmpty.GRPCStatus().Err()
 	}
 
+	logx.Infof("username: %s, password: %s", in.Username, in.Password)
 	tUser, err := l.svcCtx.AdminUserModel.FindOneByUsernameAndPassword(l.ctx, in.Username, in.Password)
+	logx.Errorf("tUser: %v", err)
 	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}

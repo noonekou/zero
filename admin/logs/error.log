@@ -1,1 +1,6 @@
 {"@timestamp":"2025-07-15T19:51:41.055+08:00","caller":"prometheus/agent.go:42","content":"listen tcp 0.0.0.0:4009: bind: address already in use","level":"error"}
+{"@timestamp":"2025-07-18T13:43:46.430+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:45:50.231+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T13:45:50.240+08:00","caller":"model/trolepermissionmodel_gen.go:96","content":"resp: []","level":"error"}
+{"@timestamp":"2025-07-18T14:03:50.013+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T14:03:50.023+08:00","caller":"model/trolepermissionmodel_gen.go:96","content":"resp: [statistic:user:read operation:user:read operation:user:create operation:user:update operation:user:delete operation:user:view employee:employee:read employee:employee:create employee:employee:update employee:employee:delete employee:employee:view employee:role:read employee:role:create employee:role:update employee:role:delete employee:role:view]","level":"error"}

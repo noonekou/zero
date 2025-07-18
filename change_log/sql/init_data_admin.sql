@@ -123,7 +123,7 @@ VALUES ('admin', 'employee:role:view');
 -- 用户表
 -- pwd: (5pJsw1G9r9[f)
 INSERT INTO t_admin_user (username, nickname, avatar, email, phone, password, status)
-VALUES ('admin', 'admin', 'https://avatars.githubusercontent.com/u/785674?v=4', 'admin@example.com', '21223e1706c109dca4af2c7b1f2fff69', '123456', 1);
+VALUES ('admin', 'admin', 'https://avatars.githubusercontent.com/u/785674?v=4', 'admin@example.com', '123456', '21223e1706c109dca4af2c7b1f2fff69', 1);
 
 -- 用户角色表
 INSERT INTO t_admin_user_role (user_id, role_id)
