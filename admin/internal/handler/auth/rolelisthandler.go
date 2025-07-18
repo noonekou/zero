@@ -1,17 +1,15 @@
-package user
+package auth
 
 import (
 	"net/http"
 
-	"bookstore/admin/internal/logic/user"
+	"bookstore/admin/internal/logic/auth"
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
-	"bookstore/common/response"
-
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func UserListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func RoleListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.PageReq
 		if err := httpx.Parse(r, &req); err != nil {
@@ -19,9 +17,12 @@ func UserListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := user.NewUserListLogic(r.Context(), svcCtx)
-		resp, err := l.UserList(&req)
-		response.Response(w, resp, err)
-
+		l := auth.NewRoleListLogic(r.Context(), svcCtx)
+		resp, err := l.RoleList(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
 	}
 }

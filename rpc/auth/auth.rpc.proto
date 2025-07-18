@@ -3,6 +3,13 @@ syntax = "proto3";
 package auth;
 option go_package="./auth";
 
+message Empty {}
+
+message PageReq {
+   int64 page = 1;
+   int64 page_size = 2;
+}
+
 message LoginReq {
   string username = 1;
   string password = 2;
@@ -22,9 +29,49 @@ message RegisterResp {
   string token = 1;
 }
 
+message Permission {
+  int64 id = 1;
+  int32 code = 2;
+  string description = 3;
+  int32 parent_code = 4;
+  repeated Permission children = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+}
+
+message PermissionListReq {
+}
+
+message PermissionListResp {
+   repeated Permission list = 1;
+}
+
+message Role {
+  int64 id = 1;
+  string name = 2;
+  repeated Permission permissions = 3;
+  int64 created_at = 4;
+  int64 updated_at = 5;
+}
+
+message RoleListResp {
+  int64 total = 1;
+  repeated Role list = 2;
+}
+
+message RoleInfoReq {
+  int64 id = 1;
+}
+
 service AdminAuthService {
   rpc Login(LoginReq) returns (LoginResp);
   rpc Register(RegisterReq) returns (RegisterResp);
+  rpc PermissionList(PermissionListReq) returns (PermissionListResp);
+  rpc AddRole(Role) returns (Empty);
+  rpc UpdateRole(Role) returns (Empty);
+  rpc RoleList(PageReq) returns (RoleListResp);
+  rpc GetRoleInfo(RoleInfoReq) returns (Role);
+  rpc DeleteRole(RoleInfoReq) returns (Empty);
 }
 
 service ApiAuthService {

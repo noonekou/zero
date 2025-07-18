@@ -19,8 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AdminAuthService_Login_FullMethodName    = "/auth.AdminAuthService/Login"
-	AdminAuthService_Register_FullMethodName = "/auth.AdminAuthService/Register"
+	AdminAuthService_Login_FullMethodName          = "/auth.AdminAuthService/Login"
+	AdminAuthService_Register_FullMethodName       = "/auth.AdminAuthService/Register"
+	AdminAuthService_PermissionList_FullMethodName = "/auth.AdminAuthService/PermissionList"
+	AdminAuthService_AddRole_FullMethodName        = "/auth.AdminAuthService/AddRole"
+	AdminAuthService_UpdateRole_FullMethodName     = "/auth.AdminAuthService/UpdateRole"
+	AdminAuthService_RoleList_FullMethodName       = "/auth.AdminAuthService/RoleList"
+	AdminAuthService_GetRoleInfo_FullMethodName    = "/auth.AdminAuthService/GetRoleInfo"
+	AdminAuthService_DeleteRole_FullMethodName     = "/auth.AdminAuthService/DeleteRole"
 )
 
 // AdminAuthServiceClient is the client API for AdminAuthService service.
@@ -29,6 +35,12 @@ const (
 type AdminAuthServiceClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
+	PermissionList(ctx context.Context, in *PermissionListReq, opts ...grpc.CallOption) (*PermissionListResp, error)
+	AddRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error)
+	UpdateRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error)
+	RoleList(ctx context.Context, in *PageReq, opts ...grpc.CallOption) (*RoleListResp, error)
+	GetRoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Role, error)
+	DeleteRole(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type adminAuthServiceClient struct {
@@ -59,12 +71,78 @@ func (c *adminAuthServiceClient) Register(ctx context.Context, in *RegisterReq, 
 	return out, nil
 }
 
+func (c *adminAuthServiceClient) PermissionList(ctx context.Context, in *PermissionListReq, opts ...grpc.CallOption) (*PermissionListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PermissionListResp)
+	err := c.cc.Invoke(ctx, AdminAuthService_PermissionList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAuthServiceClient) AddRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, AdminAuthService_AddRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAuthServiceClient) UpdateRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, AdminAuthService_UpdateRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAuthServiceClient) RoleList(ctx context.Context, in *PageReq, opts ...grpc.CallOption) (*RoleListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoleListResp)
+	err := c.cc.Invoke(ctx, AdminAuthService_RoleList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAuthServiceClient) GetRoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Role, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Role)
+	err := c.cc.Invoke(ctx, AdminAuthService_GetRoleInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminAuthServiceClient) DeleteRole(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, AdminAuthService_DeleteRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminAuthServiceServer is the server API for AdminAuthService service.
 // All implementations must embed UnimplementedAdminAuthServiceServer
 // for forward compatibility.
 type AdminAuthServiceServer interface {
 	Login(context.Context, *LoginReq) (*LoginResp, error)
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
+	PermissionList(context.Context, *PermissionListReq) (*PermissionListResp, error)
+	AddRole(context.Context, *Role) (*Empty, error)
+	UpdateRole(context.Context, *Role) (*Empty, error)
+	RoleList(context.Context, *PageReq) (*RoleListResp, error)
+	GetRoleInfo(context.Context, *RoleInfoReq) (*Role, error)
+	DeleteRole(context.Context, *RoleInfoReq) (*Empty, error)
 	mustEmbedUnimplementedAdminAuthServiceServer()
 }
 
@@ -80,6 +158,24 @@ func (UnimplementedAdminAuthServiceServer) Login(context.Context, *LoginReq) (*L
 }
 func (UnimplementedAdminAuthServiceServer) Register(context.Context, *RegisterReq) (*RegisterResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedAdminAuthServiceServer) PermissionList(context.Context, *PermissionListReq) (*PermissionListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PermissionList not implemented")
+}
+func (UnimplementedAdminAuthServiceServer) AddRole(context.Context, *Role) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddRole not implemented")
+}
+func (UnimplementedAdminAuthServiceServer) UpdateRole(context.Context, *Role) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRole not implemented")
+}
+func (UnimplementedAdminAuthServiceServer) RoleList(context.Context, *PageReq) (*RoleListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoleList not implemented")
+}
+func (UnimplementedAdminAuthServiceServer) GetRoleInfo(context.Context, *RoleInfoReq) (*Role, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoleInfo not implemented")
+}
+func (UnimplementedAdminAuthServiceServer) DeleteRole(context.Context, *RoleInfoReq) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRole not implemented")
 }
 func (UnimplementedAdminAuthServiceServer) mustEmbedUnimplementedAdminAuthServiceServer() {}
 func (UnimplementedAdminAuthServiceServer) testEmbeddedByValue()                          {}
@@ -138,6 +234,114 @@ func _AdminAuthService_Register_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminAuthService_PermissionList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PermissionListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAuthServiceServer).PermissionList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAuthService_PermissionList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAuthServiceServer).PermissionList(ctx, req.(*PermissionListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAuthService_AddRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Role)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAuthServiceServer).AddRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAuthService_AddRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAuthServiceServer).AddRole(ctx, req.(*Role))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAuthService_UpdateRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Role)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAuthServiceServer).UpdateRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAuthService_UpdateRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAuthServiceServer).UpdateRole(ctx, req.(*Role))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAuthService_RoleList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAuthServiceServer).RoleList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAuthService_RoleList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAuthServiceServer).RoleList(ctx, req.(*PageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAuthService_GetRoleInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAuthServiceServer).GetRoleInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAuthService_GetRoleInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAuthServiceServer).GetRoleInfo(ctx, req.(*RoleInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminAuthService_DeleteRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoleInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminAuthServiceServer).DeleteRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminAuthService_DeleteRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminAuthServiceServer).DeleteRole(ctx, req.(*RoleInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminAuthService_ServiceDesc is the grpc.ServiceDesc for AdminAuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +356,30 @@ var AdminAuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Register",
 			Handler:    _AdminAuthService_Register_Handler,
+		},
+		{
+			MethodName: "PermissionList",
+			Handler:    _AdminAuthService_PermissionList_Handler,
+		},
+		{
+			MethodName: "AddRole",
+			Handler:    _AdminAuthService_AddRole_Handler,
+		},
+		{
+			MethodName: "UpdateRole",
+			Handler:    _AdminAuthService_UpdateRole_Handler,
+		},
+		{
+			MethodName: "RoleList",
+			Handler:    _AdminAuthService_RoleList_Handler,
+		},
+		{
+			MethodName: "GetRoleInfo",
+			Handler:    _AdminAuthService_GetRoleInfo_Handler,
+		},
+		{
+			MethodName: "DeleteRole",
+			Handler:    _AdminAuthService_DeleteRole_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

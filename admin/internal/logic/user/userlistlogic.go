@@ -24,7 +24,7 @@ func NewUserListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserList
 	}
 }
 
-func (l *UserListLogic) UserList(req *types.UserListReq) (resp *types.UserListResp, err error) {
+func (l *UserListLogic) UserList(req *types.PageReq) (resp *types.UserListResp, err error) {
 	list, err := l.svcCtx.AdminUser.UserList(l.ctx, &adminuserservice.UserListReq{Page: req.Page, PageSize: req.PageSize})
 
 	if err != nil {

@@ -32,3 +32,33 @@ func (s *AdminAuthServiceServer) Register(ctx context.Context, in *auth.Register
 	l := adminauthservicelogic.NewRegisterLogic(ctx, s.svcCtx)
 	return l.Register(in)
 }
+
+func (s *AdminAuthServiceServer) PermissionList(ctx context.Context, in *auth.PermissionListReq) (*auth.PermissionListResp, error) {
+	l := adminauthservicelogic.NewPermissionListLogic(ctx, s.svcCtx)
+	return l.PermissionList(in)
+}
+
+func (s *AdminAuthServiceServer) AddRole(ctx context.Context, in *auth.Role) (*auth.Empty, error) {
+	l := adminauthservicelogic.NewAddRoleLogic(ctx, s.svcCtx)
+	return l.AddRole(in)
+}
+
+func (s *AdminAuthServiceServer) UpdateRole(ctx context.Context, in *auth.Role) (*auth.Empty, error) {
+	l := adminauthservicelogic.NewUpdateRoleLogic(ctx, s.svcCtx)
+	return l.UpdateRole(in)
+}
+
+func (s *AdminAuthServiceServer) RoleList(ctx context.Context, in *auth.PageReq) (*auth.RoleListResp, error) {
+	l := adminauthservicelogic.NewRoleListLogic(ctx, s.svcCtx)
+	return l.RoleList(in)
+}
+
+func (s *AdminAuthServiceServer) GetRoleInfo(ctx context.Context, in *auth.RoleInfoReq) (*auth.Role, error) {
+	l := adminauthservicelogic.NewGetRoleInfoLogic(ctx, s.svcCtx)
+	return l.GetRoleInfo(in)
+}
+
+func (s *AdminAuthServiceServer) DeleteRole(ctx context.Context, in *auth.RoleInfoReq) (*auth.Empty, error) {
+	l := adminauthservicelogic.NewDeleteRoleLogic(ctx, s.svcCtx)
+	return l.DeleteRole(in)
+}

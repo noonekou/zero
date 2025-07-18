@@ -16,6 +16,21 @@ type LoginResp struct {
 	Token string `json:"token"`
 }
 
+type PageReq struct {
+	Page     int64 `form:"page"`
+	PageSize int64 `form:"pageSize"`
+}
+
+type Permission struct {
+	Id          int64        `json:"id"`          // 权限ID
+	Code        int          `json:"code"`        // 资源编码
+	Description string       `json:"description"` // 权限描述
+	ParentCode  int          `json:"parent_code"` // 父级资源编码
+	Children    []Permission `json:"children"`    // 子资源
+	CreatedAt   int64        `json:"created_at"`
+	UpdatedAt   int64        `json:"updated_at"`
+}
+
 type RegisterReq struct {
 	Username         string `json:"username"`
 	Password         string `json:"password"`
@@ -24,6 +39,23 @@ type RegisterReq struct {
 
 type RegisterResp struct {
 	Token string `json:"token"`
+}
+
+type Role struct {
+	Id          int64        `json:"id"`
+	Name        string       `json:"name"`
+	Permissions []Permission `json:"permissions"`
+	CreatedAt   int64        `json:"created_at"`
+	UpdatedAt   int64        `json:"updated_at"`
+}
+
+type RoleInfoReq struct {
+	Id int64 `path:"id"`
+}
+
+type RoleListResp struct {
+	Total int64  `json:"total"`
+	List  []Role `json:"list"`
 }
 
 type UserInfo struct {
@@ -36,11 +68,6 @@ type UserInfo struct {
 	Status    int    `json:"status"`
 	CreatedAt int64  `json:"created_at"`
 	UpdatedAt int64  `json:"updated_at"`
-}
-
-type UserListReq struct {
-	Page     int64 `form:"page"`
-	PageSize int64 `form:"pageSize"`
 }
 
 type UserListResp struct {

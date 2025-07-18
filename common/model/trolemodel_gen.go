@@ -28,6 +28,8 @@ type (
 		Insert(ctx context.Context, data *TRole) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TRole, error)
 		FindOneByName(ctx context.Context, name string) (*TRole, error)
+		FindByPage(ctx context.Context, page, pageSize int64) (*[]TRole, error)
+		Count(ctx context.Context) (int64, error)
 		Update(ctx context.Context, data *TRole) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -83,6 +85,32 @@ func (m *defaultTRoleModel) FindOneByName(ctx context.Context, name string) (*TR
 		return nil, ErrNotFound
 	default:
 		return nil, err
+	}
+}
+
+func (m *defaultTRoleModel) FindByPage(ctx context.Context, page, pageSize int64) (*[]TRole, error) {
+	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tRoleRows, m.table)
+	var resp []TRole
+	err := m.conn.QueryRowsCtx(ctx, &resp, query, pageSize, (page-1)*pageSize)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlx.ErrNotFound:
+		return &resp, nil
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultTRoleModel) Count(ctx context.Context) (int64, error) {
+	query := fmt.Sprintf("select count(1) from %s", m.table)
+	var resp int64
+	err := m.conn.QueryRowCtx(ctx, &resp, query)
+	switch err {
+	case nil:
+		return resp, nil
+	default:
+		return 0, err
 	}
 }
 

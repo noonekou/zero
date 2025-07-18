@@ -29,8 +29,10 @@ type (
 		FindOne(ctx context.Context, id int64) (*TRolePermission, error)
 		FindOneByRoleNamePermissionName(ctx context.Context, roleName string, permissionName string) (*TRolePermission, error)
 		FindPermissionNameByUserId(ctx context.Context, userId int64) ([]string, error)
+		FindByRoleName(ctx context.Context, roleName string) ([]TPermissionData, error)
 		Update(ctx context.Context, data *TRolePermission) error
 		Delete(ctx context.Context, id int64) error
+		DeleteByRoleName(ctx context.Context, roleName string) error
 	}
 
 	defaultTRolePermissionModel struct {
@@ -45,6 +47,11 @@ type (
 		CreatedAt      time.Time `db:"created_at"`      // 创建时间
 		UpdatedAt      time.Time `db:"updated_at"`      // 更新时间
 	}
+
+	TPermissionData struct {
+		Id             int64  `db:"id"`          // 权限ID
+		PermissionName string `db:"description"` // 权限名
+	}
 )
 
 func newTRolePermissionModel(conn sqlx.SqlConn) *defaultTRolePermissionModel {
@@ -57,6 +64,12 @@ func newTRolePermissionModel(conn sqlx.SqlConn) *defaultTRolePermissionModel {
 func (m *defaultTRolePermissionModel) Delete(ctx context.Context, id int64) error {
 	query := fmt.Sprintf("delete from %s where id = $1", m.table)
 	_, err := m.conn.ExecCtx(ctx, query, id)
+	return err
+}
+
+func (m *defaultTRolePermissionModel) DeleteByRoleName(ctx context.Context, roleName string) error {
+	query := fmt.Sprintf("delete from %s where role_name = $1", m.table)
+	_, err := m.conn.ExecCtx(ctx, query, roleName)
 	return err
 }
 
@@ -93,6 +106,20 @@ func (m *defaultTRolePermissionModel) FindPermissionNameByUserId(ctx context.Con
 	var resp []string
 	err := m.conn.QueryRowsCtx(ctx, &resp, query, userId)
 
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlx.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *defaultTRolePermissionModel) FindByRoleName(ctx context.Context, roleName string) ([]TPermissionData, error) {
+	query := fmt.Sprintf("select t_permission.id, t_permission.description from t_role_permission inner join t_permission on t_permission.name = t_role_permission.permission_name where role_name = $1 order by t_permission.id")
+	var resp []TPermissionData
+	err := m.conn.QueryRowsCtx(ctx, &resp, query, roleName)
 	switch err {
 	case nil:
 		return resp, nil

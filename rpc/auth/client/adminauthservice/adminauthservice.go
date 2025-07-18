@@ -14,14 +14,28 @@ import (
 )
 
 type (
-	LoginReq     = auth.LoginReq
-	LoginResp    = auth.LoginResp
-	RegisterReq  = auth.RegisterReq
-	RegisterResp = auth.RegisterResp
+	Empty              = auth.Empty
+	LoginReq           = auth.LoginReq
+	LoginResp          = auth.LoginResp
+	PageReq            = auth.PageReq
+	Permission         = auth.Permission
+	PermissionListReq  = auth.PermissionListReq
+	PermissionListResp = auth.PermissionListResp
+	RegisterReq        = auth.RegisterReq
+	RegisterResp       = auth.RegisterResp
+	Role               = auth.Role
+	RoleInfoReq        = auth.RoleInfoReq
+	RoleListResp       = auth.RoleListResp
 
 	AdminAuthService interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 		Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
+		PermissionList(ctx context.Context, in *PermissionListReq, opts ...grpc.CallOption) (*PermissionListResp, error)
+		AddRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error)
+		UpdateRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error)
+		RoleList(ctx context.Context, in *PageReq, opts ...grpc.CallOption) (*RoleListResp, error)
+		GetRoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Role, error)
+		DeleteRole(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Empty, error)
 	}
 
 	defaultAdminAuthService struct {
@@ -43,4 +57,34 @@ func (m *defaultAdminAuthService) Login(ctx context.Context, in *LoginReq, opts 
 func (m *defaultAdminAuthService) Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
 	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
 	return client.Register(ctx, in, opts...)
+}
+
+func (m *defaultAdminAuthService) PermissionList(ctx context.Context, in *PermissionListReq, opts ...grpc.CallOption) (*PermissionListResp, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
+	return client.PermissionList(ctx, in, opts...)
+}
+
+func (m *defaultAdminAuthService) AddRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
+	return client.AddRole(ctx, in, opts...)
+}
+
+func (m *defaultAdminAuthService) UpdateRole(ctx context.Context, in *Role, opts ...grpc.CallOption) (*Empty, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
+	return client.UpdateRole(ctx, in, opts...)
+}
+
+func (m *defaultAdminAuthService) RoleList(ctx context.Context, in *PageReq, opts ...grpc.CallOption) (*RoleListResp, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
+	return client.RoleList(ctx, in, opts...)
+}
+
+func (m *defaultAdminAuthService) GetRoleInfo(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Role, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
+	return client.GetRoleInfo(ctx, in, opts...)
+}
+
+func (m *defaultAdminAuthService) DeleteRole(ctx context.Context, in *RoleInfoReq, opts ...grpc.CallOption) (*Empty, error) {
+	client := auth.NewAdminAuthServiceClient(m.cli.Conn())
+	return client.DeleteRole(ctx, in, opts...)
 }

@@ -21,6 +21,94 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Empty struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Empty) Reset() {
+	*x = Empty{}
+	mi := &file_auth_rpc_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Empty) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Empty) ProtoMessage() {}
+
+func (x *Empty) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
+func (*Empty) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{0}
+}
+
+type PageReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int64                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize      int64                  `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PageReq) Reset() {
+	*x = PageReq{}
+	mi := &file_auth_rpc_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PageReq) ProtoMessage() {}
+
+func (x *PageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PageReq.ProtoReflect.Descriptor instead.
+func (*PageReq) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PageReq) GetPage() int64 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *PageReq) GetPageSize() int64 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
 type LoginReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
@@ -31,7 +119,7 @@ type LoginReq struct {
 
 func (x *LoginReq) Reset() {
 	*x = LoginReq{}
-	mi := &file_auth_rpc_proto_msgTypes[0]
+	mi := &file_auth_rpc_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +131,7 @@ func (x *LoginReq) String() string {
 func (*LoginReq) ProtoMessage() {}
 
 func (x *LoginReq) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_rpc_proto_msgTypes[0]
+	mi := &file_auth_rpc_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +144,7 @@ func (x *LoginReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginReq.ProtoReflect.Descriptor instead.
 func (*LoginReq) Descriptor() ([]byte, []int) {
-	return file_auth_rpc_proto_rawDescGZIP(), []int{0}
+	return file_auth_rpc_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *LoginReq) GetUsername() string {
@@ -82,7 +170,7 @@ type LoginResp struct {
 
 func (x *LoginResp) Reset() {
 	*x = LoginResp{}
-	mi := &file_auth_rpc_proto_msgTypes[1]
+	mi := &file_auth_rpc_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +182,7 @@ func (x *LoginResp) String() string {
 func (*LoginResp) ProtoMessage() {}
 
 func (x *LoginResp) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_rpc_proto_msgTypes[1]
+	mi := &file_auth_rpc_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +195,7 @@ func (x *LoginResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginResp.ProtoReflect.Descriptor instead.
 func (*LoginResp) Descriptor() ([]byte, []int) {
-	return file_auth_rpc_proto_rawDescGZIP(), []int{1}
+	return file_auth_rpc_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *LoginResp) GetToken() string {
@@ -128,7 +216,7 @@ type RegisterReq struct {
 
 func (x *RegisterReq) Reset() {
 	*x = RegisterReq{}
-	mi := &file_auth_rpc_proto_msgTypes[2]
+	mi := &file_auth_rpc_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -140,7 +228,7 @@ func (x *RegisterReq) String() string {
 func (*RegisterReq) ProtoMessage() {}
 
 func (x *RegisterReq) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_rpc_proto_msgTypes[2]
+	mi := &file_auth_rpc_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -153,7 +241,7 @@ func (x *RegisterReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterReq.ProtoReflect.Descriptor instead.
 func (*RegisterReq) Descriptor() ([]byte, []int) {
-	return file_auth_rpc_proto_rawDescGZIP(), []int{2}
+	return file_auth_rpc_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *RegisterReq) GetUsername() string {
@@ -186,7 +274,7 @@ type RegisterResp struct {
 
 func (x *RegisterResp) Reset() {
 	*x = RegisterResp{}
-	mi := &file_auth_rpc_proto_msgTypes[3]
+	mi := &file_auth_rpc_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -198,7 +286,7 @@ func (x *RegisterResp) String() string {
 func (*RegisterResp) ProtoMessage() {}
 
 func (x *RegisterResp) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_rpc_proto_msgTypes[3]
+	mi := &file_auth_rpc_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -211,7 +299,7 @@ func (x *RegisterResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterResp.ProtoReflect.Descriptor instead.
 func (*RegisterResp) Descriptor() ([]byte, []int) {
-	return file_auth_rpc_proto_rawDescGZIP(), []int{3}
+	return file_auth_rpc_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *RegisterResp) GetToken() string {
@@ -221,11 +309,359 @@ func (x *RegisterResp) GetToken() string {
 	return ""
 }
 
+type Permission struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code          int32                  `protobuf:"varint,2,opt,name=code,proto3" json:"code,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	ParentCode    int32                  `protobuf:"varint,4,opt,name=parent_code,json=parentCode,proto3" json:"parent_code,omitempty"`
+	Children      []*Permission          `protobuf:"bytes,5,rep,name=children,proto3" json:"children,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     int64                  `protobuf:"varint,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Permission) Reset() {
+	*x = Permission{}
+	mi := &file_auth_rpc_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Permission) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Permission) ProtoMessage() {}
+
+func (x *Permission) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Permission.ProtoReflect.Descriptor instead.
+func (*Permission) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Permission) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Permission) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *Permission) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Permission) GetParentCode() int32 {
+	if x != nil {
+		return x.ParentCode
+	}
+	return 0
+}
+
+func (x *Permission) GetChildren() []*Permission {
+	if x != nil {
+		return x.Children
+	}
+	return nil
+}
+
+func (x *Permission) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+func (x *Permission) GetUpdatedAt() int64 {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return 0
+}
+
+type PermissionListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PermissionListReq) Reset() {
+	*x = PermissionListReq{}
+	mi := &file_auth_rpc_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PermissionListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PermissionListReq) ProtoMessage() {}
+
+func (x *PermissionListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PermissionListReq.ProtoReflect.Descriptor instead.
+func (*PermissionListReq) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{7}
+}
+
+type PermissionListResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	List          []*Permission          `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PermissionListResp) Reset() {
+	*x = PermissionListResp{}
+	mi := &file_auth_rpc_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PermissionListResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PermissionListResp) ProtoMessage() {}
+
+func (x *PermissionListResp) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PermissionListResp.ProtoReflect.Descriptor instead.
+func (*PermissionListResp) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *PermissionListResp) GetList() []*Permission {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type Role struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Permissions   []*Permission          `protobuf:"bytes,3,rep,name=permissions,proto3" json:"permissions,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     int64                  `protobuf:"varint,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Role) Reset() {
+	*x = Role{}
+	mi := &file_auth_rpc_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Role) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Role) ProtoMessage() {}
+
+func (x *Role) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Role.ProtoReflect.Descriptor instead.
+func (*Role) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Role) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Role) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Role) GetPermissions() []*Permission {
+	if x != nil {
+		return x.Permissions
+	}
+	return nil
+}
+
+func (x *Role) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+func (x *Role) GetUpdatedAt() int64 {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return 0
+}
+
+type RoleListResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Total         int64                  `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	List          []*Role                `protobuf:"bytes,2,rep,name=list,proto3" json:"list,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RoleListResp) Reset() {
+	*x = RoleListResp{}
+	mi := &file_auth_rpc_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RoleListResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoleListResp) ProtoMessage() {}
+
+func (x *RoleListResp) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoleListResp.ProtoReflect.Descriptor instead.
+func (*RoleListResp) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *RoleListResp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *RoleListResp) GetList() []*Role {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type RoleInfoReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RoleInfoReq) Reset() {
+	*x = RoleInfoReq{}
+	mi := &file_auth_rpc_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RoleInfoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoleInfoReq) ProtoMessage() {}
+
+func (x *RoleInfoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_auth_rpc_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoleInfoReq.ProtoReflect.Descriptor instead.
+func (*RoleInfoReq) Descriptor() ([]byte, []int) {
+	return file_auth_rpc_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RoleInfoReq) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
 var File_auth_rpc_proto protoreflect.FileDescriptor
 
 const file_auth_rpc_proto_rawDesc = "" +
 	"\n" +
-	"\x0eauth.rpc.proto\x12\x04auth\"B\n" +
+	"\x0eauth.rpc.proto\x12\x04auth\"\a\n" +
+	"\x05Empty\":\n" +
+	"\aPageReq\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x03R\x04page\x12\x1b\n" +
+	"\tpage_size\x18\x02 \x01(\x03R\bpageSize\"B\n" +
 	"\bLoginReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"!\n" +
@@ -236,10 +672,50 @@ const file_auth_rpc_proto_rawDesc = "" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12)\n" +
 	"\x10confirm_password\x18\x03 \x01(\tR\x0fconfirmPassword\"$\n" +
 	"\fRegisterResp\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token2o\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\xdf\x01\n" +
+	"\n" +
+	"Permission\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\x05R\x04code\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1f\n" +
+	"\vparent_code\x18\x04 \x01(\x05R\n" +
+	"parentCode\x12,\n" +
+	"\bchildren\x18\x05 \x03(\v2\x10.auth.PermissionR\bchildren\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\x03R\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\a \x01(\x03R\tupdatedAt\"\x13\n" +
+	"\x11PermissionListReq\":\n" +
+	"\x12PermissionListResp\x12$\n" +
+	"\x04list\x18\x01 \x03(\v2\x10.auth.PermissionR\x04list\"\x9c\x01\n" +
+	"\x04Role\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x122\n" +
+	"\vpermissions\x18\x03 \x03(\v2\x10.auth.PermissionR\vpermissions\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x04 \x01(\x03R\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x05 \x01(\x03R\tupdatedAt\"D\n" +
+	"\fRoleListResp\x12\x14\n" +
+	"\x05total\x18\x01 \x01(\x03R\x05total\x12\x1e\n" +
+	"\x04list\x18\x02 \x03(\v2\n" +
+	".auth.RoleR\x04list\"\x1d\n" +
+	"\vRoleInfoReq\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id2\x8a\x03\n" +
 	"\x10AdminAuthService\x12(\n" +
 	"\x05Login\x12\x0e.auth.LoginReq\x1a\x0f.auth.LoginResp\x121\n" +
-	"\bRegister\x12\x11.auth.RegisterReq\x1a\x12.auth.RegisterResp2m\n" +
+	"\bRegister\x12\x11.auth.RegisterReq\x1a\x12.auth.RegisterResp\x12C\n" +
+	"\x0ePermissionList\x12\x17.auth.PermissionListReq\x1a\x18.auth.PermissionListResp\x12\"\n" +
+	"\aAddRole\x12\n" +
+	".auth.Role\x1a\v.auth.Empty\x12%\n" +
+	"\n" +
+	"UpdateRole\x12\n" +
+	".auth.Role\x1a\v.auth.Empty\x12-\n" +
+	"\bRoleList\x12\r.auth.PageReq\x1a\x12.auth.RoleListResp\x12,\n" +
+	"\vGetRoleInfo\x12\x11.auth.RoleInfoReq\x1a\n" +
+	".auth.Role\x12,\n" +
+	"\n" +
+	"DeleteRole\x12\x11.auth.RoleInfoReq\x1a\v.auth.Empty2m\n" +
 	"\x0eApiAuthService\x12(\n" +
 	"\x05Login\x12\x0e.auth.LoginReq\x1a\x0f.auth.LoginResp\x121\n" +
 	"\bRegister\x12\x11.auth.RegisterReq\x1a\x12.auth.RegisterRespB\bZ\x06./authb\x06proto3"
@@ -256,27 +732,51 @@ func file_auth_rpc_proto_rawDescGZIP() []byte {
 	return file_auth_rpc_proto_rawDescData
 }
 
-var file_auth_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_auth_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_auth_rpc_proto_goTypes = []any{
-	(*LoginReq)(nil),     // 0: auth.LoginReq
-	(*LoginResp)(nil),    // 1: auth.LoginResp
-	(*RegisterReq)(nil),  // 2: auth.RegisterReq
-	(*RegisterResp)(nil), // 3: auth.RegisterResp
+	(*Empty)(nil),              // 0: auth.Empty
+	(*PageReq)(nil),            // 1: auth.PageReq
+	(*LoginReq)(nil),           // 2: auth.LoginReq
+	(*LoginResp)(nil),          // 3: auth.LoginResp
+	(*RegisterReq)(nil),        // 4: auth.RegisterReq
+	(*RegisterResp)(nil),       // 5: auth.RegisterResp
+	(*Permission)(nil),         // 6: auth.Permission
+	(*PermissionListReq)(nil),  // 7: auth.PermissionListReq
+	(*PermissionListResp)(nil), // 8: auth.PermissionListResp
+	(*Role)(nil),               // 9: auth.Role
+	(*RoleListResp)(nil),       // 10: auth.RoleListResp
+	(*RoleInfoReq)(nil),        // 11: auth.RoleInfoReq
 }
 var file_auth_rpc_proto_depIdxs = []int32{
-	0, // 0: auth.AdminAuthService.Login:input_type -> auth.LoginReq
-	2, // 1: auth.AdminAuthService.Register:input_type -> auth.RegisterReq
-	0, // 2: auth.ApiAuthService.Login:input_type -> auth.LoginReq
-	2, // 3: auth.ApiAuthService.Register:input_type -> auth.RegisterReq
-	1, // 4: auth.AdminAuthService.Login:output_type -> auth.LoginResp
-	3, // 5: auth.AdminAuthService.Register:output_type -> auth.RegisterResp
-	1, // 6: auth.ApiAuthService.Login:output_type -> auth.LoginResp
-	3, // 7: auth.ApiAuthService.Register:output_type -> auth.RegisterResp
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	6,  // 0: auth.Permission.children:type_name -> auth.Permission
+	6,  // 1: auth.PermissionListResp.list:type_name -> auth.Permission
+	6,  // 2: auth.Role.permissions:type_name -> auth.Permission
+	9,  // 3: auth.RoleListResp.list:type_name -> auth.Role
+	2,  // 4: auth.AdminAuthService.Login:input_type -> auth.LoginReq
+	4,  // 5: auth.AdminAuthService.Register:input_type -> auth.RegisterReq
+	7,  // 6: auth.AdminAuthService.PermissionList:input_type -> auth.PermissionListReq
+	9,  // 7: auth.AdminAuthService.AddRole:input_type -> auth.Role
+	9,  // 8: auth.AdminAuthService.UpdateRole:input_type -> auth.Role
+	1,  // 9: auth.AdminAuthService.RoleList:input_type -> auth.PageReq
+	11, // 10: auth.AdminAuthService.GetRoleInfo:input_type -> auth.RoleInfoReq
+	11, // 11: auth.AdminAuthService.DeleteRole:input_type -> auth.RoleInfoReq
+	2,  // 12: auth.ApiAuthService.Login:input_type -> auth.LoginReq
+	4,  // 13: auth.ApiAuthService.Register:input_type -> auth.RegisterReq
+	3,  // 14: auth.AdminAuthService.Login:output_type -> auth.LoginResp
+	5,  // 15: auth.AdminAuthService.Register:output_type -> auth.RegisterResp
+	8,  // 16: auth.AdminAuthService.PermissionList:output_type -> auth.PermissionListResp
+	0,  // 17: auth.AdminAuthService.AddRole:output_type -> auth.Empty
+	0,  // 18: auth.AdminAuthService.UpdateRole:output_type -> auth.Empty
+	10, // 19: auth.AdminAuthService.RoleList:output_type -> auth.RoleListResp
+	9,  // 20: auth.AdminAuthService.GetRoleInfo:output_type -> auth.Role
+	0,  // 21: auth.AdminAuthService.DeleteRole:output_type -> auth.Empty
+	3,  // 22: auth.ApiAuthService.Login:output_type -> auth.LoginResp
+	5,  // 23: auth.ApiAuthService.Register:output_type -> auth.RegisterResp
+	14, // [14:24] is the sub-list for method output_type
+	4,  // [4:14] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_auth_rpc_proto_init() }
@@ -290,7 +790,7 @@ func file_auth_rpc_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_auth_rpc_proto_rawDesc), len(file_auth_rpc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

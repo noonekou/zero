@@ -14,10 +14,18 @@ import (
 )
 
 type (
-	LoginReq     = auth.LoginReq
-	LoginResp    = auth.LoginResp
-	RegisterReq  = auth.RegisterReq
-	RegisterResp = auth.RegisterResp
+	Empty              = auth.Empty
+	LoginReq           = auth.LoginReq
+	LoginResp          = auth.LoginResp
+	PageReq            = auth.PageReq
+	Permission         = auth.Permission
+	PermissionListReq  = auth.PermissionListReq
+	PermissionListResp = auth.PermissionListResp
+	RegisterReq        = auth.RegisterReq
+	RegisterResp       = auth.RegisterResp
+	Role               = auth.Role
+	RoleInfoReq        = auth.RoleInfoReq
+	RoleListResp       = auth.RoleListResp
 
 	ApiAuthService interface {
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)

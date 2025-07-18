@@ -11,10 +11,12 @@ const (
 	ErrCodeSuccess = 0
 	ErrCodeFail    = -1
 
-	ErrCodeNotAuthorized = 10000
-	ErrCodeTokenInvalid  = 10001
-	ErrCodeTokenExpired  = 10002
-	ErrCodeNoPermission  = 10003
+	ErrCodeNotAuthorized    = 10000
+	ErrCodeTokenInvalid     = 10001
+	ErrCodeTokenExpired     = 10002
+	ErrCodeNoPermission     = 10003
+	ErrCodeRoleNotFound     = 10004
+	ErrCodeRoleAlreadyExist = 10005
 
 	ErrCodeUsernameNotExist          = 20000
 	ErrCodeUsernameOrPasswordIsEmpty = 20001
@@ -47,10 +49,12 @@ var (
 	ErrSuccess = NewMyError(ErrCodeSuccess, "success")
 	ErrFail    = NewMyError(ErrCodeFail, "fail")
 
-	ErrNotAuthorized = NewMyError(ErrCodeNotAuthorized, "not authorized")
-	ErrTokenInvalid  = NewMyError(ErrCodeTokenInvalid, "token invalid")
-	ErrTokenExpired  = NewMyError(ErrCodeTokenExpired, "token expired")
-	ErrNoPermission  = NewMyError(ErrCodeNoPermission, "no permission")
+	ErrNotAuthorized    = NewMyError(ErrCodeNotAuthorized, "not authorized")
+	ErrTokenInvalid     = NewMyError(ErrCodeTokenInvalid, "token invalid")
+	ErrTokenExpired     = NewMyError(ErrCodeTokenExpired, "token expired")
+	ErrNoPermission     = NewMyError(ErrCodeNoPermission, "no permission")
+	ErrRoleNotFound     = NewMyError(ErrCodeRoleNotFound, "role not found")
+	ErrRoleAlreadyExist = NewMyError(ErrCodeRoleAlreadyExist, "role already exist")
 
 	ErrUsernameNotExist          = NewMyError(ErrCodeUsernameNotExist, "username not exist")
 	ErrUsernameOrPasswordIsEmpty = NewMyError(ErrCodeUsernameOrPasswordIsEmpty, "username or password is empty")

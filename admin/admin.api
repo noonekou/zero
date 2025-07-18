@@ -1,5 +1,12 @@
 syntax = "v1"
 
+type (
+	PageReq {
+		page     int64 `form:"page"`
+		pageSize int64 `form:"pageSize"`
+	}
+)
+
 type UserInfo {
 	Id        int64  `json:"id"`
 	UserName  string `json:"username"`
@@ -30,6 +37,34 @@ type (
 	}
 )
 
+type Permission {
+	Id          int64        `json:"id"` // 权限ID
+	Code        int          `json:"code"` // 资源编码
+	Description string       `json:"description"` // 权限描述
+	ParentCode  int          `json:"parent_code"` // 父级资源编码
+	Children    []Permission `json:"children"` // 子资源
+	CreatedAt   int64        `json:"created_at"`
+	UpdatedAt   int64        `json:"updated_at"`
+}
+
+type Role {
+	Id          int64        `json:"id"`
+	Name        string       `json:"name"`
+	Permissions []Permission `json:"permissions"`
+	CreatedAt   int64        `json:"created_at"`
+	UpdatedAt   int64        `json:"updated_at"`
+}
+
+type (
+	RoleListResp {
+		Total int64  `json:"total"`
+		List  []Role `json:"list"`
+	}
+	RoleInfoReq {
+		Id int64 `path:"id"`
+	}
+)
+
 type (
 	GetUserInfoResp {
 		UserInfo
@@ -37,10 +72,6 @@ type (
 )
 
 type (
-	UserListReq {
-		page     int64 `form:"page"`
-		pageSize int64 `form:"pageSize"`
-	}
 	UserListResp {
 		Total int64      `json:"total"`
 		List  []UserInfo `json:"list"`
@@ -67,6 +98,24 @@ service admin-api {
 
 	@handler AuthRegister
 	post /auth/register (RegisterReq) returns (RegisterResp)
+
+	@handler PermissionList
+	get /auth/permission/list returns ([]Permission)
+
+	@handler AddRole
+	post /auth/role/add (Role) returns (Role)
+
+	@handler UpdateRole
+	post /auth/role/update (Role) returns (Role)
+
+	@handler RoleList
+	get /auth/role/list (PageReq) returns (RoleListResp)
+
+	@handler GetRoleInfo
+	get /auth/role/info (RoleInfoReq) returns (Role)
+
+	@handler DeleteRole
+	delete /auth/role/delete (RoleInfoReq)
 }
 
 @server (
@@ -79,6 +128,6 @@ service admin-api {
 	get /user/info returns (GetUserInfoResp)
 
 	@handler UserList
-	get /user/list (UserListReq) returns (UserListResp)
+	get /user/list (PageReq) returns (UserListResp)
 }
 

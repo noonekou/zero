@@ -41,3 +41,17 @@
 {"@timestamp":"2025-07-18T13:25:28.685+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
 {"@timestamp":"2025-07-18T13:25:28.689+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: sql: no rows in result set","level":"error"}
 {"@timestamp":"2025-07-18T13:26:41.862+08:00","caller":"adminauthservice/loginlogic.go:36","content":"tUser: <nil>","level":"error"}
+{"@timestamp":"2025-07-18T15:39:19.379+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T15:39:42.538+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T15:39:44.378+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T15:43:54.704+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T15:43:57.812+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T16:35:28.994+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T16:35:31.854+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T16:35:36.842+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T16:37:24.512+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T16:37:26.775+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T17:21:58.474+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T17:22:25.447+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-18T17:22:28.471+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-18T17:22:33.472+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
