@@ -55,14 +55,14 @@ VALUES ('employee:role:view', 'employee:role', 'view', '角色-详情');
 
 -- API 表
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100000, 'POST', '/auth/login', '员工登陆');
+VALUES (100000, 'POST', '/v1/auth/login', '员工登陆');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100001, 'POST', '/auth/register', '员工注册');
+VALUES (100001, 'POST', '/v1/auth/register', '员工注册');
 
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100002, 'GET', '/user/info', '用户列表-详情');
+VALUES (100002, 'GET', '/v1/user/info', '用户列表-详情');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100003, 'GET', '/user/list', '用户列表-列表');
+VALUES (100003, 'GET', '/v1/user/list', '用户列表-列表');
 
 -- API 权限表
 INSERT INTO t_api_permission (api_code, permission_name)
