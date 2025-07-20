@@ -5,6 +5,7 @@ import (
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/rpc/auth/auth"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +25,7 @@ func NewDeleteRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteRoleLogic) DeleteRole(req *types.RoleInfoReq) error {
-	// todo: add your logic here and delete this line
+	_, error := l.svcCtx.Auth.DeleteRole(l.ctx, &auth.RoleInfoReq{Id: req.Id})
 
-	return nil
+	return error
 }

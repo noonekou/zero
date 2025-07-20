@@ -5,7 +5,9 @@ import (
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/rpc/auth/auth"
 
+	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -24,7 +26,18 @@ func NewGetRoleInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRo
 }
 
 func (l *GetRoleInfoLogic) GetRoleInfo(req *types.RoleInfoReq) (resp *types.Role, err error) {
-	// todo: add your logic here and delete this line
+	role, error := l.svcCtx.Auth.GetRoleInfo(l.ctx, &auth.RoleInfoReq{Id: req.Id})
+	if error != nil {
+		return nil, error
+	}
 
-	return
+	return &types.Role{
+		Id:   role.Id,
+		Name: role.Name,
+		Permissions: lo.Map(role.Permissions, func(item *auth.Permission, _ int) types.Permission {
+			return types.Permission{Id: item.Id, Code: int(item.Code), Description: item.Description, ParentCode: int(item.ParentCode)}
+		}),
+		CreatedAt: role.CreatedAt,
+		UpdatedAt: role.UpdatedAt,
+	}, error
 }

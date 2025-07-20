@@ -55,3 +55,35 @@
 {"@timestamp":"2025-07-18T17:22:25.447+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
 {"@timestamp":"2025-07-18T17:22:28.471+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
 {"@timestamp":"2025-07-18T17:22:33.472+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-20T10:16:14.485+08:00","caller":"zrpc/server.go:90","content":"context deadline exceeded","level":"error"}
+{"@timestamp":"2025-07-20T10:47:01.346+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T10:49:43.044+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-20T10:49:46.308+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T10:54:06.355+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T10:54:21.360+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:00:26.427+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:02:21.453+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:02:31.463+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:06:46.493+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:07:06.510+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:09:45.394+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-20T11:09:49.941+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:09:59.952+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:11:28.556+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-20T11:11:32.629+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:11:42.627+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:12:17.632+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:12:32.650+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:14:08.618+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-20T11:14:12.062+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:14:22.056+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:16:12.074+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:16:17.065+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:17:34.267+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-20T11:17:34.816+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:17:54.818+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:18:29.837+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:25:50.641+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-20T11:25:53.913+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:25:58.902+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-20T11:30:39.352+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}

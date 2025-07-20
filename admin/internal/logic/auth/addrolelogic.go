@@ -5,6 +5,7 @@ import (
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/rpc/auth/auth"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -23,8 +24,10 @@ func NewAddRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRoleLo
 	}
 }
 
-func (l *AddRoleLogic) AddRole(req *types.Role) (resp *types.Role, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+func (l *AddRoleLogic) AddRole(req *types.Role) (err error) {
+	_, error := l.svcCtx.Auth.AddRole(l.ctx, &auth.Role{
+		Id:   req.Id,
+		Name: req.Name,
+	})
+	return error
 }

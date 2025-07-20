@@ -26,6 +26,10 @@ func NewDeleteRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteRoleLogic) DeleteRole(in *auth.RoleInfoReq) (*auth.Empty, error) {
+	if in.Id == 0 {
+		return nil, errs.ErrRoleNotFound.GRPCStatus().Err()
+	}
+
 	role, err := l.svcCtx.RoleModel.FindOne(l.ctx, in.Id)
 	if err != nil && err != sql.ErrNoRows {
 		return nil, err

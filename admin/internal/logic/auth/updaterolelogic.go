@@ -5,7 +5,9 @@ import (
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/rpc/auth/auth"
 
+	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -23,8 +25,14 @@ func NewUpdateRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 	}
 }
 
-func (l *UpdateRoleLogic) UpdateRole(req *types.Role) (resp *types.Role, err error) {
-	// todo: add your logic here and delete this line
+func (l *UpdateRoleLogic) UpdateRole(req *types.Role) (err error) {
+	_, error := l.svcCtx.Auth.UpdateRole(l.ctx, &auth.Role{
+		Id:   req.Id,
+		Name: req.Name,
+		Permissions: lo.Map(req.Permissions, func(item types.Permission, _ int) *auth.Permission {
+			return &auth.Permission{Id: item.Id, Code: int32(item.Code), Description: item.Description, ParentCode: int32(item.ParentCode)}
+		}),
+	})
 
-	return
+	return error
 }

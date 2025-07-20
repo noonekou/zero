@@ -34,10 +34,15 @@ func (l *AuthRegisterLogic) AuthRegister(req *types.RegisterReq) (resp *types.Re
 		return nil, errs.ErrPasswordMissMatch
 	}
 
+	if req.RoleId == 0 {
+		return nil, errs.ErrRoleNotFound
+	}
+
 	rsp, err := l.svcCtx.Auth.Register(l.ctx, &auth.RegisterReq{
 		Username:        req.Username,
 		Password:        req.Password,
 		ConfirmPassword: req.Confirm_password,
+		RoleId:          req.RoleId,
 	})
 
 	if err != nil {

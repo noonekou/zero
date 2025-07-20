@@ -210,6 +210,7 @@ type RegisterReq struct {
 	Username        string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
 	Password        string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	ConfirmPassword string                 `protobuf:"bytes,3,opt,name=confirm_password,json=confirmPassword,proto3" json:"confirm_password,omitempty"`
+	RoleId          int64                  `protobuf:"varint,4,opt,name=role_id,json=roleId,proto3" json:"role_id,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -263,6 +264,13 @@ func (x *RegisterReq) GetConfirmPassword() string {
 		return x.ConfirmPassword
 	}
 	return ""
+}
+
+func (x *RegisterReq) GetRoleId() int64 {
+	if x != nil {
+		return x.RoleId
+	}
+	return 0
 }
 
 type RegisterResp struct {
@@ -666,11 +674,12 @@ const file_auth_rpc_proto_rawDesc = "" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"!\n" +
 	"\tLoginResp\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"p\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\x89\x01\n" +
 	"\vRegisterReq\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12)\n" +
-	"\x10confirm_password\x18\x03 \x01(\tR\x0fconfirmPassword\"$\n" +
+	"\x10confirm_password\x18\x03 \x01(\tR\x0fconfirmPassword\x12\x17\n" +
+	"\arole_id\x18\x04 \x01(\x03R\x06roleId\"$\n" +
 	"\fRegisterResp\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"\xdf\x01\n" +
 	"\n" +

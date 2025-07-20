@@ -18,11 +18,11 @@ func AddRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := auth.NewAddRoleLogic(r.Context(), svcCtx)
-		resp, err := l.AddRole(&req)
+		err := l.AddRole(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
+			httpx.Ok(w)
 		}
 	}
 }

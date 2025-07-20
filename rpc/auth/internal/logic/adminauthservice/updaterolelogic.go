@@ -28,6 +28,18 @@ func NewUpdateRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 }
 
 func (l *UpdateRoleLogic) UpdateRole(in *auth.Role) (*auth.Empty, error) {
+	if in.Id == 0 {
+		return nil, errs.ErrRoleNotFound.GRPCStatus().Err()
+	}
+
+	if in.Name == "" {
+		return nil, errs.ErrRoleNameCannotBeEmpty.GRPCStatus().Err()
+	}
+
+	if len(in.Permissions) == 0 {
+		return nil, errs.ErrPermissionNotFound.GRPCStatus().Err()
+	}
+
 	role, err := l.svcCtx.RoleModel.FindOne(l.ctx, in.Id)
 	if err != nil && err != sql.ErrNoRows {
 		return nil, err
@@ -35,6 +47,16 @@ func (l *UpdateRoleLogic) UpdateRole(in *auth.Role) (*auth.Empty, error) {
 
 	if role == nil {
 		return nil, errs.ErrRoleNotFound.GRPCStatus().Err()
+	}
+
+	if in.Name != role.Name {
+		temp, err := l.svcCtx.RoleModel.FindOneByName(l.ctx, in.Name)
+		if err != nil && err != sql.ErrNoRows {
+			return nil, err
+		}
+		if temp != nil {
+			return nil, errs.ErrRoleAlreadyExist.GRPCStatus().Err()
+		}
 	}
 
 	permissions, err := l.svcCtx.PermissionModel.FindAll(l.ctx)
@@ -54,10 +76,15 @@ func (l *UpdateRoleLogic) UpdateRole(in *auth.Role) (*auth.Empty, error) {
 	})
 
 	for _, v := range toInsertPermission {
-		_, err = l.svcCtx.RolePermissionModel.Insert(l.ctx, &model.TRolePermission{RoleName: role.Name, PermissionName: v.Name})
+		_, err = l.svcCtx.RolePermissionModel.Insert(l.ctx, &model.TRolePermission{RoleName: in.Name, PermissionName: v.Name})
 		if err != nil {
 			return nil, err
 		}
+	}
+
+	err = l.svcCtx.RoleModel.Update(l.ctx, &model.TRole{Id: in.Id, Name: in.Name})
+	if err != nil {
+		return nil, err
 	}
 
 	return &auth.Empty{}, nil

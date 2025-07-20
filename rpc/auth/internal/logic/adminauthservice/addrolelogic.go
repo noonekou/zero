@@ -27,6 +27,14 @@ func NewAddRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRoleLo
 }
 
 func (l *AddRoleLogic) AddRole(in *auth.Role) (*auth.Empty, error) {
+	if in.Name == "" {
+		return nil, errs.ErrRoleNameCannotBeEmpty.GRPCStatus().Err()
+	}
+
+	if len(in.Permissions) == 0 {
+		return nil, errs.ErrPermissionNotFound.GRPCStatus().Err()
+	}
+
 	role, _ := l.svcCtx.RoleModel.FindOneByName(l.ctx, in.Name)
 	if role != nil {
 		return nil, errs.ErrRoleAlreadyExist.GRPCStatus().Err()

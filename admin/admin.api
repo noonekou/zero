@@ -1,5 +1,11 @@
 syntax = "v1"
 
+info (
+	title:       "Bookstore API"
+	description: "Bookstore API"
+	version:     "v1"
+)
+
 type (
 	PageReq {
 		page     int64 `form:"page"`
@@ -8,29 +14,30 @@ type (
 )
 
 type UserInfo {
-	Id        int64  `json:"id"`
-	UserName  string `json:"username"`
-	NickName  string `json:"nickname"`
-	Avatar    string `json:"avatar"`
-	Email     string `json:"email"`
-	Phone     string `json:"phone"`
-	Status    int    `json:"status"`
-	CreatedAt int64  `json:"created_at"`
-	UpdatedAt int64  `json:"updated_at"`
+	Id        int64  `json:"id"` // 用户ID
+	UserName  string `json:"username"` // 用户名
+	NickName  string `json:"nickname"` // 昵称
+	Avatar    string `json:"avatar"` // 头像
+	Email     string `json:"email"` // 邮箱
+	Phone     string `json:"phone"` // 手机号
+	Status    int    `json:"status"` // 状态
+	CreatedAt int64  `json:"created_at"` // 创建时间
+	UpdatedAt int64  `json:"updated_at"` // 更新时间
 }
 
 type (
 	LoginReq {
-		username string `json:"username"`
-		password string `json:"password"`
+		Username string `json:"username"` // 用户名
+		Password string `json:"password"` // 密码
 	}
 	LoginResp {
 		Token string `json:"token"`
 	}
 	RegisterReq {
-		username         string `json:"username"`
-		password         string `json:"password"`
-		confirm_password string `json:"confirm_password"`
+		Username         string `json:"username"`
+		Password         string `json:"password"`
+		Confirm_password string `json:"confirm_password"`
+		RoleId           int64  `json:"role_id"`
 	}
 	RegisterResp {
 		Token string `json:"token"`
@@ -48,20 +55,20 @@ type Permission {
 }
 
 type Role {
-	Id          int64        `json:"id"`
-	Name        string       `json:"name"`
-	Permissions []Permission `json:"permissions"`
-	CreatedAt   int64        `json:"created_at"`
-	UpdatedAt   int64        `json:"updated_at"`
+	Id          int64        `json:"id"` // 角色ID
+	Name        string       `json:"name"` // 角色名
+	Permissions []Permission `json:"permissions"` // 权限
+	CreatedAt   int64        `json:"created_at"` // 创建时间
+	UpdatedAt   int64        `json:"updated_at"` // 更新时间
 }
 
 type (
 	RoleListResp {
-		Total int64  `json:"total"`
-		List  []Role `json:"list"`
+		Total int64  `json:"total"` // 总数
+		List  []Role `json:"list"` // 列表
 	}
 	RoleInfoReq {
-		Id int64 `path:"id"`
+		Id int64 `path:"id"` // 角色ID
 	}
 )
 
@@ -93,27 +100,51 @@ type (
 	prefix: /v1
 )
 service admin-api {
+	@doc (
+		summary: "登录"
+	)
 	@handler AuthLogin
 	post /auth/login (LoginReq) returns (LoginResp)
 
+	@doc (
+		summary: "注册"
+	)
 	@handler AuthRegister
 	post /auth/register (RegisterReq) returns (RegisterResp)
 
+	@doc (
+		summary: "权限列表"
+	)
 	@handler PermissionList
 	get /auth/permission/list returns ([]Permission)
 
+	@doc (
+		summary: "添加角色"
+	)
 	@handler AddRole
-	post /auth/role/add (Role) returns (Role)
+	post /auth/role/add (Role)
 
+	@doc (
+		summary: "更新角色"
+	)
 	@handler UpdateRole
-	post /auth/role/update (Role) returns (Role)
+	post /auth/role/update (Role)
 
+	@doc (
+		summary: "角色列表"
+	)
 	@handler RoleList
 	get /auth/role/list (PageReq) returns (RoleListResp)
 
+	@doc (
+		summary: "获取角色信息"
+	)
 	@handler GetRoleInfo
 	get /auth/role/info (RoleInfoReq) returns (Role)
 
+	@doc (
+		summary: "删除角色"
+	)
 	@handler DeleteRole
 	delete /auth/role/delete (RoleInfoReq)
 }
@@ -124,9 +155,15 @@ service admin-api {
 	prefix:     /v1
 )
 service admin-api {
+	@doc (
+		summary: "获取用户信息"
+	)
 	@handler GetUserInfo
 	get /user/info returns (GetUserInfoResp)
 
+	@doc (
+		summary: "用户列表"
+	)
 	@handler UserList
 	get /user/list (PageReq) returns (UserListResp)
 }

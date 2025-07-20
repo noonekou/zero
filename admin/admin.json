@@ -1,0 +1,1106 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Bookstore API",
+    "title": "Bookstore API",
+    "version": "v1"
+  },
+  "basePath": "/",
+  "paths": {
+    "/v1/auth/login": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "登录",
+        "operationId": "authAuthLogin",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "password"
+              ],
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/permission/list": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "权限列表",
+        "operationId": "authPermissionList",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "code",
+                  "description",
+                  "parent_code",
+                  "children",
+                  "created_at",
+                  "updated_at"
+                ],
+                "properties": {
+                  "children": {
+                    "description": "子资源",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "code",
+                        "description",
+                        "parent_code",
+                        "children",
+                        "created_at",
+                        "updated_at"
+                      ],
+                      "properties": {
+                        "children": {
+                          "description": "子资源",
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "id",
+                              "code",
+                              "description",
+                              "parent_code",
+                              "children",
+                              "created_at",
+                              "updated_at"
+                            ],
+                            "properties": {
+                              "children": {
+                                "description": "子资源",
+                                "type": "array",
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "code": {
+                                "description": "资源编码",
+                                "type": "integer"
+                              },
+                              "created_at": {
+                                "type": "integer"
+                              },
+                              "description": {
+                                "description": "权限描述",
+                                "type": "string"
+                              },
+                              "id": {
+                                "description": "权限ID",
+                                "type": "integer"
+                              },
+                              "parent_code": {
+                                "description": "父级资源编码",
+                                "type": "integer"
+                              },
+                              "updated_at": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        },
+                        "code": {
+                          "description": "资源编码",
+                          "type": "integer"
+                        },
+                        "created_at": {
+                          "type": "integer"
+                        },
+                        "description": {
+                          "description": "权限描述",
+                          "type": "string"
+                        },
+                        "id": {
+                          "description": "权限ID",
+                          "type": "integer"
+                        },
+                        "parent_code": {
+                          "description": "父级资源编码",
+                          "type": "integer"
+                        },
+                        "updated_at": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  },
+                  "code": {
+                    "description": "资源编码",
+                    "type": "integer"
+                  },
+                  "created_at": {
+                    "type": "integer"
+                  },
+                  "description": {
+                    "description": "权限描述",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "权限ID",
+                    "type": "integer"
+                  },
+                  "parent_code": {
+                    "description": "父级资源编码",
+                    "type": "integer"
+                  },
+                  "updated_at": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "properties": {
+                "children": {
+                  "description": "子资源",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "code",
+                      "description",
+                      "parent_code",
+                      "children",
+                      "created_at",
+                      "updated_at"
+                    ],
+                    "properties": {
+                      "children": {
+                        "description": "子资源",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "code",
+                            "description",
+                            "parent_code",
+                            "children",
+                            "created_at",
+                            "updated_at"
+                          ],
+                          "properties": {
+                            "children": {
+                              "description": "子资源",
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            },
+                            "code": {
+                              "description": "资源编码",
+                              "type": "integer"
+                            },
+                            "created_at": {
+                              "type": "integer"
+                            },
+                            "description": {
+                              "description": "权限描述",
+                              "type": "string"
+                            },
+                            "id": {
+                              "description": "权限ID",
+                              "type": "integer"
+                            },
+                            "parent_code": {
+                              "description": "父级资源编码",
+                              "type": "integer"
+                            },
+                            "updated_at": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "code": {
+                        "description": "资源编码",
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "integer"
+                      },
+                      "description": {
+                        "description": "权限描述",
+                        "type": "string"
+                      },
+                      "id": {
+                        "description": "权限ID",
+                        "type": "integer"
+                      },
+                      "parent_code": {
+                        "description": "父级资源编码",
+                        "type": "integer"
+                      },
+                      "updated_at": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "code": {
+                  "description": "资源编码",
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "integer"
+                },
+                "description": {
+                  "description": "权限描述",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "权限ID",
+                  "type": "integer"
+                },
+                "parent_code": {
+                  "description": "父级资源编码",
+                  "type": "integer"
+                },
+                "updated_at": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/register": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "注册",
+        "operationId": "authAuthRegister",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "password",
+                "confirm_password",
+                "role_id"
+              ],
+              "properties": {
+                "confirm_password": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "role_id": {
+                  "type": "integer"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/role/add": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "添加角色",
+        "operationId": "authAddRole",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "permissions",
+                "created_at",
+                "updated_at"
+              ],
+              "properties": {
+                "created_at": {
+                  "type": "integer"
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "permissions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "code",
+                      "description",
+                      "parent_code",
+                      "children",
+                      "created_at",
+                      "updated_at"
+                    ],
+                    "properties": {
+                      "children": {
+                        "description": "子资源",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "code",
+                            "description",
+                            "parent_code",
+                            "children",
+                            "created_at",
+                            "updated_at"
+                          ],
+                          "properties": {
+                            "children": {
+                              "description": "子资源",
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            },
+                            "code": {
+                              "description": "资源编码",
+                              "type": "integer"
+                            },
+                            "created_at": {
+                              "type": "integer"
+                            },
+                            "description": {
+                              "description": "权限描述",
+                              "type": "string"
+                            },
+                            "id": {
+                              "description": "权限ID",
+                              "type": "integer"
+                            },
+                            "parent_code": {
+                              "description": "父级资源编码",
+                              "type": "integer"
+                            },
+                            "updated_at": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "code": {
+                        "description": "资源编码",
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "integer"
+                      },
+                      "description": {
+                        "description": "权限描述",
+                        "type": "string"
+                      },
+                      "id": {
+                        "description": "权限ID",
+                        "type": "integer"
+                      },
+                      "parent_code": {
+                        "description": "父级资源编码",
+                        "type": "integer"
+                      },
+                      "updated_at": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "updated_at": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {}
+          }
+        }
+      }
+    },
+    "/v1/auth/role/delete": {
+      "delete": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "删除角色",
+        "operationId": "authDeleteRole",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {}
+          }
+        }
+      }
+    },
+    "/v1/auth/role/info": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "获取角色信息",
+        "operationId": "authGetRoleInfo",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "created_at": {
+                  "type": "integer"
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "permissions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "code",
+                      "description",
+                      "parent_code",
+                      "children",
+                      "created_at",
+                      "updated_at"
+                    ],
+                    "properties": {
+                      "children": {
+                        "description": "子资源",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "code",
+                            "description",
+                            "parent_code",
+                            "children",
+                            "created_at",
+                            "updated_at"
+                          ],
+                          "properties": {
+                            "children": {
+                              "description": "子资源",
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            },
+                            "code": {
+                              "description": "资源编码",
+                              "type": "integer"
+                            },
+                            "created_at": {
+                              "type": "integer"
+                            },
+                            "description": {
+                              "description": "权限描述",
+                              "type": "string"
+                            },
+                            "id": {
+                              "description": "权限ID",
+                              "type": "integer"
+                            },
+                            "parent_code": {
+                              "description": "父级资源编码",
+                              "type": "integer"
+                            },
+                            "updated_at": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "code": {
+                        "description": "资源编码",
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "integer"
+                      },
+                      "description": {
+                        "description": "权限描述",
+                        "type": "string"
+                      },
+                      "id": {
+                        "description": "权限ID",
+                        "type": "integer"
+                      },
+                      "parent_code": {
+                        "description": "父级资源编码",
+                        "type": "integer"
+                      },
+                      "updated_at": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "updated_at": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/role/list": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "角色列表",
+        "operationId": "authRoleList",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "page",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "name": "pageSize",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "list": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "permissions",
+                      "created_at",
+                      "updated_at"
+                    ],
+                    "properties": {
+                      "created_at": {
+                        "type": "integer"
+                      },
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "permissions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "code",
+                            "description",
+                            "parent_code",
+                            "children",
+                            "created_at",
+                            "updated_at"
+                          ],
+                          "properties": {
+                            "children": {
+                              "description": "子资源",
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "code",
+                                  "description",
+                                  "parent_code",
+                                  "children",
+                                  "created_at",
+                                  "updated_at"
+                                ],
+                                "properties": {
+                                  "children": {
+                                    "description": "子资源",
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object"
+                                    }
+                                  },
+                                  "code": {
+                                    "description": "资源编码",
+                                    "type": "integer"
+                                  },
+                                  "created_at": {
+                                    "type": "integer"
+                                  },
+                                  "description": {
+                                    "description": "权限描述",
+                                    "type": "string"
+                                  },
+                                  "id": {
+                                    "description": "权限ID",
+                                    "type": "integer"
+                                  },
+                                  "parent_code": {
+                                    "description": "父级资源编码",
+                                    "type": "integer"
+                                  },
+                                  "updated_at": {
+                                    "type": "integer"
+                                  }
+                                }
+                              }
+                            },
+                            "code": {
+                              "description": "资源编码",
+                              "type": "integer"
+                            },
+                            "created_at": {
+                              "type": "integer"
+                            },
+                            "description": {
+                              "description": "权限描述",
+                              "type": "string"
+                            },
+                            "id": {
+                              "description": "权限ID",
+                              "type": "integer"
+                            },
+                            "parent_code": {
+                              "description": "父级资源编码",
+                              "type": "integer"
+                            },
+                            "updated_at": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "updated_at": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "total": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/role/update": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "更新角色",
+        "operationId": "authUpdateRole",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "permissions",
+                "created_at",
+                "updated_at"
+              ],
+              "properties": {
+                "created_at": {
+                  "type": "integer"
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "permissions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "code",
+                      "description",
+                      "parent_code",
+                      "children",
+                      "created_at",
+                      "updated_at"
+                    ],
+                    "properties": {
+                      "children": {
+                        "description": "子资源",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "code",
+                            "description",
+                            "parent_code",
+                            "children",
+                            "created_at",
+                            "updated_at"
+                          ],
+                          "properties": {
+                            "children": {
+                              "description": "子资源",
+                              "type": "array",
+                              "items": {
+                                "type": "object"
+                              }
+                            },
+                            "code": {
+                              "description": "资源编码",
+                              "type": "integer"
+                            },
+                            "created_at": {
+                              "type": "integer"
+                            },
+                            "description": {
+                              "description": "权限描述",
+                              "type": "string"
+                            },
+                            "id": {
+                              "description": "权限ID",
+                              "type": "integer"
+                            },
+                            "parent_code": {
+                              "description": "父级资源编码",
+                              "type": "integer"
+                            },
+                            "updated_at": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      },
+                      "code": {
+                        "description": "资源编码",
+                        "type": "integer"
+                      },
+                      "created_at": {
+                        "type": "integer"
+                      },
+                      "description": {
+                        "description": "权限描述",
+                        "type": "string"
+                      },
+                      "id": {
+                        "description": "权限ID",
+                        "type": "integer"
+                      },
+                      "parent_code": {
+                        "description": "父级资源编码",
+                        "type": "integer"
+                      },
+                      "updated_at": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "updated_at": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {}
+          }
+        }
+      }
+    },
+    "/v1/user/info": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "获取用户信息",
+        "operationId": "userGetUserInfo",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "avatar": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "integer"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "integer"
+                },
+                "nickname": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "integer"
+                },
+                "updated_at": {
+                  "type": "integer"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/list": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "summary": "用户列表",
+        "operationId": "userUserList",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "page",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "name": "pageSize",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "list": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "username",
+                      "nickname",
+                      "avatar",
+                      "email",
+                      "phone",
+                      "status",
+                      "created_at",
+                      "updated_at"
+                    ],
+                    "properties": {
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "integer"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "integer"
+                      },
+                      "nickname": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "integer"
+                      },
+                      "updated_at": {
+                        "type": "integer"
+                      },
+                      "username": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "total": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-date": "2025-07-20 17:20:39",
+  "x-description": "This is a goctl generated swagger file.",
+  "x-github": "https://github.com/zeromicro/go-zero",
+  "x-go-zero-doc": "https://go-zero.dev/",
+  "x-goctl-version": "1.8.5"
+}

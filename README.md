@@ -108,3 +108,26 @@ http://localhost:9090/
 2. jaeger
 
 http://localhost:16686/
+
+# ETCD Keeper
+
+http://localhost:8999/
+
+```bash
+docker pull evildecay/etcdkeeper
+docker run -d -p 8999:8080 --name etcdkeeper evildecay/etcdkeeper
+# 或者 指定 etcd 地址
+docker run -d -p 8999:8000 --name etcdkeeper \
+  -e ETCD_URL=http://host.docker.internal:2379 \
+  evildecay/etcdkeeper
+# 或者 指定 容器地址
+docker run -d -p 8999:8000 --name etcdkeeper \
+  -e ETCD_URL=http://host.docker.internal:2379 \
+  evildecay/etcdkeeper
+```
+
+# API 文档
+
+```bash
+sh doc-sync.sh
+```

@@ -26,6 +26,10 @@ func NewGetRoleInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRo
 }
 
 func (l *GetRoleInfoLogic) GetRoleInfo(in *auth.RoleInfoReq) (*auth.Role, error) {
+	if in.Id == 0 {
+		return nil, errs.ErrRoleNotFound.GRPCStatus().Err()
+	}
+
 	role, err := l.svcCtx.RoleModel.FindOne(l.ctx, in.Id)
 	if err != nil && err != sql.ErrNoRows {
 		return nil, err
