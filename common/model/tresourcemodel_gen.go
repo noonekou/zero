@@ -29,7 +29,6 @@ type (
 		FindOne(ctx context.Context, id int64) (*TResource, error)
 		FindOneByCode(ctx context.Context, code int64) (*TResource, error)
 		FindOneByName(ctx context.Context, name string) (*TResource, error)
-		FindAll(ctx context.Context) ([]TResource, error)
 		Update(ctx context.Context, data *TResource) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -100,20 +99,6 @@ func (m *defaultTResourceModel) FindOneByName(ctx context.Context, name string) 
 		return &resp, nil
 	case sqlx.ErrNotFound:
 		return nil, ErrNotFound
-	default:
-		return nil, err
-	}
-}
-
-func (m *defaultTResourceModel) FindAll(ctx context.Context) ([]TResource, error) {
-	query := fmt.Sprintf("select %s from %s", tResourceRows, m.table)
-	var resp []TResource
-	err := m.conn.QueryRowsCtx(ctx, &resp, query)
-	switch err {
-	case nil:
-		return resp, nil
-	case sqlx.ErrNotFound:
-		return make([]TResource, 0), nil
 	default:
 		return nil, err
 	}

@@ -28,7 +28,6 @@ type (
 		Insert(ctx context.Context, data *TAdminUserRole) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TAdminUserRole, error)
 		FindOneByUserIdRoleId(ctx context.Context, userId int64, roleId int64) (*TAdminUserRole, error)
-		FindAllByUserId(ctx context.Context, userId int64) ([]TAdminUserRole, error)
 		Update(ctx context.Context, data *TAdminUserRole) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -81,20 +80,6 @@ func (m *defaultTAdminUserRoleModel) FindOneByUserIdRoleId(ctx context.Context, 
 	switch err {
 	case nil:
 		return &resp, nil
-	case sqlx.ErrNotFound:
-		return nil, ErrNotFound
-	default:
-		return nil, err
-	}
-}
-
-func (m *defaultTAdminUserRoleModel) FindAllByUserId(ctx context.Context, userId int64) ([]TAdminUserRole, error) {
-	query := fmt.Sprintf("select %s from %s where user_id = $1", tAdminUserRoleRows, m.table)
-	var resp []TAdminUserRole
-	err := m.conn.QueryRowsCtx(ctx, &resp, query, userId)
-	switch err {
-	case nil:
-		return resp, nil
 	case sqlx.ErrNotFound:
 		return nil, ErrNotFound
 	default:

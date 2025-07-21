@@ -1076,3 +1076,4 @@
 {"@timestamp":"2025-07-20T16:20:31.935+08:00","caller":"stat/usage.go:61","content":"CPU: 0m, MEMORY: Alloc=3.3Mi, TotalAlloc=13.7Mi, Sys=14.1Mi, NumGC=87","level":"stat"}
 {"@timestamp":"2025-07-20T16:20:31.946+08:00","caller":"load/sheddingstat.go:61","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0","level":"stat"}
 {"@timestamp":"2025-07-20T16:20:45.687+08:00","caller":"stat/metrics.go:210","content":"(auth.admin.rpc) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms","level":"stat"}
+{"@timestamp":"2025-07-21T17:15:49.989+08:00","caller":"stat/metrics.go:210","content":"(auth.admin.rpc) - qps: 0.0/s, drops: 0, avg time: 22.0ms, med: 22.9ms, 90th: 22.9ms, 99th: 22.9ms, 99.9th: 22.9ms","level":"stat"}

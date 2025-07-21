@@ -27,7 +27,6 @@ type (
 	tApiPermissionModel interface {
 		Insert(ctx context.Context, data *TApiPermission) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TApiPermission, error)
-		FindOneByMethodAndPath(ctx context.Context, method, path string) (string, error)
 		Update(ctx context.Context, data *TApiPermission) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -70,20 +69,6 @@ func (m *defaultTApiPermissionModel) FindOne(ctx context.Context, id int64) (*TA
 		return nil, ErrNotFound
 	default:
 		return nil, err
-	}
-}
-
-func (m *defaultTApiPermissionModel) FindOneByMethodAndPath(ctx context.Context, method, path string) (string, error) {
-	var permissionName string
-	query := fmt.Sprintf("select permission_name from t_api_permission inner join t_apis on method = $1 and path = $2 and code = api_code")
-	err := m.conn.QueryRowCtx(ctx, &permissionName, query, method, path)
-	switch err {
-	case nil:
-		return permissionName, nil
-	case sqlx.ErrNotFound:
-		return "", ErrNotFound
-	default:
-		return "", err
 	}
 }
 

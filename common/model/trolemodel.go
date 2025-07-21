@@ -1,6 +1,11 @@
 package model
 
-import "github.com/zeromicro/go-zero/core/stores/sqlx"
+import (
+	"context"
+	"fmt"
+
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
+)
 
 var _ TRoleModel = (*customTRoleModel)(nil)
 
@@ -10,6 +15,8 @@ type (
 	TRoleModel interface {
 		tRoleModel
 		withSession(session sqlx.Session) TRoleModel
+		FindByPage(ctx context.Context, page, pageSize int64) (*[]TRole, error)
+		Count(ctx context.Context) (int64, error)
 	}
 
 	customTRoleModel struct {
@@ -26,4 +33,30 @@ func NewTRoleModel(conn sqlx.SqlConn) TRoleModel {
 
 func (m *customTRoleModel) withSession(session sqlx.Session) TRoleModel {
 	return NewTRoleModel(sqlx.NewSqlConnFromSession(session))
+}
+
+func (m *customTRoleModel) FindByPage(ctx context.Context, page, pageSize int64) (*[]TRole, error) {
+	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tRoleRows, m.table)
+	var resp []TRole
+	err := m.conn.QueryRowsCtx(ctx, &resp, query, pageSize, (page-1)*pageSize)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlx.ErrNotFound:
+		return &resp, nil
+	default:
+		return nil, err
+	}
+}
+
+func (m *customTRoleModel) Count(ctx context.Context) (int64, error) {
+	query := fmt.Sprintf("select count(1) from %s", m.table)
+	var resp int64
+	err := m.conn.QueryRowCtx(ctx, &resp, query)
+	switch err {
+	case nil:
+		return resp, nil
+	default:
+		return 0, err
+	}
 }

@@ -28,7 +28,6 @@ type (
 		Insert(ctx context.Context, data *TApis) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TApis, error)
 		FindOneByCode(ctx context.Context, code int64) (*TApis, error)
-		FindOneByMethodAndPath(ctx context.Context, method, path string) (*TApis, error)
 		Update(ctx context.Context, data *TApis) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -80,20 +79,6 @@ func (m *defaultTApisModel) FindOneByCode(ctx context.Context, code int64) (*TAp
 	var resp TApis
 	query := fmt.Sprintf("select %s from %s where code = $1 limit 1", tApisRows, m.table)
 	err := m.conn.QueryRowCtx(ctx, &resp, query, code)
-	switch err {
-	case nil:
-		return &resp, nil
-	case sqlx.ErrNotFound:
-		return nil, ErrNotFound
-	default:
-		return nil, err
-	}
-}
-
-func (m *defaultTApisModel) FindOneByMethodAndPath(ctx context.Context, method, path string) (*TApis, error) {
-	var resp TApis
-	query := fmt.Sprintf("select %s from %s where method = $1 and path = $2 limit 1", tApisRows, m.table)
-	err := m.conn.QueryRowCtx(ctx, &resp, query, method, path)
 	switch err {
 	case nil:
 		return &resp, nil

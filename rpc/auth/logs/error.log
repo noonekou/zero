@@ -87,3 +87,6 @@
 {"@timestamp":"2025-07-20T11:25:53.913+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
 {"@timestamp":"2025-07-20T11:25:58.902+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
 {"@timestamp":"2025-07-20T11:30:39.352+08:00","caller":"trace/agent.go:148","content":"[otel] error: failed to upload traces; HTTP status code: 502","level":"error"}
+{"@timestamp":"2025-07-21T17:15:31.335+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}
+{"@timestamp":"2025-07-21T17:15:41.730+08:00","caller":"sqlx/sqlmanager.go:33","content":"default addr for network 'postgres://localhost:5432' unknown","level":"error"}
+{"@timestamp":"2025-07-21T17:15:46.329+08:00","caller":"trace/agent.go:148","content":"[otel] error: Post \"http://jaeger:14268/api/traces\": dial tcp: lookup jaeger: no such host","level":"error"}

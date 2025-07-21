@@ -28,7 +28,6 @@ type (
 		Insert(ctx context.Context, data *TPermission) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*TPermission, error)
 		FindOneByName(ctx context.Context, name string) (*TPermission, error)
-		FindAll(ctx context.Context) ([]TPermission, error)
 		Update(ctx context.Context, data *TPermission) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -85,20 +84,6 @@ func (m *defaultTPermissionModel) FindOneByName(ctx context.Context, name string
 		return &resp, nil
 	case sqlx.ErrNotFound:
 		return nil, ErrNotFound
-	default:
-		return nil, err
-	}
-}
-
-func (m *defaultTPermissionModel) FindAll(ctx context.Context) ([]TPermission, error) {
-	query := fmt.Sprintf("select %s from %s", tPermissionRows, m.table)
-	var resp []TPermission
-	err := m.conn.QueryRowsCtx(ctx, &resp, query)
-	switch err {
-	case nil:
-		return resp, nil
-	case sqlx.ErrNotFound:
-		return make([]TPermission, 0), nil
 	default:
 		return nil, err
 	}
