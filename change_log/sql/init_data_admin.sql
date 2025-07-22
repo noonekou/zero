@@ -60,9 +60,23 @@ INSERT INTO t_apis (code, method, path, description)
 VALUES (100001, 'POST', '/v1/auth/register', '员工注册');
 
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100002, 'GET', '/v1/user/info', '用户列表-详情');
+VALUES (100002, 'POST', '/v1/auth/permission/list', '权限列表');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100003, 'GET', '/v1/user/list', '用户列表-列表');
+VALUES (100003, 'POST', '/v1/auth/role/add', '添加角色');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (100004, 'POST', '/v1/auth/role/update', '更新角色');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (100005, 'GET', '/v1/auth/role/list', '角色列表');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (100006, 'GET', '/v1/auth/role/info', '获取角色信息');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (100007, 'DELETE', '/v1/auth/role/delete', '删除角色');
+
+
+INSERT INTO t_apis (code, method, path, description)
+VALUES (200002, 'GET', '/v1/user/info', '用户列表-详情');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (200003, 'GET', '/v1/user/list', '用户列表-列表');
 
 -- API 权限表
 INSERT INTO t_api_permission (api_code, permission_name)
@@ -70,10 +84,17 @@ VALUES (100000, '*');
 INSERT INTO t_api_permission (api_code, permission_name)
 VALUES (100001, '*');
 
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100002, '*');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100003, 'employee:role:create');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100004, 'employee:role:update');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100005, 'employee:role:read');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100006, 'employee:role:view');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100007, 'employee:role:delete');
+
 INSERT INTO t_api_permission (api_code, permission_name)
-VALUES (100002, 'operation:user:view');
+VALUES (200002, 'operation:user:view');
 INSERT INTO t_api_permission (api_code, permission_name)
-VALUES (100003, 'operation:user:read');
+VALUES (200003, 'operation:user:read');
 
 -- 角色表
 INSERT INTO t_role (name)
