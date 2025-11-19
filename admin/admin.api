@@ -20,6 +20,7 @@ type UserInfo {
 	Avatar    string `json:"avatar"` // 头像
 	Email     string `json:"email"` // 邮箱
 	Phone     string `json:"phone"` // 手机号
+	Roles     []RolePermission `json:"roles"` // 角色
 	Status    int    `json:"status"` // 状态
 	CreatedAt int64  `json:"created_at"` // 创建时间
 	UpdatedAt int64  `json:"updated_at"` // 更新时间
@@ -58,8 +59,16 @@ type Role {
 	Id          int64        `json:"id"` // 角色ID
 	Name        string       `json:"name"` // 角色名
 	Permissions []Permission `json:"permissions"` // 权限
+	Status      int          `json:"status"` // 状态
 	CreatedAt   int64        `json:"created_at"` // 创建时间
 	UpdatedAt   int64        `json:"updated_at"` // 更新时间
+}
+
+type RolePermission {
+	RoleId int64 `json:"role_id"` // 角色ID
+	RoleName string `json:"role_name"` // 角色名
+	PermissionId int64 `json:"permission_id"` // 权限ID
+	PermissionName string `json:"permission_name"` // 权限名
 }
 
 type (
