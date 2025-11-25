@@ -41,6 +41,7 @@ type (
 		Id        int64     `db:"id"`         // 用户角色ID
 		UserId    int64     `db:"user_id"`    // 用户ID
 		RoleId    int64     `db:"role_id"`    // 角色ID
+		Status    int64     `db:"status"`     // 状态(1:正常 0:禁用)
 		CreatedAt time.Time `db:"created_at"` // 创建时间
 		UpdatedAt time.Time `db:"updated_at"` // 更新时间
 	}
@@ -88,14 +89,14 @@ func (m *defaultTAdminUserRoleModel) FindOneByUserIdRoleId(ctx context.Context, 
 }
 
 func (m *defaultTAdminUserRoleModel) Insert(ctx context.Context, data *TAdminUserRole) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values ($1, $2)", m.table, tAdminUserRoleRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.UserId, data.RoleId)
+	query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3)", m.table, tAdminUserRoleRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.UserId, data.RoleId, data.Status)
 	return ret, err
 }
 
 func (m *defaultTAdminUserRoleModel) Update(ctx context.Context, newData *TAdminUserRole) error {
 	query := fmt.Sprintf("update %s set %s where id = $1", m.table, tAdminUserRoleRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, newData.Id, newData.UserId, newData.RoleId)
+	_, err := m.conn.ExecCtx(ctx, query, newData.Id, newData.UserId, newData.RoleId, newData.Status)
 	return err
 }
 

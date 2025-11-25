@@ -35,7 +35,7 @@ func (m *customTAdminUserRoleModel) withSession(session sqlx.Session) TAdminUser
 }
 
 func (m *defaultTAdminUserRoleModel) FindAllByUserId(ctx context.Context, userId int64) ([]TAdminUserRole, error) {
-	query := fmt.Sprintf("select %s from %s where user_id = $1", tAdminUserRoleRows, m.table)
+	query := fmt.Sprintf("select %s from %s where user_id = $1 and status = 1", tAdminUserRoleRows, m.table)
 	var resp []TAdminUserRole
 	err := m.conn.QueryRowsCtx(ctx, &resp, query, userId)
 	switch err {

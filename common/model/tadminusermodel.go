@@ -39,7 +39,7 @@ func (m *customTAdminUserModel) withSession(session sqlx.Session) TAdminUserMode
 
 func (m *customTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TAdminUser, error) {
 	var resp TAdminUser
-	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 limit 1", tAdminUserRows, m.table)
+	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 and status = 1 limit 1", tAdminUserRows, m.table)
 	logx.Infof("query: %s, username: %s, password: %s", query, username, password)
 	err := m.conn.QueryRowCtx(ctx, &resp, query, username, password)
 	switch err {

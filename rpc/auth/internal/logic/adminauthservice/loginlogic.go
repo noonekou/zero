@@ -42,6 +42,11 @@ func (l *LoginLogic) Login(in *auth.LoginReq) (*auth.LoginResp, error) {
 		return nil, errs.ErrUsernameNotExist.GRPCStatus().Err()
 	}
 
+	// Check user status (already filtered in query, but double-check for safety)
+	if tUser.Status != 1 {
+		return nil, errs.ErrUserDisabled.GRPCStatus().Err()
+	}
+
 	token, err := common.GenerateToken(l.svcCtx.Config.Authorization.AccessSecret, l.svcCtx.Config.Authorization.AccessExpire, tUser.Id)
 	if err != nil {
 		return nil, err

@@ -3,6 +3,7 @@ package svc
 import (
 	"bookstore/admin/internal/config"
 	"bookstore/admin/internal/middleware"
+	"bookstore/common/model"
 	"bookstore/rpc/auth/client/adminauthservice"
 	"bookstore/rpc/user/client/adminuserservice"
 
@@ -18,6 +19,9 @@ type ServiceContext struct {
 	AdminUser            adminuserservice.AdminUserService
 	AuthMiddleware       rest.Middleware
 	PermissionMiddleware rest.Middleware
+	AdminUserRoleModel   model.TAdminUserRoleModel
+	RoleModel            model.TRoleModel
+	RolePermissionModel  model.TRolePermissionModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -28,5 +32,8 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		AdminUser:            adminuserservice.NewAdminUserService(zrpc.MustNewClient(c.UserConf)),
 		AuthMiddleware:       middleware.NewAuthMiddleware(c.Authorization.AccessSecret, c.Authorization.AccessExpire).Handle,
 		PermissionMiddleware: middleware.NewPermissionMiddleware(conn).Handle,
+		AdminUserRoleModel:   model.NewTAdminUserRoleModel(conn),
+		RoleModel:            model.NewTRoleModel(conn),
+		RolePermissionModel:  model.NewTRolePermissionModel(conn),
 	}
 }

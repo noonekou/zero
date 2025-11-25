@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS t_admin_user_role
     id         BIGSERIAL PRIMARY KEY,
     user_id    BIGINT                      NOT NULL,
     role_id    BIGINT                      NOT NULL,
+    status     SMALLINT                    NOT NULL DEFAULT 1,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
     UNIQUE (user_id, role_id) -- `UNIQUE KEY` syntax becomes `UNIQUE` constraint
@@ -130,6 +131,7 @@ CREATE INDEX IF NOT EXISTS idx_admin_user_role_role_id ON t_admin_user_role (rol
 COMMENT ON COLUMN t_admin_user_role.id IS '用户角色ID';
 COMMENT ON COLUMN t_admin_user_role.user_id IS '用户ID';
 COMMENT ON COLUMN t_admin_user_role.role_id IS '角色ID';
+COMMENT ON COLUMN t_admin_user_role.status IS '状态(1:正常 0:禁用)';
 COMMENT ON COLUMN t_admin_user_role.created_at IS '创建时间';
 COMMENT ON COLUMN t_admin_user_role.updated_at IS '更新时间';
 COMMENT ON TABLE t_admin_user_role IS '用户角色表';
