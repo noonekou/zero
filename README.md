@@ -19,6 +19,8 @@ curl -X POST http://localhost:8888/v1/user/login -H 'Content-Type: application/j
 
 curl -X POST http://localhost:8888/v1//auth/login -H 'Content-Type: application/json' -d '{"username":"admin","password":"21223e1706c109dca4af2c7b1f2fff69"}'
 
+curl -X POST http://localhost:8888/v1//auth/login -H 'Content-Type: application/json' -d '{"username":"admin@example.com","password":"21223e1706c109dca4af2c7b1f2fff69"}'
+
 
 curl -i "http://localhost:8888/v1/user/info"
 

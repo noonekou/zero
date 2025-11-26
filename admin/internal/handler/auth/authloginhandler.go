@@ -6,6 +6,8 @@ import (
 	"bookstore/admin/internal/logic/auth"
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/common/response"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -19,10 +21,6 @@ func AuthLoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := auth.NewAuthLoginLogic(r.Context(), svcCtx)
 		resp, err := l.AuthLogin(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		response.Response(w, resp, err)
 	}
 }

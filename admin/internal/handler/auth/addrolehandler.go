@@ -6,6 +6,8 @@ import (
 	"bookstore/admin/internal/logic/auth"
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/common/response"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -19,10 +21,7 @@ func AddRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := auth.NewAddRoleLogic(r.Context(), svcCtx)
 		err := l.AddRole(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.Ok(w)
-		}
+		response.Response(w, nil, err)
+
 	}
 }

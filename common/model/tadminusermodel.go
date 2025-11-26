@@ -17,6 +17,7 @@ type (
 		tAdminUserModel
 		withSession(session sqlx.Session) TAdminUserModel
 		FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TAdminUser, error)
+		FindOneByEmailAndPassword(ctx context.Context, email, password string) (*TAdminUser, error)
 		FindAllByPage(ctx context.Context, page, pageSize int64) (*[]TAdminUser, error)
 		Count(ctx context.Context) (int64, error)
 	}
@@ -42,6 +43,21 @@ func (m *customTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Context
 	query := fmt.Sprintf("select %s from %s where username = $1 and password = $2 and status = 1 limit 1", tAdminUserRows, m.table)
 	logx.Infof("query: %s, username: %s, password: %s", query, username, password)
 	err := m.conn.QueryRowCtx(ctx, &resp, query, username, password)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlx.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *customTAdminUserModel) FindOneByEmailAndPassword(ctx context.Context, email, password string) (*TAdminUser, error) {
+	var resp TAdminUser
+	query := fmt.Sprintf("select %s from %s where email = $1 and password = $2 and status = 1 limit 1", tAdminUserRows, m.table)
+	logx.Infof("query: %s, email: %s, password: %s", query, email, password)
+	err := m.conn.QueryRowCtx(ctx, &resp, query, email, password)
 	switch err {
 	case nil:
 		return &resp, nil
