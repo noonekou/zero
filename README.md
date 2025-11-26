@@ -121,6 +121,8 @@ http://localhost:16686/
 # ETCD Keeper
 
 http://localhost:8999/
+http://localhost:8999/etcdkeeper/?endpoint=http://etcd:2379
+
 
 ```bash
 docker pull evildecay/etcdkeeper
