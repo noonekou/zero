@@ -17,6 +17,9 @@ go run xxx.go -f etc/xxx-api.yaml
 # 测试 xxx-api 服务
 curl -X POST http://localhost:8888/v1/user/login -H 'Content-Type: application/json' -d '{"username":"admin","password":"123456"}'
 
+curl -X POST http://localhost:8888/v1//auth/login -H 'Content-Type: application/json' -d '{"username":"admin","password":"21223e1706c109dca4af2c7b1f2fff69"}'
+
+
 curl -i "http://localhost:8888/v1/user/info"
 
 # 测试rpc服务
@@ -24,6 +27,9 @@ curl -i "http://localhost:8888/v1/user/info"
 grpcui -plaintext 127.0.0.1:8080
 # 或者
 grpcurl -plaintext 127.0.0.1:8080 user.User/GetUserInfo
+
+# docker 访问rpc
+grpcurl -plaintext -proto rpc/auth/auth.rpc.proto localhost:8180
 
 # pgsql 生成model
 goctl model pg datasource -url="postgres://localhost:5432/test?sslmode=disable" -table=t_admin_user,t_admin_user_role,t_api_permission,t_apis,t_permission,t_resource,t_role,t_role_permission,t_user -dir=.
@@ -97,13 +103,16 @@ docker-compose down
 
 ```Dockerfile
 docker compose -f docker-compose.admin.yml exec pg psql -U postgres gozero
+
+
+docker compose exec [服务名称] bash
 ```
 
 # 监控
 
 1. prometheus
 
-http://localhost:9090/
+http://localhost:9095/
 
 2. jaeger
 
@@ -125,6 +134,24 @@ docker run -d -p 8999:8000 --name etcdkeeper \
   -e ETCD_URL=http://host.docker.internal:2379 \
   evildecay/etcdkeeper
 ```
+
+# PG
+
+```pg
+// 连接本地数据库
+psql -U username -d dbname
+
+// 连接远程数据库
+psql -h hostname -p port -U username -d dbname
+```
+
+常用命令
+\l 列出所有数据库
+\c 连接数据库
+\dt 列出当前数据库中的所有表
+\d 表的结构
+\q 退出
+
 
 # API 文档
 

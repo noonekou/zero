@@ -129,7 +129,7 @@ services:
       - "--config.file=/etc/prometheus/prometheus.admin.yml" # 指定配置文件路径
       - "--storage.tsdb.path=/prometheus" # 指定数据存储路径
     ports:
-      - "9090:9090"
+      - "9095:9090"
     networks:
       - admin-net
     depends_on:
