@@ -57,10 +57,12 @@ func (l *PermissionListLogic) PermissionList(in *auth.PermissionListReq) (*auth.
 			}
 
 		}
-		// if len(children) > 0 {
-		permission := auth.Permission{Id: 0, Code: int32(v.Code), Description: v.Description, ParentCode: int32(v.ParentCode), Children: children, CreatedAt: v.CreatedAt.Unix(), UpdatedAt: v.UpdatedAt.Unix()}
+		pId := v.Id
+		if len(children) > 0 {
+			pId = 0
+		}
+		permission := auth.Permission{Id: pId, Code: int32(v.Code), Description: v.Description, ParentCode: int32(v.ParentCode), Children: children, CreatedAt: v.CreatedAt.Unix(), UpdatedAt: v.UpdatedAt.Unix()}
 		list = append(list, &permission)
-		// }
 	}
 
 	return &auth.PermissionListResp{
