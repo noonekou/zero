@@ -8,8 +8,8 @@ info (
 
 type (
 	PageReq {
-		page     int64 `form:"page"`
-		pageSize int64 `form:"pageSize"`
+		Page     int64 `form:"page"`
+		PageSize int64 `form:"pageSize"`
 	}
 )
 

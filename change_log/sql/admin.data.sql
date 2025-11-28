@@ -2,7 +2,7 @@
 INSERT INTO t_resource (code, name, parent_code, description)
 VALUES (1000000, 'dashboard', 0, '仪表盘');
 INSERT INTO t_resource (code, name, parent_code, description)
-VALUES (2000000, 'employee', 0, '员工');
+VALUES (2000000, 'employee', 0, '权限');
 INSERT INTO t_resource (code, name, parent_code, description)
 VALUES (2000001, 'employee:employee', 2000000, '员工');
 INSERT INTO t_resource (code, name, parent_code, description)
