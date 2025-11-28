@@ -52,7 +52,7 @@ type Role struct {
 }
 
 type RoleInfoReq struct {
-	Id int64 `path:"id"` // 角色ID
+	Id int64 `form:"id"` // 角色ID
 }
 
 type RoleListResp struct {

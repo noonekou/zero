@@ -77,7 +77,7 @@ type (
 		List  []Role `json:"list"` // 列表
 	}
 	RoleInfoReq {
-		Id int64 `path:"id"` // 角色ID
+		Id int64 `form:"id"` // 角色ID
 	}
 )
 
