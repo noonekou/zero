@@ -57,7 +57,7 @@ func (m *defaultTRolePermissionModel) FindPermissionNameByUserId(ctx context.Con
 }
 
 func (m *defaultTRolePermissionModel) FindByRoleName(ctx context.Context, roleName string) ([]TPermissionData, error) {
-	query := "select t_permission.id, t_role_permission.permission_name from t_role_permission inner join t_permission on t_permission.name = t_role_permission.permission_name where role_name = $1 order by t_permission.id"
+	query := "select t_permission.id, t_permission.description as permission_name from t_role_permission inner join t_permission on t_permission.name = t_role_permission.permission_name where role_name = $1 order by t_permission.id"
 	var resp []TPermissionData
 	err := m.conn.QueryRowsCtx(ctx, &resp, query, roleName)
 	switch err {
