@@ -27,8 +27,9 @@ func NewUpdateRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 
 func (l *UpdateRoleLogic) UpdateRole(req *types.Role) (err error) {
 	_, error := l.svcCtx.Auth.UpdateRole(l.ctx, &auth.Role{
-		Id:   req.Id,
-		Name: req.Name,
+		Id:     req.Id,
+		Name:   req.Name,
+		Status: int64(req.Status),
 		Permissions: lo.Map(req.Permissions, func(item types.Permission, _ int) *auth.Permission {
 			return &auth.Permission{Id: item.Id, Code: int32(item.Code), Description: item.Description, ParentCode: int32(item.ParentCode)}
 		}),

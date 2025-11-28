@@ -52,6 +52,7 @@ func (l *GetRoleInfoLogic) GetRoleInfo(in *auth.RoleInfoReq) (*auth.Role, error)
 	return &auth.Role{
 		Id:          role.Id,
 		Name:        role.Name,
+		Status:      role.Status,
 		Permissions: children,
 		CreatedAt:   role.CreatedAt.Unix(),
 		UpdatedAt:   role.UpdatedAt.Unix(),

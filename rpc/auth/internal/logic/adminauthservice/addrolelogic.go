@@ -40,7 +40,7 @@ func (l *AddRoleLogic) AddRole(in *auth.Role) (*auth.Empty, error) {
 		return nil, errs.ErrRoleAlreadyExist.GRPCStatus().Err()
 	}
 
-	_, err := l.svcCtx.RoleModel.Insert(l.ctx, &model.TRole{Name: in.Name})
+	_, err := l.svcCtx.RoleModel.Insert(l.ctx, &model.TRole{Name: in.Name, Status: in.Status})
 	if err != nil {
 		return nil, err
 	}

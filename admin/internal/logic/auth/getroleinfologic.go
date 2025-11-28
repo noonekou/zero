@@ -32,8 +32,9 @@ func (l *GetRoleInfoLogic) GetRoleInfo(req *types.RoleInfoReq) (resp *types.Role
 	}
 
 	return &types.Role{
-		Id:   role.Id,
-		Name: role.Name,
+		Id:     role.Id,
+		Name:   role.Name,
+		Status: int(role.Status),
 		Permissions: lo.Map(role.Permissions, func(item *auth.Permission, _ int) types.Permission {
 			return types.Permission{Id: item.Id, Code: int(item.Code), Description: item.Description, ParentCode: int(item.ParentCode)}
 		}),

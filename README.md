@@ -36,6 +36,11 @@ grpcurl -plaintext -proto rpc/auth/auth.rpc.proto localhost:8180
 # pgsql 生成model
 goctl model pg datasource -url="postgres://localhost:5432/test?sslmode=disable" -table=t_admin_user,t_admin_user_role,t_api_permission,t_apis,t_permission,t_resource,t_role,t_role_permission,t_user -dir=.
 
+goctl model pg datasource -url="postgres://localhost:5432/test?sslmode=disable" -table=t_role -dir=.
+
+# 容器内执行 (host: pg)
+goctl model pg datasource -url="postgres://postgres:123456@localhost:5432/gozero?sslmode=disable" -table=t_role -dir=.
+
 # pg 连接配置 etc/xxx.yaml
 # config
 # svr context
@@ -73,6 +78,9 @@ XXX:
 docker-compose up -d --build
 # 指定配置文件
 docker-compose -f docker-compose.dev.yml up -d --build
+
+# 指定服务
+docker-compose -f docker-compose.admin.yml up -d --build admin-service
 ```
 
 2. 启动所有服务：

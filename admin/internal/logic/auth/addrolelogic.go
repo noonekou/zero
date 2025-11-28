@@ -26,8 +26,9 @@ func NewAddRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRoleLo
 
 func (l *AddRoleLogic) AddRole(req *types.Role) (err error) {
 	_, error := l.svcCtx.Auth.AddRole(l.ctx, &auth.Role{
-		Id:   req.Id,
-		Name: req.Name,
+		Id:     req.Id,
+		Name:   req.Name,
+		Status: int64(req.Status),
 	})
 	return error
 }

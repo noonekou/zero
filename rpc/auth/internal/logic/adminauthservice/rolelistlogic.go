@@ -45,7 +45,7 @@ func (l *RoleListLogic) RoleList(in *auth.PageReq) (*auth.RoleListResp, error) {
 			children = append(children, &auth.Permission{Id: p.Id, Code: 0, Description: p.PermissionName, ParentCode: 0, Children: nil, CreatedAt: v.CreatedAt.Unix(), UpdatedAt: v.UpdatedAt.Unix()})
 		}
 
-		list = append(list, &auth.Role{Id: v.Id, Name: v.Name, Permissions: children, CreatedAt: v.CreatedAt.Unix(), UpdatedAt: v.UpdatedAt.Unix()})
+		list = append(list, &auth.Role{Id: v.Id, Name: v.Name, Status: v.Status, Permissions: children, CreatedAt: v.CreatedAt.Unix(), UpdatedAt: v.UpdatedAt.Unix()})
 	}
 
 	return &auth.RoleListResp{

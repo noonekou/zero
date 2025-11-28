@@ -34,7 +34,7 @@ func (l *RoleListLogic) RoleList(req *types.PageReq) (resp *types.RoleListResp, 
 	resp = &types.RoleListResp{
 		Total: roleList.Total,
 		List: lo.Map(roleList.List, func(item *auth.Role, _ int) types.Role {
-			return types.Role{Id: item.Id, Name: item.Name, Permissions: lo.Map(item.Permissions, func(item *auth.Permission, _ int) types.Permission {
+			return types.Role{Id: item.Id, Name: item.Name, Status: int(item.Status), Permissions: lo.Map(item.Permissions, func(item *auth.Permission, _ int) types.Permission {
 				return types.Permission{Id: item.Id, Code: int(item.Code), Description: item.Description, ParentCode: int(item.ParentCode)}
 			}), CreatedAt: item.CreatedAt, UpdatedAt: item.UpdatedAt}
 		}),

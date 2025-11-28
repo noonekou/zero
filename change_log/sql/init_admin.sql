@@ -53,9 +53,13 @@ CREATE TABLE IF NOT EXISTS t_role
 (
     id         BIGSERIAL PRIMARY KEY,
     name       VARCHAR(20)                 NOT NULL UNIQUE,
+    -- status     SMALLINT                    NOT NULL DEFAULT 1,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW()
 );
+
+ALTER TABLE t_role ADD COLUMN status SMALLINT NOT NULL DEFAULT 1;
+
 
 -- Trigger for t_role updated_at
 CREATE OR REPLACE TRIGGER update_t_role_updated_at
@@ -67,6 +71,7 @@ EXECUTE FUNCTION update_updated_at_column();
 -- Comments for t_role columns
 COMMENT ON COLUMN t_role.id IS '角色ID';
 COMMENT ON COLUMN t_role.name IS '角色名';
+COMMENT ON COLUMN t_role.status IS '状态(1:正常 0:禁用)';
 COMMENT ON COLUMN t_role.created_at IS '创建时间';
 COMMENT ON COLUMN t_role.updated_at IS '更新时间';
 COMMENT ON TABLE t_role IS '角色表';

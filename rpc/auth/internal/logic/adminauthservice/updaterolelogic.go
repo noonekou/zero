@@ -82,7 +82,7 @@ func (l *UpdateRoleLogic) UpdateRole(in *auth.Role) (*auth.Empty, error) {
 		}
 	}
 
-	err = l.svcCtx.RoleModel.Update(l.ctx, &model.TRole{Id: in.Id, Name: in.Name})
+	err = l.svcCtx.RoleModel.Update(l.ctx, &model.TRole{Id: in.Id, Name: in.Name, Status: in.Status})
 	if err != nil {
 		return nil, err
 	}
