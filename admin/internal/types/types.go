@@ -22,13 +22,13 @@ type PageReq struct {
 }
 
 type Permission struct {
-	Id          int64        `json:"id"`          // 权限ID
-	Code        int          `json:"code"`        // 资源编码
-	Description string       `json:"description"` // 权限描述
-	ParentCode  int          `json:"parent_code"` // 父级资源编码
-	Children    []Permission `json:"children"`    // 子资源
-	CreatedAt   int64        `json:"created_at"`
-	UpdatedAt   int64        `json:"updated_at"`
+	Id          int64        `json:"id"`                  // 权限ID
+	Code        int          `json:"code"`                // 资源编码
+	Description string       `json:"description"`         // 权限描述
+	ParentCode  int          `json:"parent_code"`         // 父级资源编码
+	Children    []Permission `json:"children"`            // 子资源
+	CreatedAt   int64        `json:"created_at,optional"` // 创建时间
+	UpdatedAt   int64        `json:"updated_at,optional"` // 更新时间
 }
 
 type RegisterReq struct {
@@ -43,12 +43,12 @@ type RegisterResp struct {
 }
 
 type Role struct {
-	Id          int64        `json:"id"`          // 角色ID
-	Name        string       `json:"name"`        // 角色名
-	Permissions []Permission `json:"permissions"` // 权限
-	Status      int          `json:"status"`      // 状态
-	CreatedAt   int64        `json:"created_at"`  // 创建时间
-	UpdatedAt   int64        `json:"updated_at"`  // 更新时间
+	Id          int64        `json:"id"`                  // 角色ID
+	Name        string       `json:"name"`                // 角色名
+	Permissions []Permission `json:"permissions"`         // 权限
+	Status      int          `json:"status"`              // 状态
+	CreatedAt   int64        `json:"created_at,optional"` // 创建时间
+	UpdatedAt   int64        `json:"updated_at,optional"` // 更新时间
 }
 
 type RoleInfoReq struct {
@@ -68,16 +68,20 @@ type RolePermission struct {
 }
 
 type UserInfo struct {
-	Id        int64            `json:"id"`         // 用户ID
-	UserName  string           `json:"username"`   // 用户名
-	NickName  string           `json:"nickname"`   // 昵称
-	Avatar    string           `json:"avatar"`     // 头像
-	Email     string           `json:"email"`      // 邮箱
-	Phone     string           `json:"phone"`      // 手机号
-	Roles     []RolePermission `json:"roles"`      // 角色
-	Status    int              `json:"status"`     // 状态
-	CreatedAt int64            `json:"created_at"` // 创建时间
-	UpdatedAt int64            `json:"updated_at"` // 更新时间
+	Id        int64            `json:"id"`                  // 用户ID
+	UserName  string           `json:"username"`            // 用户名
+	NickName  string           `json:"nickname,optional"`   // 昵称
+	Avatar    string           `json:"avatar,optional"`     // 头像
+	Email     string           `json:"email,optional"`      // 邮箱
+	Phone     string           `json:"phone,optional"`      // 手机号
+	Roles     []RolePermission `json:"roles"`               // 角色
+	Status    int              `json:"status"`              // 状态
+	CreatedAt int64            `json:"created_at,optional"` // 创建时间
+	UpdatedAt int64            `json:"updated_at,optional"` // 更新时间
+}
+
+type UserInfoReq struct {
+	Id int64 `form:"id"` // 角色ID
 }
 
 type UserListResp struct {

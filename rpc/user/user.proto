@@ -3,6 +3,8 @@ syntax = "proto3";
 package user;
 option go_package="./user";
 
+message Empty {}
+
 message UserInfo {
   int64 id = 1;
   string user_name = 2;
@@ -33,6 +35,15 @@ message GetUserInfoResp {
    repeated UserInfo list = 2;
  }
 
+ message UserInfoReq {
+   int64 id = 1;
+ }
+
+ message UserUpdateReq {
+   UserInfo info = 1;
+   repeated int64 ids = 2;
+ }
+
 service UserService {
   rpc GetUserInfo(GetUserInfoReq) returns(GetUserInfoResp);
   rpc UserList(UserListReq) returns(UserListResp);
@@ -41,4 +52,7 @@ service UserService {
 service AdminUserService {
   rpc GetUserInfo(GetUserInfoReq) returns(GetUserInfoResp);
   rpc UserList(UserListReq) returns(UserListResp);
+  rpc AddUser(UserUpdateReq) returns(UserInfo);
+  rpc UpdateUser(UserUpdateReq) returns(UserInfo);
+  rpc DeleteUser(UserInfoReq) returns(Empty);
 }

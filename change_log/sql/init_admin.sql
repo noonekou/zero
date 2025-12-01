@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS t_admin_user
     password   VARCHAR(255)                NOT NULL,
     nickname   VARCHAR(64)                          DEFAULT '',
     avatar     VARCHAR(255)                         DEFAULT '',
-    email      VARCHAR(128)                         DEFAULT '',
+    email      VARCHAR(128)                NOT NULL UNIQUE,
     phone      VARCHAR(32)                          DEFAULT '',
     status     SMALLINT                    NOT NULL DEFAULT 1,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),

@@ -15,7 +15,8 @@ type (
 	// and implement the added methods in customTAdminUserModel.
 	TAdminUserModel interface {
 		tAdminUserModel
-		withSession(session sqlx.Session) TAdminUserModel
+		WithSession(session sqlx.Session) TAdminUserModel
+		InsertWithId(ctx context.Context, data *TAdminUser) (int64, error)
 		FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TAdminUser, error)
 		FindOneByEmailAndPassword(ctx context.Context, email, password string) (*TAdminUser, error)
 		FindAllByPage(ctx context.Context, page, pageSize int64) (*[]TAdminUser, error)
@@ -34,8 +35,21 @@ func NewTAdminUserModel(conn sqlx.SqlConn) TAdminUserModel {
 	}
 }
 
-func (m *customTAdminUserModel) withSession(session sqlx.Session) TAdminUserModel {
+func (m *customTAdminUserModel) WithSession(session sqlx.Session) TAdminUserModel {
 	return NewTAdminUserModel(sqlx.NewSqlConnFromSession(session))
+}
+
+// InsertWithId 插入数据并返回ID
+func (m *defaultTAdminUserModel) InsertWithId(ctx context.Context, data *TAdminUser) (int64, error) {
+	query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+		m.table, tAdminUserRowsExpectAutoSet)
+
+	var id int64
+	err := m.conn.QueryRowCtx(ctx, &id, query,
+		data.Username, data.Password, data.Nickname,
+		data.Avatar, data.Email, data.Phone, data.Status)
+
+	return id, err
 }
 
 func (m *customTAdminUserModel) FindOneByUsernameAndPassword(ctx context.Context, username, password string) (*TAdminUser, error) {

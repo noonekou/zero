@@ -73,6 +73,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.AuthMiddleware, serverCtx.PermissionMiddleware},
 			[]rest.Route{
 				{
+					// 添加用户
+					Method:  http.MethodPost,
+					Path:    "/user/add",
+					Handler: user.AddUserHandler(serverCtx),
+				},
+				{
+					// 删除用户
+					Method:  http.MethodDelete,
+					Path:    "/user/delete",
+					Handler: user.DeleteUserHandler(serverCtx),
+				},
+				{
 					// 获取用户信息
 					Method:  http.MethodGet,
 					Path:    "/user/info",
@@ -83,6 +95,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:  http.MethodGet,
 					Path:    "/user/list",
 					Handler: user.UserListHandler(serverCtx),
+				},
+				{
+					// 更新用户
+					Method:  http.MethodPost,
+					Path:    "/user/update",
+					Handler: user.UpdateUserHandler(serverCtx),
 				},
 			}...,
 		),

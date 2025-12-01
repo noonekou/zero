@@ -1,5 +1,19 @@
 # 项目搭建
 
+## 步骤
+
+### 修改 xxx.api
+执行 `goctl api go -api xxx.api -dir .` 同步
+
+### 修改rpc xxx.proto
+执行 `goctl rpc protoc xxx.proto --go_out=. --go-grpc_out=. --zrpc_out=. -m` 同步
+
+### 数据同步 
+执行 `goctl model pg datasource -url="postgres://postgres:123456@localhost:5432/gozero?sslmode=disable" -table=t_role -dir=.` 同步
+
+### 数据库连接配置, 修改api权限sql
+`psql -U postgres -d gozero`
+
 ## 创建 admin 服务
 
 ```bash

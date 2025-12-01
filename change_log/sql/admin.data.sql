@@ -62,6 +62,12 @@ INSERT INTO t_apis (code, method, path, description)
 VALUES (200001, 'GET', '/v1/user/info', '获取用户信息');
 INSERT INTO t_apis (code, method, path, description)
 VALUES (200002, 'GET', '/v1/user/list', '获取用户列表');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (200003, 'POST', '/v1/user/add', '添加用户');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (200004, 'POST', '/v1/user/update', '更新用户');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (200005, 'DELETE', '/v1/user/delete', '删除用户');
 
 -- API 权限表
 INSERT INTO t_api_permission (api_code, permission_name)
@@ -78,6 +84,9 @@ INSERT INTO t_api_permission (api_code, permission_name) VALUES (100007, 'employ
 
 INSERT INTO t_api_permission (api_code, permission_name) VALUES (200001, 'employee:role:view');
 INSERT INTO t_api_permission (api_code, permission_name) VALUES (200002, 'employee:role:read');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200003, 'employee:role:create');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200004, 'employee:role:update');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200005, 'employee:role:delete');
 
 -- 角色表
 INSERT INTO t_role (name)

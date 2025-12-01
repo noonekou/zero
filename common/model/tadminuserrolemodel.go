@@ -14,8 +14,9 @@ type (
 	// and implement the added methods in customTAdminUserRoleModel.
 	TAdminUserRoleModel interface {
 		tAdminUserRoleModel
-		withSession(session sqlx.Session) TAdminUserRoleModel
+		WithSession(session sqlx.Session) TAdminUserRoleModel
 		FindAllByUserId(ctx context.Context, userId int64) ([]TAdminUserRole, error)
+		DeleteByUserId(ctx context.Context, userId int64) error
 	}
 
 	customTAdminUserRoleModel struct {
@@ -30,12 +31,12 @@ func NewTAdminUserRoleModel(conn sqlx.SqlConn) TAdminUserRoleModel {
 	}
 }
 
-func (m *customTAdminUserRoleModel) withSession(session sqlx.Session) TAdminUserRoleModel {
+func (m *customTAdminUserRoleModel) WithSession(session sqlx.Session) TAdminUserRoleModel {
 	return NewTAdminUserRoleModel(sqlx.NewSqlConnFromSession(session))
 }
 
 func (m *defaultTAdminUserRoleModel) FindAllByUserId(ctx context.Context, userId int64) ([]TAdminUserRole, error) {
-	query := fmt.Sprintf("select %s from %s where user_id = $1 and status = 1", tAdminUserRoleRows, m.table)
+	query := fmt.Sprintf("select %s from %s where user_id = $1", tAdminUserRoleRows, m.table)
 	var resp []TAdminUserRole
 	err := m.conn.QueryRowsCtx(ctx, &resp, query, userId)
 	switch err {
@@ -46,4 +47,10 @@ func (m *defaultTAdminUserRoleModel) FindAllByUserId(ctx context.Context, userId
 	default:
 		return nil, err
 	}
+}
+
+func (m *defaultTAdminUserRoleModel) DeleteByUserId(ctx context.Context, userId int64) error {
+	query := fmt.Sprintf("delete from %s where user_id = $1", m.table)
+	_, err := m.conn.ExecCtx(ctx, query, userId)
+	return err
 }
