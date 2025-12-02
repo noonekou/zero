@@ -2,14 +2,12 @@ package adminuserservicelogic
 
 import (
 	"context"
-	"errors"
 
 	errs "bookstore/common/error"
 	"bookstore/common/model"
 	"bookstore/rpc/user/internal/svc"
 	"bookstore/rpc/user/user"
 
-	"github.com/lib/pq"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
@@ -49,8 +47,7 @@ func (l *UpdateUserLogic) UpdateUser(in *user.UserUpdateReq) (*user.UserInfo, er
 		})
 
 		if err != nil {
-			var pgErr *pq.Error
-			if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+			if errs.IsDuplicateKeyError(err) {
 				return errs.ErrUsernameAlreadyExist.GRPCStatus().Err()
 			}
 			return err

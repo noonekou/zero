@@ -1,6 +1,9 @@
 package errs
 
 import (
+	"errors"
+
+	"github.com/lib/pq"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -84,4 +87,12 @@ func GetMyError(err error) *MyError {
 		return myErr
 	}
 	return nil
+}
+
+func IsDuplicateKeyError(err error) bool {
+	var pgErr *pq.Error
+	if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+		return true
+	}
+	return false
 }
