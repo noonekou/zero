@@ -1,4 +1,7 @@
-package auth
+// Code scaffolded by goctl. Safe to edit.
+// goctl 1.9.2
+
+package permission
 
 import (
 	"context"
@@ -17,6 +20,7 @@ type GetRoleInfoLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 获取角色信息
 func NewGetRoleInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRoleInfoLogic {
 	return &GetRoleInfoLogic{
 		Logger: logx.WithContext(ctx),

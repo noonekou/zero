@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	auth "bookstore/admin/internal/handler/auth"
+	permission "bookstore/admin/internal/handler/permission"
 	user "bookstore/admin/internal/handler/user"
 	"bookstore/admin/internal/svc"
 
@@ -23,10 +24,10 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: auth.AuthLoginHandler(serverCtx),
 			},
 			{
-				// 权限列表
-				Method:  http.MethodGet,
-				Path:    "/auth/permission/list",
-				Handler: auth.PermissionListHandler(serverCtx),
+				// 退出登录
+				Method:  http.MethodPost,
+				Path:    "/auth/logout",
+				Handler: auth.AuthLogoutHandler(serverCtx),
 			},
 			{
 				// 注册
@@ -34,37 +35,52 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/auth/register",
 				Handler: auth.AuthRegisterHandler(serverCtx),
 			},
-			{
-				// 添加角色
-				Method:  http.MethodPost,
-				Path:    "/auth/role/add",
-				Handler: auth.AddRoleHandler(serverCtx),
-			},
-			{
-				// 删除角色
-				Method:  http.MethodDelete,
-				Path:    "/auth/role/delete",
-				Handler: auth.DeleteRoleHandler(serverCtx),
-			},
-			{
-				// 获取角色信息
-				Method:  http.MethodGet,
-				Path:    "/auth/role/info",
-				Handler: auth.GetRoleInfoHandler(serverCtx),
-			},
-			{
-				// 角色列表
-				Method:  http.MethodGet,
-				Path:    "/auth/role/list",
-				Handler: auth.RoleListHandler(serverCtx),
-			},
-			{
-				// 更新角色
-				Method:  http.MethodPost,
-				Path:    "/auth/role/update",
-				Handler: auth.UpdateRoleHandler(serverCtx),
-			},
 		},
+		rest.WithPrefix("/v1"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthMiddleware, serverCtx.PermissionMiddleware},
+			[]rest.Route{
+				{
+					// 权限列表
+					Method:  http.MethodGet,
+					Path:    "/permission/list",
+					Handler: permission.PermissionListHandler(serverCtx),
+				},
+				{
+					// 添加角色
+					Method:  http.MethodPost,
+					Path:    "/permission/role/add",
+					Handler: permission.AddRoleHandler(serverCtx),
+				},
+				{
+					// 删除角色
+					Method:  http.MethodDelete,
+					Path:    "/permission/role/delete",
+					Handler: permission.DeleteRoleHandler(serverCtx),
+				},
+				{
+					// 获取角色信息
+					Method:  http.MethodGet,
+					Path:    "/permission/role/info",
+					Handler: permission.GetRoleInfoHandler(serverCtx),
+				},
+				{
+					// 角色列表
+					Method:  http.MethodGet,
+					Path:    "/permission/role/list",
+					Handler: permission.RoleListHandler(serverCtx),
+				},
+				{
+					// 更新角色
+					Method:  http.MethodPost,
+					Path:    "/permission/role/update",
+					Handler: permission.UpdateRoleHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithPrefix("/v1"),
 	)
 

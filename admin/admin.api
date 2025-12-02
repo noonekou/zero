@@ -126,40 +126,53 @@ service admin-api {
 	post /auth/register (RegisterReq) returns (RegisterResp)
 
 	@doc (
+		summary: "退出登录"
+	)
+	@handler AuthLogout
+	post /auth/logout
+}
+
+@server (
+	group:      permission
+	middleware: AuthMiddleware,PermissionMiddleware
+	prefix:     /v1
+)
+service admin-api {
+	@doc (
 		summary: "权限列表"
 	)
 	@handler PermissionList
-	get /auth/permission/list returns ([]Permission)
+	get /permission/list returns ([]Permission)
 
 	@doc (
 		summary: "添加角色"
 	)
 	@handler AddRole
-	post /auth/role/add (Role)
+	post /permission/role/add (Role)
 
 	@doc (
 		summary: "更新角色"
 	)
 	@handler UpdateRole
-	post /auth/role/update (Role)
+	post /permission/role/update (Role)
 
 	@doc (
 		summary: "角色列表"
 	)
 	@handler RoleList
-	get /auth/role/list (PageReq) returns (RoleListResp)
+	get /permission/role/list (PageReq) returns (RoleListResp)
 
 	@doc (
 		summary: "获取角色信息"
 	)
 	@handler GetRoleInfo
-	get /auth/role/info (RoleInfoReq) returns (Role)
+	get /permission/role/info (RoleInfoReq) returns (Role)
 
 	@doc (
 		summary: "删除角色"
 	)
 	@handler DeleteRole
-	delete /auth/role/delete (RoleInfoReq)
+	delete /permission/role/delete (RoleInfoReq)
 }
 
 @server (

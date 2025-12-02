@@ -1,4 +1,7 @@
-package auth
+// Code scaffolded by goctl. Safe to edit.
+// goctl 1.9.2
+
+package permission
 
 import (
 	"context"
@@ -16,6 +19,7 @@ type DeleteRoleLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 删除角色
 func NewDeleteRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteRoleLogic {
 	return &DeleteRoleLogic{
 		Logger: logx.WithContext(ctx),

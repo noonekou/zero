@@ -1,4 +1,7 @@
-package auth
+// Code scaffolded by goctl. Safe to edit.
+// goctl 1.9.2
+
+package permission
 
 import (
 	"context"
@@ -17,6 +20,7 @@ type AddRoleLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 添加角色
 func NewAddRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRoleLogic {
 	return &AddRoleLogic{
 		Logger: logx.WithContext(ctx),
@@ -25,7 +29,7 @@ func NewAddRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddRoleLo
 	}
 }
 
-func (l *AddRoleLogic) AddRole(req *types.Role) (err error) {
+func (l *AddRoleLogic) AddRole(req *types.Role) error {
 	_, error := l.svcCtx.Auth.AddRole(l.ctx, &auth.Role{
 		Id:     req.Id,
 		Name:   req.Name,

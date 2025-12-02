@@ -43,19 +43,21 @@ INSERT INTO t_apis (code, method, path, description)
 VALUES (100000, 'POST', '/v1/auth/login', '员工登陆');
 INSERT INTO t_apis (code, method, path, description)
 VALUES (100001, 'POST', '/v1/auth/register', '员工注册');
+INSERT INTO t_apis (code, method, path, description)
+VALUES (100002, 'POST', '/v1/auth/logout', '退出登录');
 
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100002, 'POST', '/v1/auth/permission/list', '权限列表');
+VALUES (100002, 'POST', '/v1/permission/list', '权限列表');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100003, 'POST', '/v1/auth/role/add', '添加角色');
+VALUES (100003, 'POST', '/v1/permission/role/add', '添加角色');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100004, 'POST', '/v1/auth/role/update', '更新角色');
+VALUES (100004, 'POST', '/v1/permission/role/update', '更新角色');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100005, 'GET', '/v1/auth/role/list', '角色列表');
+VALUES (100005, 'GET', '/v1/permission/role/list', '角色列表');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100006, 'GET', '/v1/auth/role/info', '获取角色信息');
+VALUES (100006, 'GET', '/v1/permission/role/info', '获取角色信息');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100007, 'DELETE', '/v1/auth/role/delete', '删除角色');
+VALUES (100007, 'DELETE', '/v1/permission/role/delete', '删除角色');
 
 INSERT INTO t_apis (code, method, path, description)
 VALUES (200001, 'GET', '/v1/user/info', '获取用户信息');

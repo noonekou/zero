@@ -1,4 +1,7 @@
-package auth
+// Code scaffolded by goctl. Safe to edit.
+// goctl 1.9.2
+
+package permission
 
 import (
 	"context"
@@ -17,6 +20,7 @@ type RoleListLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 角色列表
 func NewRoleListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RoleListLogic {
 	return &RoleListLogic{
 		Logger: logx.WithContext(ctx),

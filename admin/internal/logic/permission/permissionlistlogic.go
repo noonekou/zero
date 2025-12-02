@@ -1,4 +1,7 @@
-package auth
+// Code scaffolded by goctl. Safe to edit.
+// goctl 1.9.2
+
+package permission
 
 import (
 	"context"
@@ -16,6 +19,7 @@ type PermissionListLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
+// 权限列表
 func NewPermissionListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PermissionListLogic {
 	return &PermissionListLogic{
 		Logger: logx.WithContext(ctx),
