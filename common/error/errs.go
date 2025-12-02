@@ -20,12 +20,13 @@ const (
 	ErrCodePermissionNotFound    = 10006
 	ErrCodeRoleNameCannotBeEmpty = 10007
 
-	ErrCodeUsernameNotExist          = 20000
-	ErrCodeUsernameOrPasswordIsEmpty = 20001
-	ErrCodePasswordMissMatch         = 20002
-	ErrCodeUsernameAlreadyExist      = 20003
-	ErrCodeUserNotFound              = 20004
-	ErrCodeUserDisabled              = 20005
+	ErrCodeUsernameNotExist            = 20000
+	ErrCodeUsernameOrPasswordIsEmpty   = 20001
+	ErrCodePasswordMissMatch           = 20002
+	ErrCodeUsernameAlreadyExist        = 20003
+	ErrCodeUserNotFound                = 20004
+	ErrCodeUserDisabled                = 20005
+	ErrCodeUsernameOrEmailAlreadyExist = 20006
 )
 
 type MyError struct {
@@ -62,12 +63,13 @@ var (
 	ErrRoleNameNotFound      = NewMyError(ErrCodeRoleNameCannotBeEmpty, "role name cannot be empty")
 	ErrRoleNameCannotBeEmpty = NewMyError(ErrCodeRoleNameCannotBeEmpty, "role name cannot be empty")
 
-	ErrUsernameNotExist          = NewMyError(ErrCodeUsernameNotExist, "username not exist")
-	ErrUsernameOrPasswordIsEmpty = NewMyError(ErrCodeUsernameOrPasswordIsEmpty, "username or password is empty")
-	ErrPasswordMissMatch         = NewMyError(ErrCodePasswordMissMatch, "password miss match")
-	ErrUsernameAlreadyExist      = NewMyError(ErrCodeUsernameAlreadyExist, "username already exist")
-	ErrUserNotFound              = NewMyError(ErrCodeUserNotFound, "user not found")
-	ErrUserDisabled              = NewMyError(ErrCodeUserDisabled, "user is disabled")
+	ErrUsernameNotExist            = NewMyError(ErrCodeUsernameNotExist, "username not exist")
+	ErrUsernameOrPasswordIsEmpty   = NewMyError(ErrCodeUsernameOrPasswordIsEmpty, "username or password is empty")
+	ErrPasswordMissMatch           = NewMyError(ErrCodePasswordMissMatch, "password miss match")
+	ErrUsernameAlreadyExist        = NewMyError(ErrCodeUsernameAlreadyExist, "username already exist")
+	ErrUserNotFound                = NewMyError(ErrCodeUserNotFound, "user not found")
+	ErrUserDisabled                = NewMyError(ErrCodeUserDisabled, "user is disabled")
+	ErrUsernameOrEmailAlreadyExist = NewMyError(ErrCodeUsernameOrEmailAlreadyExist, "username or email already exist")
 )
 
 func IsMyError(err error, code ErrorCodeType) bool {
