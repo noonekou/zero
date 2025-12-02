@@ -1,12 +1,11 @@
 -- 资源表
 INSERT INTO t_resource (code, name, parent_code, description)
 VALUES (1000000, 'dashboard', 0, '仪表盘');
+INSERT INTO t_resource (code, name, parent_code, description)VALUES (2000000, 'system', 0, '权限');
 INSERT INTO t_resource (code, name, parent_code, description)
-VALUES (2000000, 'employee', 0, '权限');
+VALUES (2000001, 'system:employee', 2000000, '员工');
 INSERT INTO t_resource (code, name, parent_code, description)
-VALUES (2000001, 'employee:employee', 2000000, '员工');
-INSERT INTO t_resource (code, name, parent_code, description)
-VALUES (2000002, 'employee:role', 2000000, '角色');
+VALUES (2000002, 'system:role', 2000000, '角色');
 
 
 -- 权限表
@@ -17,26 +16,26 @@ VALUES ('dashboard:read', 'dashboard', 'read', '仪表盘-列表');
 
 -- 员工
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:employee:read', 'employee:employee', 'read', '员工-列表');
+VALUES ('system:employee:read', 'system:employee', 'read', '员工-列表');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:employee:create', 'employee:employee', 'create', '员工-新建');
+VALUES ('system:employee:create', 'system:employee', 'create', '员工-新建');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:employee:update', 'employee:employee', 'update', '员工-更新');
+VALUES ('system:employee:update', 'system:employee', 'update', '员工-更新');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:employee:delete', 'employee:employee', 'delete', '员工-删除');
+VALUES ('system:employee:delete', 'system:employee', 'delete', '员工-删除');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:employee:view', 'employee:employee', 'view', '员工-详情');
+VALUES ('system:employee:view', 'system:employee', 'view', '员工-详情');
 -- 角色
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:role:read', 'employee:role', 'read', '角色-列表');
+VALUES ('system:role:read', 'system:role', 'read', '角色-列表');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:role:create', 'employee:role', 'create', '角色-新建');
+VALUES ('system:role:create', 'system:role', 'create', '角色-新建');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:role:update', 'employee:role', 'update', '角色-更新');
+VALUES ('system:role:update', 'system:role', 'update', '角色-更新');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:role:delete', 'employee:role', 'delete', '角色-删除');
+VALUES ('system:role:delete', 'system:role', 'delete', '角色-删除');
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('employee:role:view', 'employee:role', 'view', '角色-详情');
+VALUES ('system:role:view', 'system:role', 'view', '角色-详情');
 
 
 -- API 表
@@ -76,17 +75,17 @@ INSERT INTO t_api_permission (api_code, permission_name)
 VALUES (100001, '*');
 
 INSERT INTO t_api_permission (api_code, permission_name) VALUES (100002, '*');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100003, 'employee:role:create');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100004, 'employee:role:update');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100005, 'employee:role:read');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100006, 'employee:role:view');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100007, 'employee:role:delete');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100003, 'system:role:create');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100004, 'system:role:update');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100005, 'system:role:read');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100006, 'system:role:view');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (100007, 'system:role:delete');
 
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (200001, 'employee:role:view');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (200002, 'employee:role:read');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (200003, 'employee:role:create');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (200004, 'employee:role:update');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (200005, 'employee:role:delete');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200001, 'system:role:view');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200002, 'system:role:read');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200003, 'system:role:create');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200004, 'system:role:update');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200005, 'system:role:delete');
 
 -- 角色表
 INSERT INTO t_role (name)
@@ -98,27 +97,27 @@ VALUES ('admin', 'dashboard:read');
 
 -- 员工
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:employee:read');
+VALUES ('admin', 'system:employee:read');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:employee:create');
+VALUES ('admin', 'system:employee:create');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:employee:update');
+VALUES ('admin', 'system:employee:update');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:employee:delete');
+VALUES ('admin', 'system:employee:delete');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:employee:view');
+VALUES ('admin', 'system:employee:view');
 
 -- 角色
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:role:read');
+VALUES ('admin', 'system:role:read');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:role:create');
+VALUES ('admin', 'system:role:create');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:role:update');
+VALUES ('admin', 'system:role:update');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:role:delete');
+VALUES ('admin', 'system:role:delete');
 INSERT INTO t_role_permission (role_name, permission_name)
-VALUES ('admin', 'employee:role:view');
+VALUES ('admin', 'system:role:view');
 
 -- 用户表
 -- pwd: (5pJsw1G9r9[f)
