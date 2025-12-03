@@ -9,6 +9,8 @@ import (
 	"bookstore/admin/internal/logic/permission"
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/common/response"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -23,10 +25,6 @@ func DeleteRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := permission.NewDeleteRoleLogic(r.Context(), svcCtx)
 		err := l.DeleteRole(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.Ok(w)
-		}
+		response.Response(w, nil, err)
 	}
 }

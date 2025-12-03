@@ -9,6 +9,8 @@ import (
 	"bookstore/admin/internal/logic/permission"
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/common/response"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
@@ -23,10 +25,6 @@ func UpdateRoleHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := permission.NewUpdateRoleLogic(r.Context(), svcCtx)
 		err := l.UpdateRole(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.Ok(w)
-		}
+		response.Response(w, nil, err)
 	}
 }

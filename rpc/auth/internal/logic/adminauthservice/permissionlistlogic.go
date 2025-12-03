@@ -57,9 +57,14 @@ func (l *PermissionListLogic) PermissionList(in *auth.PermissionListReq) (*auth.
 			}
 
 		}
-		pId := v.Id
+		var pId int64
 		if len(children) > 0 {
 			pId = 0
+		} else {
+			curPermission := lo.Filter(permissions, func(m model.TPermission, index int) bool {
+				return m.ResourceName == v.Name
+			})
+			pId = curPermission[0].Id
 		}
 		permission := auth.Permission{Id: pId, Code: int32(v.Code), Description: v.Description, ParentCode: int32(v.ParentCode), Children: children, CreatedAt: v.CreatedAt.Unix(), UpdatedAt: v.UpdatedAt.Unix()}
 		list = append(list, &permission)

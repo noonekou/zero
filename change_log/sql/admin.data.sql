@@ -1,3 +1,12 @@
+DELETE FROM t_role;
+DELETE FROM t_role_permission;
+DELETE FROM t_admin_user_role;
+DELETE FROM t_admin_user;
+DELETE FROM t_api_permission;
+DELETE FROM t_apis;
+DELETE FROM t_permission;
+DELETE FROM t_resource;
+
 -- 资源表
 INSERT INTO t_resource (code, name, parent_code, description)
 VALUES (1000000, 'dashboard', 0, '仪表盘');
@@ -6,7 +15,6 @@ INSERT INTO t_resource (code, name, parent_code, description)
 VALUES (2000001, 'system:employee', 2000000, '员工');
 INSERT INTO t_resource (code, name, parent_code, description)
 VALUES (2000002, 'system:role', 2000000, '角色');
-
 
 -- 权限表
 
@@ -47,17 +55,17 @@ INSERT INTO t_apis (code, method, path, description)
 VALUES (100002, 'POST', '/v1/auth/logout', '退出登录');
 
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100002, 'POST', '/v1/permission/list', '权限列表');
+VALUES (300001, 'GET', '/v1/permission/list', '权限列表');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100003, 'POST', '/v1/permission/role/add', '添加角色');
+VALUES (300002, 'POST', '/v1/permission/role/add', '添加角色');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100004, 'POST', '/v1/permission/role/update', '更新角色');
+VALUES (300003, 'POST', '/v1/permission/role/update', '更新角色');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100005, 'GET', '/v1/permission/role/list', '角色列表');
+VALUES (300004, 'GET', '/v1/permission/role/list', '角色列表');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100006, 'GET', '/v1/permission/role/info', '获取角色信息');
+VALUES (300005, 'GET', '/v1/permission/role/info', '获取角色信息');
 INSERT INTO t_apis (code, method, path, description)
-VALUES (100007, 'DELETE', '/v1/permission/role/delete', '删除角色');
+VALUES (300006, 'DELETE', '/v1/permission/role/delete', '删除角色');
 
 INSERT INTO t_apis (code, method, path, description)
 VALUES (200001, 'GET', '/v1/user/info', '获取用户信息');
@@ -75,15 +83,16 @@ INSERT INTO t_api_permission (api_code, permission_name)
 VALUES (100000, '*');
 INSERT INTO t_api_permission (api_code, permission_name)
 VALUES (100001, '*');
-
 INSERT INTO t_api_permission (api_code, permission_name) VALUES (100002, '*');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100003, 'system:role:create');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100004, 'system:role:update');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100005, 'system:role:read');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100006, 'system:role:view');
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (100007, 'system:role:delete');
 
-INSERT INTO t_api_permission (api_code, permission_name) VALUES (200001, 'system:role:view');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (300001, '*');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (300002, 'system:role:create');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (300003, 'system:role:update');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (300004, 'system:role:read');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (300005, 'system:role:view');
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (300006, 'system:role:delete');
+
+INSERT INTO t_api_permission (api_code, permission_name) VALUES (200001, '*');
 INSERT INTO t_api_permission (api_code, permission_name) VALUES (200002, 'system:role:read');
 INSERT INTO t_api_permission (api_code, permission_name) VALUES (200003, 'system:role:create');
 INSERT INTO t_api_permission (api_code, permission_name) VALUES (200004, 'system:role:update');

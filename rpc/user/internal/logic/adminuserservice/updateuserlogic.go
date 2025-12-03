@@ -36,14 +36,20 @@ func (l *UpdateUserLogic) UpdateUser(in *user.UserUpdateReq) (*user.UserInfo, er
 		adminUserModel := l.svcCtx.AdminUserModel.WithSession(session)
 		adminUserRoleModel := l.svcCtx.AdminUserRoleModel.WithSession(session)
 
+		oldUser, err := adminUserModel.FindOne(ctx, in.Info.Id)
+		if err != nil {
+			return err
+		}
+
 		err = adminUserModel.Update(ctx, &model.TAdminUser{
 			Id:       in.Info.Id,
 			Username: in.Info.UserName,
-			Nickname: in.Info.NickName,
-			Avatar:   in.Info.Avatar,
+			Nickname: oldUser.Nickname,
+			Avatar:   oldUser.Avatar,
 			Email:    in.Info.Email,
-			Phone:    in.Info.Phone,
+			Phone:    oldUser.Phone,
 			Status:   int64(in.Info.Status),
+			Password: oldUser.Password,
 		})
 
 		if err != nil {
