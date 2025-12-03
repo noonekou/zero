@@ -15,7 +15,7 @@ const (
 )
 
 func TestGenToken(t *testing.T) {
-	token, err := GenerateToken("2yB#@guNbKJDtgys", 3600, 4)
+	token, err := GenerateToken("2yB#@guNbKJDtgys", 360000, 4)
 	fmt.Println(token)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, token)

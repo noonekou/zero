@@ -26,51 +26,51 @@ func NewPermissionListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Pe
 }
 
 func (l *PermissionListLogic) PermissionList(in *auth.PermissionListReq) (*auth.PermissionListResp, error) {
-	resources, err := l.svcCtx.ResourceModel.FindAll(l.ctx)
+
+	all, err := l.svcCtx.PermissionModel.FindParentAll(l.ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	permissions, err := l.svcCtx.PermissionModel.FindAll(l.ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	list := make([]*auth.Permission, 0)
-
-	rootResource := lo.Filter(resources, func(v model.TResource, index int) bool {
-		return v.ParentCode == 0
+	group := lo.GroupBy(all, func(v model.TPermissionParentData) int {
+		return v.ParentCode
 	})
 
-	for _, v := range rootResource {
-		subResource := lo.Filter(resources, func(m model.TResource, index int) bool {
-			return m.ParentCode == v.Code
-		})
+	var iter func(pCode int) []*auth.Permission
+	iter = func(pCode int) []*auth.Permission {
+		if _, ok := group[pCode]; !ok {
+			return []*auth.Permission{}
+		}
 		children := make([]*auth.Permission, 0)
-		for _, s := range subResource {
-			curPermission := lo.Filter(permissions, func(m model.TPermission, index int) bool {
-				return m.ResourceName == s.Name
+		for _, v := range group[pCode] {
+			children = append(children, &auth.Permission{
+				Id:          v.Id,
+				Code:        int32(v.Code),
+				Description: v.Description,
+				ParentCode:  int32(v.ParentCode),
+				Children:    iter(int(v.Code)),
+				CreatedAt:   v.CreatedAt.Unix(),
+				UpdatedAt:   v.UpdatedAt.Unix(),
 			})
-
-			for _, p := range curPermission {
-				children = append(children, &auth.Permission{Id: p.Id, Code: int32(s.Code), Description: p.Description.String, ParentCode: int32(s.ParentCode), Children: nil, CreatedAt: s.CreatedAt.Unix(), UpdatedAt: s.UpdatedAt.Unix()})
-			}
-
 		}
-		var pId int64
-		if len(children) > 0 {
-			pId = 0
-		} else {
-			curPermission := lo.Filter(permissions, func(m model.TPermission, index int) bool {
-				return m.ResourceName == v.Name
-			})
-			pId = curPermission[0].Id
-		}
-		permission := auth.Permission{Id: pId, Code: int32(v.Code), Description: v.Description, ParentCode: int32(v.ParentCode), Children: children, CreatedAt: v.CreatedAt.Unix(), UpdatedAt: v.UpdatedAt.Unix()}
-		list = append(list, &permission)
+
+		return children
+	}
+
+	temp := make([]*auth.Permission, 0)
+	for _, v := range group[0] {
+		temp = append(temp, &auth.Permission{
+			Id:          v.Id,
+			Code:        int32(v.Code),
+			Description: v.PDescription,
+			ParentCode:  int32(v.ParentCode),
+			Children:    iter(int(v.Code)),
+			CreatedAt:   v.CreatedAt.Unix(),
+			UpdatedAt:   v.UpdatedAt.Unix(),
+		})
 	}
 
 	return &auth.PermissionListResp{
-		List: list,
+		List: temp,
 	}, nil
 }

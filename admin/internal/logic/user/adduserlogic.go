@@ -30,8 +30,8 @@ func NewAddUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddUserLo
 }
 
 func (l *AddUserLogic) AddUser(req *types.UserInfo) error {
-	ids := lo.Map(req.Roles, func(role types.RolePermission, _ int) int64 {
-		return role.RoleId
+	ids := lo.Map(req.Roles, func(role types.Role, _ int) int64 {
+		return role.Id
 	})
 	_, err := l.svcCtx.AdminUser.AddUser(l.ctx, &adminuserservice.UserUpdateReq{
 		Info: &adminuserservice.UserInfo{

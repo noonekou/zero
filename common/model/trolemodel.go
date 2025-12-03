@@ -14,7 +14,7 @@ type (
 	// and implement the added methods in customTRoleModel.
 	TRoleModel interface {
 		tRoleModel
-		withSession(session sqlx.Session) TRoleModel
+		WithSession(session sqlx.Session) TRoleModel
 		FindByPage(ctx context.Context, page, pageSize int64) (*[]TRole, error)
 		Count(ctx context.Context) (int64, error)
 	}
@@ -31,7 +31,7 @@ func NewTRoleModel(conn sqlx.SqlConn) TRoleModel {
 	}
 }
 
-func (m *customTRoleModel) withSession(session sqlx.Session) TRoleModel {
+func (m *customTRoleModel) WithSession(session sqlx.Session) TRoleModel {
 	return NewTRoleModel(sqlx.NewSqlConnFromSession(session))
 }
 

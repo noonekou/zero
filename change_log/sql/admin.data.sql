@@ -20,7 +20,7 @@ VALUES (2000002, 'system:role', 2000000, '角色');
 
 -- 仪表盘
 INSERT INTO t_permission (name, resource_name, action, description)
-VALUES ('dashboard:read', 'dashboard', 'read', '仪表盘-列表');
+VALUES ('dashboard:read', 'dashboard', 'read', '仪表盘');
 
 -- 员工
 INSERT INTO t_permission (name, resource_name, action, description)

@@ -9,6 +9,7 @@ import (
 	"bookstore/rpc/auth/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 type DeleteRoleLogic struct {
@@ -39,14 +40,18 @@ func (l *DeleteRoleLogic) DeleteRole(in *auth.RoleInfoReq) (*auth.Empty, error) 
 		return nil, errs.ErrRoleNotFound.GRPCStatus().Err()
 	}
 
-	err = l.svcCtx.RoleModel.Delete(l.ctx, in.Id)
-	if err != nil {
-		return nil, err
-	}
-	err = l.svcCtx.RolePermissionModel.DeleteByRoleName(l.ctx, role.Name)
-	if err != nil {
-		return nil, err
-	}
+	err = l.svcCtx.Conn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
+		// Use session-based models to ensure operations run within transaction
+		roleModel := l.svcCtx.RoleModel.WithSession(session)
+		rolePermissionModel := l.svcCtx.RolePermissionModel.WithSession(session)
 
-	return &auth.Empty{}, nil
+		err = roleModel.Delete(ctx, in.Id)
+		if err != nil {
+			return err
+		}
+		err = rolePermissionModel.DeleteByRoleName(ctx, role.Name)
+		return err
+	})
+
+	return &auth.Empty{}, err
 }

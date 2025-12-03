@@ -5,8 +5,10 @@ import (
 
 	"bookstore/admin/internal/svc"
 	"bookstore/admin/internal/types"
+	"bookstore/common/model"
 	"bookstore/rpc/user/client/adminuserservice"
 
+	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -38,34 +40,37 @@ func (l *UserListLogic) UserList(req *types.PageReq) (resp *types.UserListResp, 
 	listData := make([]types.UserInfo, 0)
 	for _, v := range list.List {
 
-		userRoles, err := l.svcCtx.AdminUserRoleModel.FindAllByUserId(l.ctx, v.Id)
+		// Query user roles
+		rolePermissions, err := l.svcCtx.RolePermissionModel.FindPermissionsByUserId(l.ctx, v.Id)
 		if err != nil {
 			return nil, err
 		}
 
-		roles := make([]types.RolePermission, 0)
-		for _, userRole := range userRoles {
-			// Get role information
-			role, err := l.svcCtx.RoleModel.FindOne(l.ctx, userRole.RoleId)
-			if err != nil {
-				continue // Skip if role not found
-			}
+		rolePermissionsGroup := lo.GroupBy(rolePermissions, func(item model.TRolePermissionData) string {
+			return item.RoleName
+		})
 
-			// Get role permissions
-			permissions, err := l.svcCtx.RolePermissionModel.FindByRoleName(l.ctx, role.Name)
-			if err != nil {
-				continue // Skip if permissions not found
-			}
+		roles := make([]types.Role, 0)
+		for roleName, rolePermissions := range rolePermissionsGroup {
+			permissions := lo.Map(rolePermissions, func(item model.TRolePermissionData, _ int) types.Permission {
+				return types.Permission{
+					Id:          item.PermissionId,
+					Code:        item.PermissionCode, // Converting first char of code string to int
+					Description: item.PermissionDescription,
+					ParentCode:  int(item.PermissionParentCode),
+					Children:    []types.Permission{},
+					CreatedAt:   item.CreatedAt.Unix(),
+					UpdatedAt:   item.UpdatedAt.Unix(),
+				}
+			})
 
-			// Add each permission as a separate RolePermission entry
-			for _, perm := range permissions {
-				roles = append(roles, types.RolePermission{
-					RoleId:         role.Id,
-					RoleName:       role.Name,
-					PermissionId:   perm.Id,
-					PermissionName: perm.PermissionName,
-				})
-			}
+			roles = append(roles, types.Role{
+				Id:          int64(rolePermissions[0].RoleId),
+				Name:        roleName,
+				Permissions: permissions,
+				CreatedAt:   rolePermissions[0].CreatedAt.Unix(),
+				UpdatedAt:   rolePermissions[0].UpdatedAt.Unix(),
+			})
 		}
 
 		listData = append(listData, types.UserInfo{Id: v.Id, UserName: v.UserName, NickName: v.NickName, Avatar: v.Avatar, Email: v.Email, Phone: v.Phone, Roles: roles, Status: int(v.Status), CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt})

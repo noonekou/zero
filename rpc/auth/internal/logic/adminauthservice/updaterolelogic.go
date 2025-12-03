@@ -11,6 +11,7 @@ import (
 
 	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 type UpdateRoleLogic struct {
@@ -59,33 +60,38 @@ func (l *UpdateRoleLogic) UpdateRole(in *auth.Role) (*auth.Empty, error) {
 		}
 	}
 
-	permissions, err := l.svcCtx.PermissionModel.FindAll(l.ctx)
-	if err != nil {
-		return nil, err
-	}
+	err = l.svcCtx.Conn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
+		roleModel := l.svcCtx.RoleModel.WithSession(session)
+		rolePermissionModel := l.svcCtx.RolePermissionModel.WithSession(session)
+		permissionModel := l.svcCtx.PermissionModel.WithSession(session)
 
-	err = l.svcCtx.RolePermissionModel.DeleteByRoleName(l.ctx, role.Name)
-	if err != nil {
-		return nil, err
-	}
+		permissions, err := permissionModel.FindAll(ctx)
+		if err != nil {
+			return err
+		}
 
-	toInsertPermission := lo.Filter(permissions, func(v model.TPermission, index int) bool {
-		return lo.ContainsBy(in.Permissions, func(v2 *auth.Permission) bool {
-			return v.Id == v2.Id
+		err = rolePermissionModel.DeleteByRoleName(ctx, role.Name)
+		if err != nil {
+			return err
+		}
+
+		toInsertPermission := lo.Filter(permissions, func(v model.TPermission, index int) bool {
+			return lo.ContainsBy(in.Permissions, func(v2 *auth.Permission) bool {
+				return v.Id == v2.Id
+			})
 		})
+
+		for _, v := range toInsertPermission {
+			_, err = rolePermissionModel.Insert(ctx, &model.TRolePermission{RoleName: in.Name, PermissionName: v.Name})
+			if err != nil {
+				return err
+			}
+		}
+
+		err = roleModel.Update(ctx, &model.TRole{Id: in.Id, Name: in.Name, Status: in.Status})
+
+		return err
 	})
 
-	for _, v := range toInsertPermission {
-		_, err = l.svcCtx.RolePermissionModel.Insert(l.ctx, &model.TRolePermission{RoleName: in.Name, PermissionName: v.Name})
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	err = l.svcCtx.RoleModel.Update(l.ctx, &model.TRole{Id: in.Id, Name: in.Name, Status: in.Status})
-	if err != nil {
-		return nil, err
-	}
-
-	return &auth.Empty{}, nil
+	return &auth.Empty{}, err
 }

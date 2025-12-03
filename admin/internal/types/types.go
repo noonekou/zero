@@ -68,16 +68,16 @@ type RolePermission struct {
 }
 
 type UserInfo struct {
-	Id        int64            `json:"id"`                  // 用户ID
-	UserName  string           `json:"username"`            // 用户名
-	NickName  string           `json:"nickname,optional"`   // 昵称
-	Avatar    string           `json:"avatar,optional"`     // 头像
-	Email     string           `json:"email,optional"`      // 邮箱
-	Phone     string           `json:"phone,optional"`      // 手机号
-	Roles     []RolePermission `json:"roles"`               // 角色
-	Status    int              `json:"status"`              // 状态
-	CreatedAt int64            `json:"created_at,optional"` // 创建时间
-	UpdatedAt int64            `json:"updated_at,optional"` // 更新时间
+	Id        int64  `json:"id"`                  // 用户ID
+	UserName  string `json:"username"`            // 用户名
+	NickName  string `json:"nickname,optional"`   // 昵称
+	Avatar    string `json:"avatar,optional"`     // 头像
+	Email     string `json:"email,optional"`      // 邮箱
+	Phone     string `json:"phone,optional"`      // 手机号
+	Roles     []Role `json:"roles"`               // 角色
+	Status    int    `json:"status"`              // 状态
+	CreatedAt int64  `json:"created_at,optional"` // 创建时间
+	UpdatedAt int64  `json:"updated_at,optional"` // 更新时间
 }
 
 type UserInfoReq struct {

@@ -31,8 +31,8 @@ func NewUpdateUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 
 func (l *UpdateUserLogic) UpdateUser(req *types.UserInfo) error {
 
-	ids := lo.Map(req.Roles, func(role types.RolePermission, _ int) int64 {
-		return role.RoleId
+	ids := lo.Map(req.Roles, func(role types.Role, _ int) int64 {
+		return role.Id
 	})
 
 	_, err := l.svcCtx.AdminUser.UpdateUser(l.ctx, &adminuserservice.UserUpdateReq{
