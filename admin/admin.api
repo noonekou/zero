@@ -124,7 +124,14 @@ service admin-api {
 	)
 	@handler AuthRegister
 	post /auth/register (RegisterReq) returns (RegisterResp)
+}
 
+@server (
+	group:      auth
+	prefix:     /v1
+	middleware: AuthMiddleware
+)
+service admin-api {
 	@doc (
 		summary: "退出登录"
 	)

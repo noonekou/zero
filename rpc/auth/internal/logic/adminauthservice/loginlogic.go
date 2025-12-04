@@ -61,5 +61,13 @@ func (l *LoginLogic) Login(in *auth.LoginReq) (*auth.LoginResp, error) {
 		return nil, err
 	}
 
+	// Store token in Redis
+	tokenKey := common.GetTokenKey(tUser.Id)
+	err = l.svcCtx.RedisClient.Setex(tokenKey, token, int(l.svcCtx.Config.Authorization.AccessExpire))
+	if err != nil {
+		logx.Errorf("Failed to store token in Redis: %v", err)
+		// Continue even if Redis fails (fallback to JWT validation)
+	}
+
 	return &auth.LoginResp{Token: token}, nil
 }

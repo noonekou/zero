@@ -5,6 +5,7 @@ import (
 	"bookstore/rpc/auth/internal/config"
 
 	_ "github.com/lib/pq"
+	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
@@ -18,6 +19,7 @@ type ServiceContext struct {
 	RoleModel           model.TRoleModel
 	RolePermissionModel model.TRolePermissionModel
 	Conn                sqlx.SqlConn
+	RedisClient         *redis.Redis
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -32,5 +34,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		ResourceModel:       model.NewTResourceModel(conn),
 		RoleModel:           model.NewTRoleModel(conn),
 		RolePermissionModel: model.NewTRolePermissionModel(conn),
+		RedisClient:         redis.MustNewRedis(c.TokenRedis),
 	}
 }

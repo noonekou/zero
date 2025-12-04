@@ -24,18 +24,27 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: auth.AuthLoginHandler(serverCtx),
 			},
 			{
-				// 退出登录
-				Method:  http.MethodPost,
-				Path:    "/auth/logout",
-				Handler: auth.AuthLogoutHandler(serverCtx),
-			},
-			{
 				// 注册
 				Method:  http.MethodPost,
 				Path:    "/auth/register",
 				Handler: auth.AuthRegisterHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/v1"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthMiddleware},
+			[]rest.Route{
+				{
+					// 退出登录
+					Method:  http.MethodPost,
+					Path:    "/auth/logout",
+					Handler: auth.AuthLogoutHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithPrefix("/v1"),
 	)
 

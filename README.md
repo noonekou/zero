@@ -178,6 +178,31 @@ psql -h hostname -p port -U username -d dbname
 \d 表的结构
 \q 退出
 
+# Redis
+
+```redis
+// 连接本地数据库
+redis-cli -a 123456 -h 127.0.0.1 -p 6379
+
+// 连接远程数据库
+redis-cli -h hostname -p port -a 123456 -h 127.0.0.1 -p 6379
+
+docker exec -it redis redis-cli -a 123456
+```
+
+常用命令
+KEYS * 列出所有key
+DEL key 删除key
+GET key 获取key的值
+SET key value 设置key的值
+EXISTS key 检查key是否存在
+EXPIRE key seconds 设置key的过期时间
+TTL key 查看key的剩余生存时间
+EXPIREAT key timestamp 设置key的过期时间
+
+INFO 查看 Redis 服务器的详细信息（如内存、客户端连接数等）
+FLUSHDB 清空数据库
+FLUSHALL 清空所有数据库
 
 # API 文档
 

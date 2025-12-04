@@ -86,6 +86,18 @@ services:
       - etcd_data:/bitnami/etcd/data
     restart: always
 
+  redis:
+    image: redis:7-alpine
+    container_name: zero-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass "123456"
+    volumes:
+      - redis_data:/data
+    networks:
+      - admin-net
+    restart: always
+
   etcdkeeper:
     image: evildecay/etcdkeeper:latest # 最新维护的 etcd Web UI (v0.7.8, 2024-09)
     container_name: etcdkeeper
@@ -142,3 +154,4 @@ volumes:
   pg_data:
   etcd_data:
   prometheus_data:
+  redis_data:

@@ -13,6 +13,11 @@ Authorization:
 
 DataSource: postgres://postgres:123456@pg:5432/gozero?sslmode=disable
 
+TokenRedis:
+  Host: zero-redis:6379
+  Type: node
+  Pass: "123456"
+
   #Monitoring
 Prometheus:
   Host: 0.0.0.0

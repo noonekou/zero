@@ -8,7 +8,7 @@ import (
 
 	"bookstore/admin/internal/logic/auth"
 	"bookstore/admin/internal/svc"
-	"github.com/zeromicro/go-zero/rest/httpx"
+	"bookstore/common/response"
 )
 
 // 退出登录
@@ -16,10 +16,7 @@ func AuthLogoutHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		l := auth.NewAuthLogoutLogic(r.Context(), svcCtx)
 		err := l.AuthLogout()
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.Ok(w)
-		}
+		response.Response(w, nil, err)
+
 	}
 }
