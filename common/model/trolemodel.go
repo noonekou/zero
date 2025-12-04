@@ -36,7 +36,7 @@ func (m *customTRoleModel) WithSession(session sqlx.Session) TRoleModel {
 }
 
 func (m *customTRoleModel) FindByPage(ctx context.Context, page, pageSize int64) (*[]TRole, error) {
-	query := fmt.Sprintf("select %s from %s limit $1 offset $2", tRoleRows, m.table)
+	query := fmt.Sprintf("select %s from %s order by created_at desc limit $1 offset $2 ", tRoleRows, m.table)
 	var resp []TRole
 	err := m.conn.QueryRowsCtx(ctx, &resp, query, pageSize, (page-1)*pageSize)
 	switch err {

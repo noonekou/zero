@@ -1,7 +1,9 @@
 package adminauthservicelogic
 
 import (
+	"cmp"
 	"context"
+	"slices"
 
 	"bookstore/common/model"
 	"bookstore/rpc/auth/auth"
@@ -53,6 +55,10 @@ func (l *PermissionListLogic) PermissionList(in *auth.PermissionListReq) (*auth.
 				UpdatedAt:   v.UpdatedAt.Unix(),
 			})
 		}
+
+		slices.SortFunc(children, func(a, b *auth.Permission) int {
+			return cmp.Compare(a.Id, b.Id)
+		})
 
 		return children
 	}
