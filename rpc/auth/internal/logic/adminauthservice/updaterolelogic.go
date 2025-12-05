@@ -81,8 +81,17 @@ func (l *UpdateRoleLogic) UpdateRole(in *auth.Role) (*auth.Empty, error) {
 			})
 		})
 
-		for _, v := range toInsertPermission {
-			_, err = rolePermissionModel.Insert(ctx, &model.TRolePermission{RoleName: in.Name, PermissionName: v.Name})
+		// 批量插入角色权限关系
+		if len(toInsertPermission) > 0 {
+			rolePermissions := make([]*model.TRolePermission, 0, len(toInsertPermission))
+			for _, permission := range toInsertPermission {
+				rolePermissions = append(rolePermissions, &model.TRolePermission{
+					RoleName:       in.Name,
+					PermissionName: permission.Name,
+				})
+			}
+
+			err = rolePermissionModel.BatchInsert(ctx, rolePermissions)
 			if err != nil {
 				return err
 			}

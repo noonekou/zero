@@ -57,7 +57,6 @@ func (l *AddUserLogic) AddUser(in *user.UserUpdateReq) (*user.UserInfo, error) {
 				userRoles = append(userRoles, &model.TAdminUserRole{
 					UserId: uid,
 					RoleId: roleId,
-					Status: 1, // 默认状态为启用
 				})
 			}
 
