@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -20,6 +21,7 @@ type (
 		FindPermissionsByUserId(ctx context.Context, userId int64) ([]TRolePermissionData, error)
 		FindByRoleName(ctx context.Context, roleName string) ([]TPermissionData, error)
 		DeleteByRoleName(ctx context.Context, roleName string) error
+		BatchInsert(ctx context.Context, data []*TRolePermission) error
 	}
 
 	customTRolePermissionModel struct {
@@ -100,5 +102,30 @@ func (m *defaultTRolePermissionModel) FindByRoleName(ctx context.Context, roleNa
 func (m *customTRolePermissionModel) DeleteByRoleName(ctx context.Context, roleName string) error {
 	query := fmt.Sprintf("delete from %s where role_name = $1", m.table)
 	_, err := m.conn.ExecCtx(ctx, query, roleName)
+	return err
+}
+
+// BatchInsert 批量插入角色权限关系
+func (m *defaultTRolePermissionModel) BatchInsert(ctx context.Context, data []*TRolePermission) error {
+	if len(data) == 0 {
+		return nil
+	}
+
+	// 构建批量插入的 SQL
+	// INSERT INTO table (role_name, permission_name) VALUES ($1, $2), ($3, $4), ...
+	valueStrings := make([]string, 0, len(data))
+	valueArgs := make([]interface{}, 0, len(data)*2)
+
+	for i, item := range data {
+		valueStrings = append(valueStrings, fmt.Sprintf("($%d, $%d)", i*2+1, i*2+2))
+		valueArgs = append(valueArgs, item.RoleName, item.PermissionName)
+	}
+
+	query := fmt.Sprintf("INSERT INTO %s (%s) VALUES %s",
+		m.table,
+		tRolePermissionRowsExpectAutoSet,
+		strings.Join(valueStrings, ","))
+
+	_, err := m.conn.ExecCtx(ctx, query, valueArgs...)
 	return err
 }

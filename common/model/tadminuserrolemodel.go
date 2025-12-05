@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
@@ -17,6 +18,7 @@ type (
 		WithSession(session sqlx.Session) TAdminUserRoleModel
 		FindAllByUserId(ctx context.Context, userId int64) ([]TAdminUserRole, error)
 		DeleteByUserId(ctx context.Context, userId int64) error
+		BatchInsert(ctx context.Context, data []*TAdminUserRole) error
 	}
 
 	customTAdminUserRoleModel struct {
@@ -52,5 +54,30 @@ func (m *defaultTAdminUserRoleModel) FindAllByUserId(ctx context.Context, userId
 func (m *defaultTAdminUserRoleModel) DeleteByUserId(ctx context.Context, userId int64) error {
 	query := fmt.Sprintf("delete from %s where user_id = $1", m.table)
 	_, err := m.conn.ExecCtx(ctx, query, userId)
+	return err
+}
+
+// BatchInsert 批量插入用户角色关系
+func (m *defaultTAdminUserRoleModel) BatchInsert(ctx context.Context, data []*TAdminUserRole) error {
+	if len(data) == 0 {
+		return nil
+	}
+
+	// 构建批量插入的 SQL
+	// INSERT INTO table (user_id, role_id, status) VALUES ($1, $2, $3), ($4, $5, $6), ...
+	valueStrings := make([]string, 0, len(data))
+	valueArgs := make([]interface{}, 0, len(data)*3)
+
+	for i, item := range data {
+		valueStrings = append(valueStrings, fmt.Sprintf("($%d, $%d, $%d)", i*3+1, i*3+2, i*3+3))
+		valueArgs = append(valueArgs, item.UserId, item.RoleId, item.Status)
+	}
+
+	query := fmt.Sprintf("INSERT INTO %s (%s) VALUES %s",
+		m.table,
+		tAdminUserRoleRowsExpectAutoSet,
+		strings.Join(valueStrings, ","))
+
+	_, err := m.conn.ExecCtx(ctx, query, valueArgs...)
 	return err
 }

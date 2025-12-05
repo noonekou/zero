@@ -49,12 +49,19 @@ func (l *AddUserLogic) AddUser(in *user.UserUpdateReq) (*user.UserInfo, error) {
 		}
 
 		adminUserRoleModel := l.svcCtx.AdminUserRoleModel.WithSession(session)
-		for _, v := range in.Ids {
-			_, err = adminUserRoleModel.Insert(ctx, &model.TAdminUserRole{
-				UserId: uid,
-				RoleId: v,
-			})
 
+		// 批量插入用户角色关系
+		if len(in.Ids) > 0 {
+			userRoles := make([]*model.TAdminUserRole, 0, len(in.Ids))
+			for _, roleId := range in.Ids {
+				userRoles = append(userRoles, &model.TAdminUserRole{
+					UserId: uid,
+					RoleId: roleId,
+					Status: 1, // 默认状态为启用
+				})
+			}
+
+			err = adminUserRoleModel.BatchInsert(ctx, userRoles)
 			if err != nil {
 				return err
 			}
