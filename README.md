@@ -178,6 +178,14 @@ psql -h hostname -p port -U username -d dbname
 \d 表的结构
 \q 退出
 
+# SSH Port Forwarding
+
+```bash
+ssh -NfL <本地端口>:<目标IP>:<目标端口> <SSH用户>@<SSH服务器IP>
+ssh -NfR <远程端口>:<本地IP>:<本地端口> <SSH用户>@<SSH服务器IP>
+ssh -NfD <本地端口> <SSH用户>@<SSH服务器IP>
+```
+
 # Redis
 
 ```redis
