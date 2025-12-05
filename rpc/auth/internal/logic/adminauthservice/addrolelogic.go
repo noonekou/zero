@@ -10,6 +10,7 @@ import (
 
 	"github.com/samber/lo"
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 type AddRoleLogic struct {
@@ -40,37 +41,41 @@ func (l *AddRoleLogic) AddRole(in *auth.Role) (*auth.Empty, error) {
 		return nil, errs.ErrRoleAlreadyExist.GRPCStatus().Err()
 	}
 
-	_, err := l.svcCtx.RoleModel.Insert(l.ctx, &model.TRole{Name: in.Name, Status: in.Status})
-	if err != nil {
-		return nil, err
-	}
-
 	permissions, err := l.svcCtx.PermissionModel.FindAll(l.ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	toInsertPermission := lo.Filter(permissions, func(v model.TPermission, index int) bool {
-		return lo.ContainsBy(in.Permissions, func(v2 *auth.Permission) bool {
-			return v.Id == v2.Id
+	errr := l.svcCtx.Conn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
+		_, err := l.svcCtx.RoleModel.Insert(l.ctx, &model.TRole{Name: in.Name, Status: in.Status})
+		if err != nil {
+			return err
+		}
+
+		toInsertPermission := lo.Filter(permissions, func(v model.TPermission, index int) bool {
+			return lo.ContainsBy(in.Permissions, func(v2 *auth.Permission) bool {
+				return v.Id == v2.Id
+			})
 		})
+
+		// 批量插入角色权限关系
+		if len(toInsertPermission) > 0 {
+			rolePermissions := make([]*model.TRolePermission, 0, len(toInsertPermission))
+			for _, permission := range toInsertPermission {
+				rolePermissions = append(rolePermissions, &model.TRolePermission{
+					RoleName:       in.Name,
+					PermissionName: permission.Name,
+				})
+			}
+
+			err = l.svcCtx.RolePermissionModel.BatchInsert(l.ctx, rolePermissions)
+			if err != nil {
+				return err
+			}
+		}
+
+		return err
 	})
 
-	// 批量插入角色权限关系
-	if len(toInsertPermission) > 0 {
-		rolePermissions := make([]*model.TRolePermission, 0, len(toInsertPermission))
-		for _, permission := range toInsertPermission {
-			rolePermissions = append(rolePermissions, &model.TRolePermission{
-				RoleName:       in.Name,
-				PermissionName: permission.Name,
-			})
-		}
-
-		err = l.svcCtx.RolePermissionModel.BatchInsert(l.ctx, rolePermissions)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	return &auth.Empty{}, nil
+	return &auth.Empty{}, errr
 }
