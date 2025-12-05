@@ -19,6 +19,7 @@ type (
 		FindAllByUserId(ctx context.Context, userId int64) ([]TAdminUserRole, error)
 		DeleteByUserId(ctx context.Context, userId int64) error
 		BatchInsert(ctx context.Context, data []*TAdminUserRole) error
+		CountByRoleId(ctx context.Context, roleId int64) (int64, error)
 	}
 
 	customTAdminUserRoleModel struct {
@@ -80,4 +81,15 @@ func (m *defaultTAdminUserRoleModel) BatchInsert(ctx context.Context, data []*TA
 
 	_, err := m.conn.ExecCtx(ctx, query, valueArgs...)
 	return err
+}
+
+// CountByRoleId 统计指定角色关联的用户数量
+func (m *defaultTAdminUserRoleModel) CountByRoleId(ctx context.Context, roleId int64) (int64, error) {
+	query := fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE role_id = $1", m.table)
+	var count int64
+	err := m.conn.QueryRowCtx(ctx, &count, query, roleId)
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
 }

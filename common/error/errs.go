@@ -22,6 +22,7 @@ const (
 	ErrCodeRoleAlreadyExist      = 10005
 	ErrCodePermissionNotFound    = 10006
 	ErrCodeRoleNameCannotBeEmpty = 10007
+	ErrCodeRoleHasUsers          = 10008
 
 	ErrCodeUsernameNotExist            = 20000
 	ErrCodeUsernameOrPasswordIsEmpty   = 20001
@@ -65,6 +66,7 @@ var (
 	ErrPermissionNotFound    = NewMyError(ErrCodePermissionNotFound, "permission not found")
 	ErrRoleNameNotFound      = NewMyError(ErrCodeRoleNameCannotBeEmpty, "role name cannot be empty")
 	ErrRoleNameCannotBeEmpty = NewMyError(ErrCodeRoleNameCannotBeEmpty, "role name cannot be empty")
+	ErrRoleHasUsers          = NewMyError(ErrCodeRoleHasUsers, "cannot delete role with associated users")
 
 	ErrUsernameNotExist            = NewMyError(ErrCodeUsernameNotExist, "username not exist")
 	ErrUsernameOrPasswordIsEmpty   = NewMyError(ErrCodeUsernameOrPasswordIsEmpty, "username or password is empty")

@@ -40,6 +40,16 @@ func (l *DeleteRoleLogic) DeleteRole(in *auth.RoleInfoReq) (*auth.Empty, error) 
 		return nil, errs.ErrRoleNotFound.GRPCStatus().Err()
 	}
 
+	// 检查角色是否有关联用户
+	userCount, err := l.svcCtx.AdminUserRoleModel.CountByRoleId(l.ctx, in.Id)
+	if err != nil && err != sql.ErrNoRows {
+		return nil, err
+	}
+
+	if userCount > 0 {
+		return nil, errs.ErrRoleHasUsers.GRPCStatus().Err()
+	}
+
 	err = l.svcCtx.Conn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		// Use session-based models to ensure operations run within transaction
 		roleModel := l.svcCtx.RoleModel.WithSession(session)
